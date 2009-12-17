@@ -16,7 +16,7 @@
     (classify model (transform doc))))
 
 (deftest naive-bayes
-  (is (= {:yes 0.6897586117634674, :no 0.3102413882365325}
+  (is (= :yes
          (test-doc [:chinese :chinese :chinese :tokyo :japan])))
-  (is (= {:yes 3/4, :no 1/4}
+  (is (= :yes
          (test-doc []))))

@@ -26,7 +26,7 @@
     (classify model (transform doc))))
 
 (deftest naive-bayes
-  (is (= {:yes 0.3131320321244134, :no 0.6868679678755866}
+  (is (= :no
          (test-doc #{:sunny :hot :high :weak})))
-  (is (= {:yes 9/14, :no 5/14}
+  (is (= :yes
          (test-doc []))))

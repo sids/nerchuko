@@ -34,6 +34,14 @@
           1
           doc))
 
+(defn key-with-max-val
+  "Returns the key which has the max value."
+  [map]
+  (first (reduce (fn [[k-max v-max] [k v]]
+                   (if (> v v-max)
+                     [k v] [k-max v-max]))
+                 map)))
+
 (defn classify [model doc]
   (let [doc (select-keys doc (:features model))
         numerators (reduce into
@@ -43,4 +51,7 @@
                                    {cls (* prior likelihood)}))
                                (:classes model)))
         denominator (reduce + (vals numerators))]
-    (reduce merge (map (fn [[cls numerator]] {cls (/ numerator denominator)}) numerators))))
+    (key-with-max-val
+      (reduce merge (map (fn [[cls numerator]]
+                           {cls (/ numerator denominator)})
+                         numerators)))))
