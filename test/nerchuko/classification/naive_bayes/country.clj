@@ -12,7 +12,7 @@
   (counts doc))
 
 (defn- test-doc [doc]
-  (let [model (generate-model (map-on-firsts transform training-data))]
+  (let [model (learn-model (map-on-firsts transform training-data))]
     (classify model (transform doc))))
 
 (deftest naive-bayes
