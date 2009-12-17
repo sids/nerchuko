@@ -1,5 +1,5 @@
 (ns test.nerchuko.classification.naive-bayes.country
-  (:use nerchuko.classification.naive-bayes
+  (:use nerchuko.classification.naive-bayes.multinomial
         nerchuko.helpers)
   (:use clojure.test))
 
