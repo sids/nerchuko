@@ -1,6 +1,6 @@
 (ns test.run
   (:use clojure.test)
-  (:require test.nerchuko.classifiers.naive-bayes))
+  (:require test.nerchuko.classification.naive-bayes))
 
 (defn run []
   (run-all-tests #"^test.nerchuko..*"))

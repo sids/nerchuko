@@ -1,5 +1,5 @@
-(ns test.nerchuko.classifiers.naive-bayes.country
-  (:use nerchuko.classifiers.naive-bayes
+(ns test.nerchuko.classification.naive-bayes.country
+  (:use nerchuko.classification.naive-bayes
         nerchuko.helpers))
 
 (def training-set [[[:chinese :beijing :chinese] :yes]

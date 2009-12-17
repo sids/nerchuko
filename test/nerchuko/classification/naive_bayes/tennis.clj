@@ -1,5 +1,5 @@
-(ns test.nerchuko.classifiers.naive-bayes.tennis
-  (:use nerchuko.classifiers.naive-bayes
+(ns test.nerchuko.classification.naive-bayes.tennis
+  (:use nerchuko.classification.naive-bayes
         nerchuko.helpers)
   (:use clojure.test))
 

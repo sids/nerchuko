@@ -1,4 +1,4 @@
-(ns nerchuko.classifiers.naive-bayes
+(ns nerchuko.classification.naive-bayes
   (:use nerchuko.helpers)
   (:use [clojure.set :only (intersection)]
         clojure.contrib.generic.math-functions

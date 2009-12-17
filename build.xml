@@ -39,7 +39,7 @@
       <classpath refid="classpath"/>
       <sysproperty key="clojure.compile.path" value="${classes.dir}"/>
       <arg value="nerchuko.helpers"/>
-      <arg value="nerchuko.classifiers.naive-bayes"/>
+      <arg value="nerchuko.classification.naive-bayes"/>
     </java>
   </target>
 
