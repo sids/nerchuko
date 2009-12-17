@@ -3,7 +3,7 @@
         nerchuko.helpers)
   (:use clojure.test))
 
-(def training-set [[#{:sunny :hot :high :weak} :no]
+(def training-data [[#{:sunny :hot :high :weak} :no]
                    [#{:sunny :hot :high :strong} :no]
                    [#{:overcast :hot :high :weak} :yes]
                    [#{:rain :mild :high :weak} :yes]
@@ -18,12 +18,15 @@
                    [#{:overcast :hot :normal :weak} :yes]
                    [#{:rain :mild :high :strong} :no]])
 
-(def unclassified-doc #{:sunny :hot :high :weak})
-
 (defn- transform [doc]
   (counts doc))
 
-(def model (generate-model (map-on-firsts transform training-set)))
+(defn- test-doc [doc]
+  (let [model (generate-model (map-on-firsts transform training-data))]
+    (classify model (transform doc))))
 
 (deftest naive-bayes
-  (is (= 1 (- 3 1))))
+  (is (= {:yes 0.3131320321244134, :no 0.6868679678755866}
+         (test-doc #{:sunny :hot :high :weak})))
+  (is (= {:yes 9/14, :no 5/14}
+         (test-doc []))))
