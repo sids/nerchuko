@@ -84,9 +84,9 @@ classifier over model."
 (defn classify
   "Classifies the doc using a Naive Bayes classifier based on model.
 Returns the most probable class."
-  [model doc]
-  (let [classes-probabilities (probabilities model doc)]
-    (key-with-max-val classes-probabilities)))
+  ([model doc & [default-class]]
+     (let [classes-probabilities (probabilities model doc)]
+       (key-with-max-val classes-probabilities default-class))))
 
 (defn classifier
   "Returns (partial classify model).

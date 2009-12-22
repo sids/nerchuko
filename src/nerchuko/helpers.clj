@@ -36,10 +36,10 @@
 
 (defn key-with-max-val
   "Returns the key which has the max value.
-Returns nil if all the values are equal."
-  [map]
+Returns on-all-equal if all the values are equal."
+  [map & [on-all-equal]]
   (if (apply = (vals map))
-    nil
+    on-all-equal
     (first (reduce (fn [[k-max v-max] [k v]]
                      (if (> v v-max)
                        [k v] [k-max v-max]))
