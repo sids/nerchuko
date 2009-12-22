@@ -11,12 +11,14 @@
 (defn- transform [doc]
   (counts doc))
 
-(defn- test-doc [doc]
-  (let [model (learn-model (map-on-firsts transform training-data))]
-    (classify model (transform doc))))
-
 (deftest naive-bayes
-  (is (= :yes
-         (test-doc [:chinese :chinese :chinese :tokyo :japan])))
-  (is (= :yes
-         (test-doc []))))
+  (let [training-dataset (map-on-firsts transform training-data)
+        model (learn-model training-dataset)]
+    (is (= {:yes 0.6897586117634674, :no 0.3102413882365325}
+           (probabilities model (transform [:chinese :chinese :chinese :tokyo :japan]))))
+    (is (= :yes
+           (classify model (transform [:chinese :chinese :chinese :tokyo :japan]))))
+    (is (= {:yes 3/4, :no 1/4}
+           (probabilities model (transform []))))
+    (is (= :yes
+           (classify model (transform []))))))

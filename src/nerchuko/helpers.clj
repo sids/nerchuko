@@ -24,8 +24,6 @@
 (defn lasts [coll]
   (map last coll))
 
-
-
 (defn map-on-firsts
   "Takes a sequence of 2-item vectors [v1 v2] and returns a lazy sequence of [(f v1) v2]. If a collection is given, calls seq on it."
   [f pair-seq]
@@ -35,3 +33,21 @@
   "Takes a sequence of 2-item vectors [v1 v2] and returns a lazy sequence of [v1 (f v2)]. If a collection is given, calls seq on it."
   [f pair-seq]
   (map (fn [[v1 v2]] [v1 (f v2)]) pair-seq))
+
+(defn key-with-max-val
+  "Returns the key which has the max value.
+Returns nil if all the values are equal."
+  [map]
+  (if (apply = (vals map))
+    nil
+    (first (reduce (fn [[k-max v-max] [k v]]
+                     (if (> v v-max)
+                       [k v] [k-max v-max]))
+                   map))))
+
+(defn to-probabilities
+  "Given a coll of numbers, converts them to probabilities
+by dividing each with their total sum. Returns a seq."
+  [coll]
+  (let [total (reduce + coll)]
+    (map #(/ % total) coll)))

@@ -21,12 +21,14 @@
 (defn- transform [doc]
   (counts doc))
 
-(defn- test-doc [doc]
-  (let [model (learn-model (map-on-firsts transform training-data))]
-    (classify model (transform doc))))
-
 (deftest naive-bayes
-  (is (= :no
-         (test-doc #{:sunny :hot :high :weak})))
-  (is (= :yes
-         (test-doc []))))
+  (let [training-dataset (map-on-firsts transform training-data)
+        model (learn-model training-dataset)]
+    (is (= {:yes 0.3131320321244134, :no 0.6868679678755866}
+           (probabilities model (transform #{:sunny :hot :high :weak}))))
+    (is (= :no
+           (classify model (transform #{:sunny :hot :high :weak}))))
+    (is (= {:yes 9/14, :no 5/14}
+           (probabilities model (transform []))))
+    (is (= :yes
+           (classify model (transform []))))))
