@@ -13,13 +13,14 @@ The aggregate information is returned as a vector of:
 - the number of documents belonging to each class, as a map { classes => counts }.
 - features counts for each class, as a map { classes => { features => counts } }."
   [training-dataset]
-  (reduce (fn [[classes features classes-counts features-classes-counts] [doc cls]]
-            [(conj classes cls)
-             (into features (keys doc))
-             (merge-with-+ classes-counts {cls 1})
-             (merge-with merge-with-+ features-classes-counts {cls doc})])
-          [#{} #{} {} {}]
-          training-dataset))
+  (->> training-dataset
+       (map-on-firsts counts)
+       (reduce (fn [[classes features classes-counts features-classes-counts] [doc cls]]
+                 [(conj classes cls)
+                  (into features (keys doc))
+                  (merge-with-+ classes-counts {cls 1})
+                  (merge-with merge-with-+ features-classes-counts {cls doc})])
+               [#{} #{} {} {}])))
 
 (defn- conditional-probability
   "Returns the conditional probabilities of a feature for each class."
@@ -72,7 +73,7 @@ classifier over model."
         features (:features model)
         priors (:priors model)
         cond-probs (:cond-probs model)
-        doc (select-keys doc features)]
+        doc (select-keys (counts doc) features)]
     (zipmap classes
             (to-probabilities
              (map (fn [class]
