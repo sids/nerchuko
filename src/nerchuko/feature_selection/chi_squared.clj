@@ -4,7 +4,9 @@
         clojure.contrib.generic.functor))
 
 (defn aggregate [training-dataset]
-  (reduce (fn [[docs-count classes-counts features-counts features-classes-counts]
+  (->> training-dataset
+       (map-on-firsts counts)
+       (reduce (fn [[docs-count classes-counts features-counts features-classes-counts]
                [doc class]]
             (let [doc-features (keys doc)]
               [(inc docs-count)
@@ -15,8 +17,7 @@
                        (map (fn [feature]
                               {feature {class 1}})
                             doc-features))]))
-          [0 {} {} {}]
-          training-dataset)) 
+          [0 {} {} {}]))) 
 
 (defn- expected-count [row-count column-count docs-count]
   (* docs-count

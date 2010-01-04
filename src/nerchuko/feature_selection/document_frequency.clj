@@ -8,7 +8,8 @@ Even if a feature occurs multiple times in a document, it is counted
 only as a single occurrence."  [k training-dataset]
   (->> training-dataset
        firsts
-       (map (comp counts keys))
+       (map set)
+       (map counts)
        (reduce merge-with-+)
        (largest-n-by-vals k)
        keys
