@@ -20,7 +20,7 @@
 
 (deftest naive-bayes
   (let [model (learn-model training-dataset)]
-    (is (= {:yes 0.3131320321244134, :no 0.6868679678755866}
+    (is (= {:yes 0.3131320321244135, :no 0.6868679678755865}
            (probabilities model #{:sunny :hot :high :weak})))
     (is (= :no
            (classify model #{:sunny :hot :high :weak})))

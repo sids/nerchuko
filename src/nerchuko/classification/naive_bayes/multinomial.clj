@@ -53,21 +53,21 @@ The model is a map with the following keys:
                                                   features-total))
                        features-classes-counts)}))
 
-(defn- likelihood
+(defn- log-likelihood
   "Given a doc and the conditional probabilities of the features for a class,
-returns the likelihood that the document belongs to the class.
-Essentially, this returns a product of the conditional probabilities of the
-features that appear in the doc."
-  [doc class-cond-probs]
-  (reduce (fn [class-likelihood [feature feature-count]]
-            (* class-likelihood (pow (class-cond-probs feature) feature-count)))
-          1
-          doc))
+returns the log of the likelihood that the document belongs to the
+class.  Essentially, this returns log of the product of the
+conditional probabilities of the features that appear in the doc."
+[doc class-cond-probs]
+  (->> doc
+       (map (fn [[feature feature-count]]
+              (pow (class-cond-probs feature) feature-count)))
+       (map log)
+       (reduce +)))
 
-(defn probabilities
-  "Returns the a posteriori probabilities of the document
-belonging to each class, estimated using the Naive Bayes
-classifier over model."
+(defn- estimates
+  "Returns the log of the product of the prior probabilities of each
+class and the likelihood of the document belonging to that class."
   [model doc]
   (let [classes (:classes model)
         features (:features model)
@@ -75,12 +75,20 @@ classifier over model."
         cond-probs (:cond-probs model)
         doc (select-keys (counts doc) features)]
     (zipmap classes
-            (to-probabilities
-             (map (fn [class]
-                    (let [prior (priors class)
-                          class-likelihood (likelihood doc (cond-probs class))]
-                      (* prior class-likelihood)))
-                  classes)))))
+            (map (fn [class]
+                   (let [prior (priors class)
+                         class-likelihood (log-likelihood doc (cond-probs class))]
+                     (+ (log prior) class-likelihood)))
+                 classes))))
+
+(defn probabilities
+  "Returns the a posteriori probabilities of the document
+belonging to each class, estimated using the Naive Bayes
+classifier over model."
+  [model doc]
+  (let [es (->> (estimates model doc)
+                (fmap exp))]
+    (zipmap (keys es) (to-probabilities (vals es)))))
 
 (defn classify
   "Classifies the doc using a Naive Bayes classifier based on model.

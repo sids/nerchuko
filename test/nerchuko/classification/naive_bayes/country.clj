@@ -10,7 +10,7 @@
 
 (deftest naive-bayes
   (let [model (learn-model training-dataset)]
-    (is (= {:yes 0.6897586117634674, :no 0.3102413882365325}
+    (is (= {:yes 0.6897586117634673, :no 0.31024138823653274}
            (probabilities model [:chinese :chinese :chinese :tokyo :japan])))
     (is (= :yes
            (classify model [:chinese :chinese :chinese :tokyo :japan])))
