@@ -25,9 +25,11 @@
   (map last coll))
 
 (defn map-on-firsts
-  "Takes a sequence of 2-item vectors [v1 v2] and returns a lazy sequence of [(f v1) v2]. If a collection is given, calls seq on it."
-  [f pair-seq]
-  (map (fn [[v1 v2]] [(f v1) v2]) pair-seq))
+  "Takes a sequence of sequences (v1 v2 ...) and returns a lazy sequence of ((f v1) v2 ...). If a collection is given, calls seq on it."
+  [f seq]
+  (map (fn [[v1 & vs]]
+         (into [(f v1)] vs))
+       seq))
 
 (defn map-on-lasts
   "Takes a sequence of 2-item vectors [v1 v2] and returns a lazy sequence of [v1 (f v2)]. If a collection is given, calls seq on it."
@@ -50,7 +52,9 @@ Returns on-all-equal if all the values are equal."
 by dividing each with their total sum. Returns a seq."
   [coll]
   (let [total (reduce + coll)]
-    (map #(/ % total) coll)))
+    (map #(if-not (zero? total)
+            (/ % total)
+            0.0) coll)))
 
 (defn largest-n-by-vals
   "Returns a subset of map containing the n largest entries
