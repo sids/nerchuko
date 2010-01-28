@@ -83,3 +83,19 @@ as determined by comparing the vals."
   (let [comparator (fn [v1 v2] (compare v2 v1))]
     (into {}
           (take n (sort-by val comparator map)))))
+
+(defn partition-random
+  "Randomly divides the items in coll into n partitions.
+Returns a vector of vectors."
+  [n coll]
+  (let [ret (into [] (repeat n []))]
+    (reduce (fn [ret x]
+              (let [pos (rand-int n)]
+                (assoc ret pos (conj (ret pos) x))))
+            ret
+            coll)))
+
+(defmacro call
+  "Macro that expands to a call to function f in the given namespace."
+  [ns f & args]
+  `((ns-resolve (the-ns ~ns) ~f) ~@args))
