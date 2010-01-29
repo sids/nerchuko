@@ -8,7 +8,7 @@
 (defvar *feature-selector* 'nerchuko.feature-selection.chi-squared)
 
 (defn select [k training-dataset]
-  (call *feature-selector* 'select k training-dataset))
+  (call *feature-selector* 'select [k training-dataset]))
 
 (defn select-and-filter
   ([k training-dataset]

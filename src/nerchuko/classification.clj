@@ -8,10 +8,10 @@
 (defvar *classifier* 'nerchuko.classification.naive-bayes.multinomial)
 
 (defn learn-model [training-dataset]
-  (call *classifier* 'learn-model training-dataset))
+  (call *classifier* 'learn-model [training-dataset]))
 
 (defn classify [model doc]
-  (call *classifier* 'classify model doc))
+  (call *classifier* 'classify [model doc]))
 
 (defn save-model [file model]
   (binding [*print-dup* true]
