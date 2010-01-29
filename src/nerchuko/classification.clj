@@ -78,7 +78,7 @@
 (defn- get-max-count-length [matrix]
   (->> matrix
        vals
-       (map #(reduce max (vals %)))
+       (map #(reduce max (cons 0 (vals %))))
        (reduce max)
        str
        .length))
