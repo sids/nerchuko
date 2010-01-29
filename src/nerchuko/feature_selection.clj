@@ -1,6 +1,8 @@
 (ns nerchuko.feature-selection
   (:use nerchuko.helpers)
-  (:require nerchuko.feature-selection.chi-squared)
+  (:require nerchuko.feature-selection.chi-squared
+            nerchuko.feature-selection.document-frequency
+            nerchuko.feature-selection.collection-frequency)
   (:use [clojure.contrib.def :only (defvar)]))
 
 (defvar *feature-selector* 'nerchuko.feature-selection.chi-squared)

@@ -2,7 +2,8 @@
   (:use nerchuko.helpers)
   (:require nerchuko.classification.naive-bayes.multinomial)
   (:use [clojure.contrib.def :only (defvar)]
-        [clojure.contrib.duck-streams :only (spit)]))
+        [clojure.contrib.duck-streams :only (spit)])
+  (:require [clojure.contrib.str-utils2 :as str-utils2]))
 
 (defvar *classifier* 'nerchuko.classification.naive-bayes.multinomial)
 
@@ -38,14 +39,14 @@
         (doall
          (map-with-index-on partitions
            (fn [idx test-dataset]
-             (println "\nTrial" (inc idx) (clojure.contrib.str-utils2/repeat "=" 32) "\n")
+             (println "\nTrial" (inc idx) (str-utils2/repeat "=" 32) "\n")
              (let [training-dataset (apply concat (concat (take idx partitions)
                                                           (rest (drop idx partitions))))
                    model (learn-model training-dataset)]
                (->> test-dataset
                     (get-confusion-matrix model)
                     print-confusion-matrix)))))]
-    (println "\nSummary" (clojure.contrib.str-utils2/repeat "=" 32) "\n")
+    (println "\nSummary" (str-utils2/repeat "=" 32) "\n")
     (->> confusion-matrices
          (reduce merge-confusion-matrices)
          print-confusion-matrix)))

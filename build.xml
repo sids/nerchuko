@@ -39,9 +39,8 @@
       <classpath refid="classpath"/>
       <sysproperty key="clojure.compile.path" value="${classes.dir}"/>
       <arg value="nerchuko.helpers"/>
-      <arg value="nerchuko.classification.naive-bayes.multinomial"/>
-      <arg value="nerchuko.feature-selection.collection-frequency"/>
-      <arg value="nerchuko.feature-selection.document-frequency"/>
+      <arg value="nerchuko.classification"/>
+      <arg value="nerchuko.feature-selection"/>
     </java>
   </target>
 
