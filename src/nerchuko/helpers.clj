@@ -101,3 +101,36 @@ Returns a vector of vectors."
      `(call ns f []))
   ([ns f args]
      `(apply (ns-resolve (the-ns (symbol ~ns)) ~f) ~args)))
+
+(defn to-seq
+  "Returns a seq.
+If v implements Sequential, simply calls seq on it.
+Otherwise returns a seq containing v as the only element."
+  [v]
+  (if (sequential? v)
+    (seq v)
+    (seq (list v))))
+
+(defn pairs
+  "Returns a hash-map of vectors where each vector is a pairing of key
+with a value from vals."
+  [key vals]
+  (map #(vector key %) vals))
+
+(defn flatten-map
+  "'Flattens' the map into a seq.
+Each key contributes one of more elements to the seq. The elements
+corresponding to any given key are obtained by calling pairs on
+the to-seq of its value."
+  [m]
+  (reduce into
+          (map (fn [[k v]] (pairs k (to-seq v)))
+               m)))
+
+(defmulti prepare-doc class)
+
+(defmethod prepare-doc clojure.lang.PersistentArrayMap [doc]
+  (prepare-doc (flatten-map doc)))
+
+(defmethod prepare-doc clojure.lang.Seqable [doc]
+  (counts doc))
