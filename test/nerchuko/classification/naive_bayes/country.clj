@@ -1,5 +1,5 @@
 (ns test.nerchuko.classification.naive-bayes.country
-  (:use nerchuko.classification.naive-bayes.multinomial
+  (:use nerchuko.classification
         nerchuko.utils)
   (:use clojure.test))
 
@@ -9,12 +9,13 @@
                        [[:tokyo :japan :chinese] :no]])
 
 (deftest naive-bayes
-  (let [model (learn-model training-dataset)]
-    (is (= {:yes 0.6897586117634673, :no 0.31024138823653274}
-           (probabilities model [:chinese :chinese :chinese :tokyo :japan])))
-    (is (= :yes
-           (classify model [:chinese :chinese :chinese :tokyo :japan])))
-    (is (= {:yes 3/4, :no 1/4}
-           (probabilities model [])))
-    (is (= :yes
-           (classify model [])))))
+  (binding [*classifier* 'nerchuko.classification.naive-bayes.multinomial]
+    (let [model (learn-model training-dataset)]
+      (is (= {:yes 0.6897586117634673, :no 0.31024138823653274}
+             (scores model [:chinese :chinese :chinese :tokyo :japan])))
+      (is (= :yes
+             (classify model [:chinese :chinese :chinese :tokyo :japan])))
+      (is (= {:yes 3/4, :no 1/4}
+             (scores model [])))
+      (is (= :yes
+             (classify model []))))))

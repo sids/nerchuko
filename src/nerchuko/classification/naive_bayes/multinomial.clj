@@ -81,7 +81,7 @@ class and the likelihood of the document belonging to that class."
                      (+ (log prior) class-likelihood)))
                  classes))))
 
-(defn probabilities
+(defn scores
   "Returns the a posteriori probabilities of the document
 belonging to each class, estimated using the Naive Bayes
 classifier over model."
@@ -94,7 +94,7 @@ classifier over model."
   "Classifies the doc using a Naive Bayes classifier based on model.
 Returns the most probable class."
   ([model doc & [default-class]]
-     (let [classes-probabilities (probabilities model doc)]
+     (let [classes-probabilities (scores model doc)]
        (key-with-max-val classes-probabilities default-class))))
 
 (defn classifier

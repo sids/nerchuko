@@ -1,5 +1,5 @@
 (ns test.nerchuko.classification.naive-bayes.tennis
-  (:use nerchuko.classification.naive-bayes.multinomial
+  (:use nerchuko.classification
         nerchuko.utils)
   (:use clojure.test))
 
@@ -19,12 +19,13 @@
                        [#{:rain :mild :high :strong} :no]])
 
 (deftest naive-bayes
-  (let [model (learn-model training-dataset)]
-    (is (= {:yes 0.3131320321244135, :no 0.6868679678755865}
-           (probabilities model #{:sunny :hot :high :weak})))
-    (is (= :no
-           (classify model #{:sunny :hot :high :weak})))
-    (is (= {:yes 9/14, :no 5/14}
-           (probabilities model [])))
-    (is (= :yes
-           (classify model [])))))
+  (binding [*classifier* 'nerchuko.classification.naive-bayes.multinomial]
+    (let [model (learn-model training-dataset)]
+      (is (= {:yes 0.3131320321244135, :no 0.6868679678755865}
+             (scores model #{:sunny :hot :high :weak})))
+      (is (= :no
+             (classify model #{:sunny :hot :high :weak})))
+      (is (= {:yes 9/14, :no 5/14}
+             (scores model [])))
+      (is (= :yes
+             (classify model []))))))

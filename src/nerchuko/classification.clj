@@ -10,6 +10,9 @@
 (defn learn-model [training-dataset]
   (call *classifier* 'learn-model [training-dataset]))
 
+(defn scores [model doc]
+  (call *classifier* 'scores [model doc]))
+
 (defn classify [model doc]
   (call *classifier* 'classify [model doc]))
 
