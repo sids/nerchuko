@@ -1,5 +1,5 @@
 (ns nerchuko.feature-selection.chi-squared
-  (:use nerchuko.helpers)
+  (:use nerchuko.utils)
   (:use clojure.contrib.generic.math-functions
         clojure.contrib.generic.functor))
 

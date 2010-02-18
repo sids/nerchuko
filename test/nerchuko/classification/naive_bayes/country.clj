@@ -1,6 +1,6 @@
 (ns test.nerchuko.classification.naive-bayes.country
   (:use nerchuko.classification.naive-bayes.multinomial
-        nerchuko.helpers)
+        nerchuko.utils)
   (:use clojure.test))
 
 (def training-dataset [[[:chinese :beijing :chinese] :yes]

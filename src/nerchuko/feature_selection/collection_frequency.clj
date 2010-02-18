@@ -1,5 +1,5 @@
 (ns nerchuko.feature-selection.collection-frequency
-  (:use nerchuko.helpers)
+  (:use nerchuko.utils)
   (:use clojure.contrib.generic.functor))
 
 (defn select

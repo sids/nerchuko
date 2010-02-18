@@ -1,5 +1,5 @@
 (ns nerchuko.feature-selection
-  (:use nerchuko.helpers)
+  (:use nerchuko.utils)
   (:require nerchuko.feature-selection.chi-squared
             nerchuko.feature-selection.document-frequency
             nerchuko.feature-selection.collection-frequency)

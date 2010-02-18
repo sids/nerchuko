@@ -1,6 +1,6 @@
 (ns test.nerchuko.classification.naive-bayes.tennis
   (:use nerchuko.classification.naive-bayes.multinomial
-        nerchuko.helpers)
+        nerchuko.utils)
   (:use clojure.test))
 
 (def training-dataset [[#{:sunny :hot :high :weak} :no]

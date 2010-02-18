@@ -1,5 +1,5 @@
 (ns nerchuko.classification
-  (:use nerchuko.helpers)
+  (:use nerchuko.utils)
   (:require nerchuko.classification.naive-bayes.multinomial)
   (:use [clojure.contrib.def :only (defvar)]
         [clojure.contrib.duck-streams :only (spit)])

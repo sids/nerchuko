@@ -1,5 +1,5 @@
 (ns test.nerchuko.feature-selection.country
-  (:use nerchuko.helpers)
+  (:use nerchuko.utils)
   (:require [nerchuko.feature-selection.document-frequency :as document-frequency]
             [nerchuko.feature-selection.document-frequency :as collection-frequency]
             [nerchuko.feature-selection.chi-squared :as chi-squared])

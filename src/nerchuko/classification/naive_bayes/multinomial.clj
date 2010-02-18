@@ -1,5 +1,5 @@
 (ns nerchuko.classification.naive-bayes.multinomial
-  (:use nerchuko.helpers)
+  (:use nerchuko.utils)
   (:use [clojure.set :only (intersection)]
         clojure.contrib.generic.math-functions
         clojure.contrib.generic.functor))
