@@ -1,9 +1,7 @@
 (ns test.nerchuko.feature-selection.tennis
-  (:use nerchuko.utils
+  (:use nerchuko.feature-selection
+        nerchuko.utils
         nerchuko.helpers)
-  (:require [nerchuko.feature-selection.document-frequency :as document-frequency]
-            [nerchuko.feature-selection.collection-frequency :as collection-frequency]
-            [nerchuko.feature-selection.chi-squared :as chi-squared])
   (:use clojure.test))
 
 (def training-data [[#{:sunny :hot :high :weak} :no]
@@ -26,25 +24,28 @@
                     training-data))
 
 (deftest feature-selection-document-frequency
-  (is (= (document-frequency/select 1 training-dataset)
-         #{:weak}))
-  (is (= (document-frequency/select 2 training-dataset)
-         #{:weak :normal}))
-  (is (= (document-frequency/select 4 training-dataset)
-         #{:strong :weak :normal :high})))
+  (binding [*feature-selector* 'nerchuko.feature-selection.document-frequency]
+    (is (= (select 1 training-dataset)
+           #{:weak}))
+    (is (= (select 2 training-dataset)
+           #{:weak :normal}))
+    (is (= (select 4 training-dataset)
+           #{:strong :weak :normal :high}))))
 
 (deftest feature-selection-collection-frequency
-  (is (= (collection-frequency/select 1 training-dataset)
-         #{:weak}))
-  (is (= (collection-frequency/select 2 training-dataset)
-         #{:weak :normal}))
-  (is (= (collection-frequency/select 4 training-dataset)
-         #{:strong :weak :normal :high})))
+  (binding [*feature-selector* 'nerchuko.feature-selection.collection-frequency]
+    (is (= (select 1 training-dataset)
+           #{:weak}))
+    (is (= (select 2 training-dataset)
+           #{:weak :normal}))
+    (is (= (select 4 training-dataset)
+           #{:strong :weak :normal :high}))))
 
 (deftest feature-selection-chi-squared
-  (is (= (chi-squared/select 1 training-dataset)
-         #{:overcast}))
-  (is (= (chi-squared/select 2 training-dataset)
-         #{:overcast :normal}))
-  (is (= (chi-squared/select 4 training-dataset)
-         #{:sunny :overcast :normal :high})))
+  (binding [*feature-selector* 'nerchuko.feature-selection.chi-squared]
+    (is (= (select 1 training-dataset)
+           #{:overcast}))
+    (is (= (select 2 training-dataset)
+           #{:overcast :normal}))
+    (is (= (select 4 training-dataset)
+           #{:sunny :overcast :normal :high}))))

@@ -1,9 +1,7 @@
 (ns test.nerchuko.feature-selection.country
-  (:use nerchuko.utils
+  (:use nerchuko.feature-selection
+        nerchuko.utils
         nerchuko.helpers)
-  (:require [nerchuko.feature-selection.document-frequency :as document-frequency]
-            [nerchuko.feature-selection.document-frequency :as collection-frequency]
-            [nerchuko.feature-selection.chi-squared :as chi-squared])
   (:use clojure.test))
 
 (def training-data [[[:chinese :beijing :chinese] :yes]
@@ -16,25 +14,28 @@
                     training-data))
 
 (deftest feature-selection-document-frequency
-  (is (= (document-frequency/select 1 training-dataset)
-         #{:chinese}))
-  (is (= (document-frequency/select 2 training-dataset)
-         #{:shanghai :chinese}))
-  (is (= (document-frequency/select 4 training-dataset)
-         #{:shanghai :tokyo :macao :chinese})))
+  (binding [*feature-selector* 'nerchuko.feature-selection.document-frequency]
+    (is (= (select 1 training-dataset)
+           #{:chinese}))
+    (is (= (select 2 training-dataset)
+           #{:shanghai :chinese}))
+    (is (= (select 4 training-dataset)
+           #{:shanghai :tokyo :macao :chinese}))))
 
 (deftest feature-selection-collection-frequency
-  (is (= (collection-frequency/select 1 training-dataset)
-         #{:chinese}))
-  (is (= (collection-frequency/select 2 training-dataset)
-         #{:shanghai :chinese}))
-  (is (= (collection-frequency/select 4 training-dataset)
-         #{:shanghai :tokyo :macao :chinese})))
+  (binding [*feature-selector* 'nerchuko.feature-selection.collection-frequency]
+    (is (= (select 1 training-dataset)
+           #{:chinese}))
+    (is (= (select 2 training-dataset)
+           #{:shanghai :chinese}))
+    (is (= (select 4 training-dataset)
+           #{:shanghai :tokyo :macao :chinese}))))
 
 (deftest feature-selection-chi-squared
-  (is (= (chi-squared/select 1 training-dataset)
-         #{:tokyo}))
-  (is (= (chi-squared/select 2 training-dataset)
-         #{:tokyo :japan}))
-  (is (= (chi-squared/select 4 training-dataset)
-         #{:shanghai :tokyo :beijing :japan})))
+  (binding [*feature-selector* 'nerchuko.feature-selection.chi-squared]
+    (is (= (select 1 training-dataset)
+           #{:tokyo}))
+    (is (= (select 2 training-dataset)
+           #{:tokyo :japan}))
+    (is (= (select 4 training-dataset)
+           #{:shanghai :tokyo :beijing :japan}))))
