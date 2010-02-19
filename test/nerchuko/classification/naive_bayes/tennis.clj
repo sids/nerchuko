@@ -20,7 +20,7 @@
                        [#{:rain :mild :high :strong} :no]])
 
 (deftest naive-bayes
-  (binding [*classifier* 'nerchuko.classification.naive-bayes.multinomial]
+  (binding [*classifier* "naive-bayes.multinomial"]
     (let [training-dataset (map-on-firsts prepare-doc
                                           training-dataset)
           model (learn-model training-dataset)]

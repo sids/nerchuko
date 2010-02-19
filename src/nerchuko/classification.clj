@@ -7,14 +7,25 @@
 
 (defvar *classifier* 'nerchuko.classification.naive-bayes.multinomial)
 
+(defn- resolve-classifier [c]
+  (if (.startsWith (as-str c) "nerchuko.classification.")
+    c
+    (str "nerchuko.classification." (as-str c))))
+
 (defn learn-model [training-dataset]
-  (call *classifier* 'learn-model [training-dataset]))
+  (call (resolve-classifier *classifier*)
+        'learn-model
+        [training-dataset]))
 
 (defn scores [model doc]
-  (call *classifier* 'scores [model doc]))
+  (call (resolve-classifier *classifier*)
+        'scores
+        [model doc]))
 
 (defn classify [model doc]
-  (call *classifier* 'classify [model doc]))
+  (call (resolve-classifier *classifier*)
+        'classify
+        [model doc]))
 
 (defn save-model [file model]
   (binding [*print-dup* true]

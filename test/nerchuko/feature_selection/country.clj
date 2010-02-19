@@ -14,7 +14,7 @@
                     training-data))
 
 (deftest feature-selection-document-frequency
-  (binding [*feature-selector* 'nerchuko.feature-selection.document-frequency]
+  (binding [*feature-selector* "document-frequency"]
     (is (= (select 1 training-dataset)
            #{:chinese}))
     (is (= (select 2 training-dataset)
@@ -23,7 +23,7 @@
            #{:shanghai :tokyo :macao :chinese}))))
 
 (deftest feature-selection-collection-frequency
-  (binding [*feature-selector* 'nerchuko.feature-selection.collection-frequency]
+  (binding [*feature-selector* "collection-frequency"]
     (is (= (select 1 training-dataset)
            #{:chinese}))
     (is (= (select 2 training-dataset)
@@ -32,7 +32,7 @@
            #{:shanghai :tokyo :macao :chinese}))))
 
 (deftest feature-selection-chi-squared
-  (binding [*feature-selector* 'nerchuko.feature-selection.chi-squared]
+  (binding [*feature-selector* "chi-squared"]
     (is (= (select 1 training-dataset)
            #{:tokyo}))
     (is (= (select 2 training-dataset)

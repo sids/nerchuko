@@ -7,8 +7,15 @@
 
 (defvar *feature-selector* 'nerchuko.feature-selection.chi-squared)
 
+(defn- resolve-feature-selector [c]
+  (if (.startsWith (as-str c) "nerchuko.feature-selection.")
+    c
+    (str "nerchuko.feature-selection." (as-str c))))
+
 (defn select [k training-dataset]
-  (call *feature-selector* 'select [k training-dataset]))
+  (call (resolve-feature-selector *feature-selector*)
+        'select
+        [k training-dataset]))
 
 (defn select-and-filter
   ([k training-dataset]
