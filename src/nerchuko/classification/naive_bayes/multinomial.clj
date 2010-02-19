@@ -14,7 +14,6 @@ The aggregate information is returned as a vector of:
 - features counts for each class, as a map { classes => { features => counts } }."
   [training-dataset]
   (->> training-dataset
-       (map-on-firsts counts)
        (reduce (fn [[classes features classes-counts features-classes-counts] [doc cls]]
                  [(conj classes cls)
                   (into features (keys doc))
@@ -73,7 +72,7 @@ class and the likelihood of the document belonging to that class."
         features (:features model)
         priors (:priors model)
         cond-probs (:cond-probs model)
-        doc (select-keys (counts doc) features)]
+        doc (select-keys doc features)]
     (zipmap classes
             (map (fn [class]
                    (let [prior (priors class)

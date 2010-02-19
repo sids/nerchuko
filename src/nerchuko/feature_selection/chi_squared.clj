@@ -3,9 +3,8 @@
   (:use clojure.contrib.generic.math-functions
         clojure.contrib.generic.functor))
 
-(defn aggregate [training-dataset]
+(defn- aggregate [training-dataset]
   (->> training-dataset
-       (map-on-firsts counts)
        (reduce (fn [[docs-count classes-counts features-counts features-classes-counts]
                [doc class]]
             (let [doc-features (keys doc)]

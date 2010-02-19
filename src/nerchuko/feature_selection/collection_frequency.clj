@@ -9,7 +9,6 @@ multiple times."
   [k training-dataset]
   (->> training-dataset
        firsts
-       (map counts)
        (reduce merge-with-+)
        (largest-n-by-vals k)
        keys

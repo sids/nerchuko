@@ -1,14 +1,19 @@
 (ns test.nerchuko.feature-selection.country
-  (:use nerchuko.utils)
+  (:use nerchuko.utils
+        nerchuko.helpers)
   (:require [nerchuko.feature-selection.document-frequency :as document-frequency]
             [nerchuko.feature-selection.document-frequency :as collection-frequency]
             [nerchuko.feature-selection.chi-squared :as chi-squared])
   (:use clojure.test))
 
-(def training-dataset [[[:chinese :beijing :chinese] :yes]
-                       [[:chinese :chinese :shanghai] :yes]
-                       [[:chinese :macao] :yes]
-                       [[:tokyo :japan :chinese] :no]])
+(def training-data [[[:chinese :beijing :chinese] :yes]
+                    [[:chinese :chinese :shanghai] :yes]
+                    [[:chinese :macao] :yes]
+                    [[:tokyo :japan :chinese] :no]])
+
+(def training-dataset
+     (map-on-firsts prepare-doc
+                    training-data))
 
 (deftest feature-selection-document-frequency
   (is (= (document-frequency/select 1 training-dataset)
