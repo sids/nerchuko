@@ -1,3 +1,6 @@
-/build/
-/nerchuko.jar
-/src/test
+pom-generated.xml
+Manifest.txt
+nerchuko.jar
+lib
+classes
+src/test
