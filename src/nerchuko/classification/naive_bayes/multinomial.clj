@@ -1,4 +1,6 @@
 (ns nerchuko.classification.naive-bayes.multinomial
+  "An implementation of the Naive Bayes classification technique,
+using the multinomial model for counting the features."
   (:use nerchuko.utils)
   (:use [clojure.set :only (intersection)]
         clojure.contrib.generic.math-functions

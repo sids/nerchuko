@@ -1,4 +1,7 @@
-(ns nerchuko.utils)
+(ns nerchuko.utils
+  "General Clojure utilities. These are used pretty heavily within
+the nerchuko code itself and might prove to be quite useful even
+for applications using nerchuko.")
 
 ;;;;;; miscellaneus utils
 
@@ -97,24 +100,28 @@ Returns a vector of vectors."
     (apply map f colls)))
 
 (defn map-on-firsts
-  "Takes a sequence of sequences (v1 v2 ...) and returns a lazy sequence of ((f v1) v2 ...). If a collection is given, calls seq on it."
+  "Takes a sequence of sequences (v1 v2 ...) and returns a lazy sequence of
+((f v1) (f v2) ...). If a collection is given, calls seq on it."
   [f seq]
   (map (fn [[v1 & vs]]
          (into [(f v1)] vs))
        seq))
 
 (defn map-on-lasts
-  "Takes a sequence of 2-item vectors [v1 v2] and returns a lazy sequence of [v1 (f v2)]. If a collection is given, calls seq on it."
+  "Takes a sequence of 2-item vectors [v1 v2] and returns a lazy sequence
+of [v1 (f v2)]. If a collection is given, calls seq on it."
   [f pair-seq]
   (map (fn [[v1 v2]] [v1 (f v2)]) pair-seq))
 
 (defn map-with-index
-  "Calls map on the collections after cons-ing (iterate inc 0) to them. So f will receive the index along with the items themselves."
+  "Calls map on the collections after cons-ing (iterate inc 0) to them.
+So f will receive the index along with the items themselves."
   [f & colls]
   (apply map f (cons (iterate inc 0) colls)))
 
 (defn map-with-index-on
-  "Calls map on the collections after cons-ing (iterate inc 0) to them. So f will receive the index along with the items themselves."
+  "Calls map on the collections after cons-ing (iterate inc 0) to them.
+So f will receive the index along with the items themselves."
   [& colls-and-f]
   (apply map-on (cons (iterate inc 0) colls-and-f)))
 

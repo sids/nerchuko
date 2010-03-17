@@ -1,4 +1,6 @@
 (ns nerchuko.classification
+  "This namespace provides the primary functions for accessing
+nerchuko's classification capabilities."
   (:use nerchuko.utils)
   (:require nerchuko.classification.naive-bayes.multinomial)
   (:use [clojure.contrib.def :only (defvar)]
@@ -12,27 +14,44 @@
     c
     (str "nerchuko.classification." (as-str c))))
 
-(defn learn-model [training-dataset]
+(defn learn-model
+  "Uses the classifier implementation set to *classifier* to learn from
+the training-dataset and generate a model. Returns the model.
+
+training-dataset must be a sequence of training examples each of which
+must be a 2-item vector of the document and the corresponding class.
+Each document should be a map with the features as the keys and the
+'quantity' of those features as the values."
+  [training-dataset]
   (call (resolve-classifier *classifier*)
         'learn-model
         [training-dataset]))
 
-(defn scores [model doc]
+(defn scores
+  "Classifies doc using model and returns the scores for each class as a map."
+  [model doc]
   (call (resolve-classifier *classifier*)
         'scores
         [model doc]))
 
-(defn classify [model doc]
+(defn classify
+  "Classifies doc using model and returns the class with the maximum score."
+  [model doc]
   (call (resolve-classifier *classifier*)
         'classify
         [model doc]))
 
-(defn save-model [file model]
+(defn save-model
+  "Saves model to file."
+  [file model]
   (binding [*print-dup* true]
     (spit file
           (pr-str model))))
 
-(defn get-confusion-matrix [model test-dataset]
+(defn get-confusion-matrix
+  "Generates a confusion matrix by classifying every document in test-dataset
+using model."
+  [model test-dataset]
   (let [empty-matrix (reduce (fn [h class]
                                (assoc h class {}))
                              {}
@@ -43,7 +62,10 @@
          (reduce (partial merge-with merge-with-+))
          (merge empty-matrix))))
 
-(defn merge-confusion-matrices [& matrices]
+(defn merge-confusion-matrices
+  "Merges together any number of confusion matrices by adding together the
+corresponding values."
+  [& matrices]
   (reduce (partial merge-with merge-with-+) matrices))
 
 (declare print-confusion-matrix)
@@ -105,7 +127,9 @@
        str
        .length))
 
-(defn print-confusion-matrix [matrix]
+(defn print-confusion-matrix
+  "Pretty prints a confusion matrix."
+  [matrix]
   (let [total (get-total-docs matrix)
         correct (get-total-correct-classifications matrix)
         accuracy (if-not (zero? total) (* 100.0 (/ correct total)))]
