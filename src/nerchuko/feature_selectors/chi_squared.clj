@@ -1,4 +1,4 @@
-(ns nerchuko.feature-selection.chi-squared
+(ns nerchuko.feature-selectors.chi-squared
   (:use nerchuko.utils)
   (:use clojure.contrib.generic.math-functions
         clojure.contrib.generic.functor))

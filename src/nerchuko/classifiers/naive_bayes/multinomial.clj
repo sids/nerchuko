@@ -1,4 +1,4 @@
-(ns nerchuko.classification.naive-bayes.multinomial
+(ns nerchuko.classifiers.naive-bayes.multinomial
   "An implementation of the Naive Bayes classification technique,
 using the multinomial model for counting the features."
   (:use nerchuko.utils)

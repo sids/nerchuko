@@ -1,11 +1,12 @@
-(ns nerchuko.feature-selection.document-frequency
+(ns nerchuko.feature-selectors.collection-frequency
   (:use nerchuko.utils)
   (:use clojure.contrib.generic.functor))
 
 (defn select
   "Returns a set of the top k most frequently occurring features.
-Even if a feature occurs multiple times in a document, it is counted
-only as a single occurrence."  [k training-dataset]
+Multiple occurrences of a feature in a document are counted
+multiple times."
+  [k training-dataset]
   (->> training-dataset
        firsts
        (reduce merge-with-+)

@@ -2,17 +2,17 @@
   "This namespace provides the primary functions for accessing
 nerchuko's classification capabilities."
   (:use nerchuko.utils)
-  (:require nerchuko.classification.naive-bayes.multinomial)
+  (:require nerchuko.classifiers.naive-bayes.multinomial)
   (:use [clojure.contrib.def :only (defvar)]
         [clojure.contrib.duck-streams :only (spit)])
   (:require [clojure.contrib.str-utils2 :as str-utils2]))
 
-(defvar *classifier* 'nerchuko.classification.naive-bayes.multinomial)
+(defvar *classifier* 'nerchuko.classifiers.naive-bayes.multinomial)
 
 (defn- resolve-classifier [c]
-  (if (.startsWith (as-str c) "nerchuko.classification.")
+  (if (.startsWith (as-str c) "nerchuko.classifiers.")
     c
-    (str "nerchuko.classification." (as-str c))))
+    (str "nerchuko.classifiers." (as-str c))))
 
 (defn learn-model
   "Uses the classifier implementation set to *classifier* to learn from

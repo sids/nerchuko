@@ -2,17 +2,17 @@
   "This namespace provides the primary functions for accessing
 nerchuko's feature selection capabilities."
   (:use nerchuko.utils)
-  (:require nerchuko.feature-selection.chi-squared
-            nerchuko.feature-selection.document-frequency
-            nerchuko.feature-selection.collection-frequency)
+  (:require nerchuko.feature-selectors.chi-squared
+            nerchuko.feature-selectors.document-frequency
+            nerchuko.feature-selectors.collection-frequency)
   (:use [clojure.contrib.def :only (defvar)]))
 
-(defvar *feature-selector* 'nerchuko.feature-selection.chi-squared)
+(defvar *feature-selector* 'nerchuko.feature-selectors.chi-squared)
 
 (defn- resolve-feature-selector [c]
-  (if (.startsWith (as-str c) "nerchuko.feature-selection.")
+  (if (.startsWith (as-str c) "nerchuko.feature-selectors.")
     c
-    (str "nerchuko.feature-selection." (as-str c))))
+    (str "nerchuko.feature-selectors." (as-str c))))
 
 (defn select
   "Return a set of the _best_ k features from the training-dataset.
