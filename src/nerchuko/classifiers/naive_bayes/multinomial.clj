@@ -1,7 +1,8 @@
 (ns nerchuko.classifiers.naive-bayes.multinomial
   "An implementation of the Naive Bayes classification technique,
 using the multinomial model for counting the features."
-  (:use nerchuko.utils)
+  (:use nerchuko.utils
+        nerchuko.helpers)
   (:use [clojure.set :only (intersection)]
         clojure.contrib.generic.math-functions
         clojure.contrib.generic.functor))
@@ -46,13 +47,15 @@ The model is a map with the following keys:
         docs-total (reduce + (vals classes-counts))
         features-total (count features)
         features-0s (fmap dec (counts features))]
-    {:classes classes
-     :features features
-     :priors (fmap #(/ % docs-total) classes-counts)
-     :cond-probs (fmap (fn [feature-classes-counts]
-                         (conditional-probability (merge features-0s feature-classes-counts)
-                                                  features-total))
-                       features-classes-counts)}))
+    (struct-map model
+      :classifier 'nerchuko.classifiers.naive-bayes.multinomial
+      :classes classes
+      :features features
+      :priors (fmap #(/ % docs-total) classes-counts)
+      :cond-probs (fmap (fn [feature-classes-counts]
+                          (conditional-probability (merge features-0s feature-classes-counts)
+                                                   features-total))
+                        features-classes-counts))))
 
 (defn- log-likelihood
   "Given a doc and the conditional probabilities of the features for a class,

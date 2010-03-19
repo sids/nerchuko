@@ -14,28 +14,28 @@
                     training-data))
 
 (deftest feature-selection-document-frequency
-  (binding [*feature-selector* "document-frequency"]
-    (is (= (select 1 training-dataset)
-           #{:chinese}))
-    (is (= (select 2 training-dataset)
-           #{:shanghai :chinese}))
-    (is (= (select 4 training-dataset)
-           #{:shanghai :tokyo :macao :chinese}))))
+  (are [k features] (= (select 'nerchuko.feature-selectors.document-frequency
+                               k
+                               training-dataset)
+                       features)
+       1 #{:chinese}
+       2 #{:shanghai :chinese}
+       4 #{:shanghai :tokyo :macao :chinese}))
 
 (deftest feature-selection-collection-frequency
-  (binding [*feature-selector* "collection-frequency"]
-    (is (= (select 1 training-dataset)
-           #{:chinese}))
-    (is (= (select 2 training-dataset)
-           #{:shanghai :chinese}))
-    (is (= (select 4 training-dataset)
-           #{:shanghai :tokyo :macao :chinese}))))
+  (are [k features] (= (select 'nerchuko.feature-selectors.collection-frequency
+                               k
+                               training-dataset)
+                       features)
+       1 #{:chinese}
+       2 #{:shanghai :chinese}
+       4 #{:shanghai :tokyo :macao :chinese}))
 
 (deftest feature-selection-chi-squared
-  (binding [*feature-selector* "chi-squared"]
-    (is (= (select 1 training-dataset)
-           #{:tokyo}))
-    (is (= (select 2 training-dataset)
-           #{:tokyo :japan}))
-    (is (= (select 4 training-dataset)
-           #{:shanghai :tokyo :beijing :japan}))))
+  (are [k features] (= (select 'nerchuko.feature-selectors.chi-squared
+                               k
+                               training-dataset)
+                       features)
+       1 #{:tokyo}
+       2 #{:tokyo :japan}
+       4 #{:shanghai :tokyo :beijing :japan}))

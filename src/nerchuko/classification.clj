@@ -3,16 +3,8 @@
 nerchuko's classification capabilities."
   (:use nerchuko.utils)
   (:require nerchuko.classifiers.naive-bayes.multinomial)
-  (:use [clojure.contrib.def :only (defvar)]
-        [clojure.contrib.duck-streams :only (spit)])
+  (:use [clojure.contrib.duck-streams :only (spit)])
   (:require [clojure.contrib.str-utils2 :as str-utils2]))
-
-(defvar *classifier* 'nerchuko.classifiers.naive-bayes.multinomial)
-
-(defn- resolve-classifier [c]
-  (if (.startsWith (as-str c) "nerchuko.classifiers.")
-    c
-    (str "nerchuko.classifiers." (as-str c))))
 
 (defn learn-model
   "Uses the classifier implementation set to *classifier* to learn from
@@ -22,22 +14,22 @@ training-dataset must be a sequence of training examples each of which
 must be a 2-item vector of the document and the corresponding class.
 Each document should be a map with the features as the keys and the
 'quantity' of those features as the values."
-  [training-dataset]
-  (call (resolve-classifier *classifier*)
+  [classifier training-dataset]
+  (call classifier
         'learn-model
         [training-dataset]))
 
 (defn scores
   "Classifies doc using model and returns the scores for each class as a map."
   [model doc]
-  (call (resolve-classifier *classifier*)
+  (call (:classifier model)
         'scores
         [model doc]))
 
 (defn classify
   "Classifies doc using model and returns the class with the maximum score."
   [model doc]
-  (call (resolve-classifier *classifier*)
+  (call (:classifier model)
         'classify
         [model doc]))
 

@@ -24,28 +24,28 @@
                     training-data))
 
 (deftest feature-selection-document-frequency
-  (binding [*feature-selector* "document-frequency"]
-    (is (= (select 1 training-dataset)
-           #{:weak}))
-    (is (= (select 2 training-dataset)
-           #{:weak :normal}))
-    (is (= (select 4 training-dataset)
-           #{:strong :weak :normal :high}))))
+  (are [k features] (= (select 'nerchuko.feature-selectors.document-frequency
+                               k
+                               training-dataset)
+                       features)
+       1 #{:weak}
+       2 #{:weak :normal}
+       4 #{:strong :weak :normal :high}))
 
 (deftest feature-selection-collection-frequency
-  (binding [*feature-selector* "collection-frequency"]
-    (is (= (select 1 training-dataset)
-           #{:weak}))
-    (is (= (select 2 training-dataset)
-           #{:weak :normal}))
-    (is (= (select 4 training-dataset)
-           #{:strong :weak :normal :high}))))
+  (are [k features] (= (select 'nerchuko.feature-selectors.collection-frequency
+                               k
+                               training-dataset)
+                       features)
+       1 #{:weak}
+       2 #{:weak :normal}
+       4 #{:strong :weak :normal :high}))
 
 (deftest feature-selection-chi-squared
-  (binding [*feature-selector* "chi-squared"]
-    (is (= (select 1 training-dataset)
-           #{:overcast}))
-    (is (= (select 2 training-dataset)
-           #{:overcast :normal}))
-    (is (= (select 4 training-dataset)
-           #{:sunny :overcast :normal :high}))))
+  (are [k features] (= (select 'nerchuko.feature-selectors.chi-squared
+                               k
+                               training-dataset)
+                       features)
+       1 #{:overcast}
+       2 #{:overcast :normal}
+       4 #{:sunny :overcast :normal :high}))
