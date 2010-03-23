@@ -3,7 +3,6 @@
 nerchuko's classification capabilities."
   (:use nerchuko.utils)
   (:require nerchuko.classifiers.naive-bayes.multinomial)
-  (:use [clojure.contrib.duck-streams :only (spit)])
   (:require [clojure.contrib.str-utils2 :as str-utils2]))
 
 (defn learn-model
@@ -32,13 +31,6 @@ Each document should be a map with the features as the keys and the
   (call (:classifier model)
         'classify
         [model doc]))
-
-(defn save-model
-  "Saves model to file."
-  [file model]
-  (binding [*print-dup* true]
-    (spit file
-          (pr-str model))))
 
 (defn get-confusion-matrix
   "Generates a confusion matrix by classifying every document in test-dataset
