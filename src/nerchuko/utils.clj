@@ -37,8 +37,10 @@ by dividing each with their total sum. Returns a seq."
   "Returns a map with the items of coll as keys and the number
 of occurrences of the item in coll as the corresponding values."
   [coll]
-  (reduce merge-with-+
-          (map #(hash-map % 1) coll)))
+  (if (seq coll)
+    (reduce merge-with-+
+            (map #(hash-map % 1) coll))
+    {}))
 
 (defn to-seq
   "Returns a seq.
