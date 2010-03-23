@@ -3,7 +3,7 @@
   :url "http://github.com/sids/nerchuko"
   :namespaces [nerchuko.classification
                nerchuko.feature-selection
-               nerchuko.text-utils
+               nerchuko.utils
                nerchuko.helpers]
   :dependencies [[org.clojure/clojure "1.1.0-master-SNAPSHOT"]
                  [org.clojure/clojure-contrib "1.0-SNAPSHOT"]
