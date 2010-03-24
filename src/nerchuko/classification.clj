@@ -54,7 +54,7 @@ corresponding values."
 
 (declare print-confusion-matrix)
 
-(defn cross-validate [partitions]
+(defn cross-validate [classifier partitions]
   (let [confusion-matrices
         (doall
          (map-with-index-on partitions
@@ -62,7 +62,7 @@ corresponding values."
              (println "\nTrial" (inc idx) (str-utils2/repeat "=" 32) "\n")
              (let [training-dataset (apply concat (concat (take idx partitions)
                                                           (rest (drop idx partitions))))
-                   model (learn-model training-dataset)]
+                   model (learn-model classifier training-dataset)]
                (->> test-dataset
                     (get-confusion-matrix model)
                     print-confusion-matrix)))))]
