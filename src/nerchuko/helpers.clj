@@ -10,7 +10,7 @@ as converting documents to the necessary format etc."
   [file model]
   (binding [*print-dup* true]
     (spit file
-          (pr-str model))))
+          (pr-str (merge {} model)))))
 
 (defn load-model
   "Load model from a file."
