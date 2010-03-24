@@ -2,7 +2,7 @@
   "Functions that help with various auxiliary tasks such
 as converting documents to the necessary format etc."
   (:use nerchuko.utils
-        clj.text.tokenization)
+        clj-text.tokenization)
   (:use [clojure.contrib.duck-streams :only (spit)]))
 
 (defn save-model
