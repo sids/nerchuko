@@ -3,6 +3,7 @@
 nerchuko's classification capabilities."
   (:use nerchuko.utils)
   (:require nerchuko.classifiers.naive-bayes.multinomial)
+  (:use [clojure.contrib.def :only (defnk)])
   (:require [clojure.contrib.str-utils2 :as str-utils2]))
 
 (defn learn-model
@@ -54,22 +55,43 @@ corresponding values."
 
 (declare print-confusion-matrix)
 
-(defn cross-validate [classifier partitions]
-  (let [confusion-matrices
-        (doall
-         (map-with-index-on partitions
-           (fn [idx test-dataset]
-             (println "\nTrial" (inc idx) (str-utils2/repeat "=" 32) "\n")
-             (let [training-dataset (apply concat (concat (take idx partitions)
-                                                          (rest (drop idx partitions))))
-                   model (learn-model classifier training-dataset)]
-               (->> test-dataset
-                    (get-confusion-matrix model)
-                    print-confusion-matrix)))))]
-    (println "\nSummary" (str-utils2/repeat "=" 32) "\n")
-    (->> confusion-matrices
-         (reduce merge-confusion-matrices)
-         print-confusion-matrix)))
+(defnk get-confusion-matrices [classifier n training-dataset :print? true]
+  (let [folds (partition-random n
+                                training-dataset)]
+    (doall
+     (map-with-index-on folds
+       (fn [idx test-dataset]
+         (let [training-dataset (apply concat
+                                       (concat (take idx folds)
+                                               (rest (drop idx folds))))
+               model            (learn-model classifier
+                                             training-dataset)
+               confusion-matrix (get-confusion-matrix model
+                                                      test-dataset)]
+           (if print?
+             (do
+               (println "\nTrial" (inc idx) (str-utils2/repeat "=" 32) "\n")
+               (print-confusion-matrix confusion-matrix)))
+           confusion-matrix))))))
+
+(defnk cross-validate
+  "Performs n-fold cross-validation of training-dataset using
+classifier. Takes an optional boolean argument :print?; if
+true (default is true), prints the confusion matrices of each trial as
+well as a summary confusion matrix. The summary confusion matrix is
+obtained by adding together the confusion matrices from the
+trials. Returns the summary confusion matrix."
+  [classifier n training-dataset :print? true]
+  (let [confusion-matrices (get-confusion-matrices classifier n
+                                                   training-dataset
+                                                   :print? print?)
+        summary-matrix     (apply merge-confusion-matrices
+                                  confusion-matrices)]
+    (if print?
+      (do
+        (println "\nSummary" (str-utils2/repeat "=" 32) "\n")
+        (print-confusion-matrix summary-matrix)))
+    summary-matrix))
 
 (defn- get-total-docs [matrix]
   (->> matrix
