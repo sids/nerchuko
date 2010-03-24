@@ -4,14 +4,10 @@
         nerchuko.helpers)
   (:use clojure.test))
 
-(def training-data [[[:chinese :beijing :chinese] :yes]
-                    [[:chinese :chinese :shanghai] :yes]
-                    [[:chinese :macao] :yes]
-                    [[:tokyo :japan :chinese] :no]])
-
-(def training-dataset
-     (map-on-firsts prepare-doc
-                    training-data))
+(def training-dataset [[[:chinese :beijing :chinese] :yes]
+                       [[:chinese :chinese :shanghai] :yes]
+                       [[:chinese :macao] :yes]
+                       [[:tokyo :japan :chinese] :no]])
 
 (deftest feature-selection-document-frequency
   (are [k features] (= (select 'nerchuko.feature-selectors.document-frequency
