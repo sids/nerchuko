@@ -1,0 +1,175 @@
+<html>
+  <head>
+    <title>classification API reference (Nerchuko)</title>
+    <link href="static/favicon.png" rel="icon" />
+    <link href="static/favicon.png" rel="shortcut icon" />
+    <link media="all" type="text/css" href="static/clojure.css" rel="stylesheet" />
+    <link media="all" type="text/css" href="static/wiki.css" rel="stylesheet" />
+    <link media="all" type="text/css" href="static/internal.css" rel="stylesheet" />
+    <!-- TODO: are we using these (from clojure.org)? If so, add the files -->
+    <script src="file/view/code_highlighter.js" type="text/javascript"></script>
+    <script src="file/view/clojure.js" type="text/javascript"></script>
+    <style>.menuWrapper{height: 36px;}</style>
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" href="http://www.wikispaces.com/_/2009051601/s/internal_ie.css" type="text/css" />
+    <![endif]-->
+  </head>
+<!--
+This document was auto-generated from the source by the clojure autodoc system.
+To report errors or ask questions about the overall documentation structure, formatting,
+etc., contact Tom Faulhaber (google mail name: tomfaulhaber).
+For errors in the documentation of a particular namespace, contact the author of that
+namespace.
+-->
+  <body>
+    <div id="AllContentContainer">
+      <div id="Header">
+	<a id="Logo" href="index.html"><img alt="Clojure" height="100" width="100" src="static/clojure-icon.gif" /></a>
+	<h1><a title="page header title" id="page-header" href="index.html">Nerchuko API Documentation</a></h1>
+      </div>
+      <div id="leftcolumn"><div style="text-align: center;"></div>
+<div class="menu">
+  <div class="WikiCustomNav WikiElement wiki">
+    <a class="wiki_link" href="index.html">Overview</a><br />
+    <a class="wiki_link" href="api-index.html">API Index</a><br />
+    <a class="wiki_link" href="#">Namespaces:</a>
+    <ul id="left-sidebar-list">
+      <li><a href="classification-api.html" class="wiki_link">classification</a></li><li><a href="classifiers.naive-bayes.multinomial-api.html" class="wiki_link">classifiers.naive-bayes.multinomial</a></li><li><a href="feature-selection-api.html" class="wiki_link">feature-selection</a></li><li><a href="feature-selectors.chi-squared-api.html" class="wiki_link">feature-selectors.chi-squared</a></li><li><a href="feature-selectors.collection-frequency-api.html" class="wiki_link">feature-selectors.collection-frequency</a></li><li><a href="feature-selectors.document-frequency-api.html" class="wiki_link">feature-selectors.document-frequency</a></li><li><a href="helpers-api.html" class="wiki_link">helpers</a></li><li><a href="utils-api.html" class="wiki_link">utils</a></li>
+    </ul>
+  </div>
+</div>
+</div>
+      <div id="rightcolumn">
+	<div id="Content">
+	  <div class="contentBox"><div class="innerContentBox">
+              <div id="content_view" class="wiki wikiPage">
+                <div id="right-sidebar"><div id="toc">
+  <h1 class="nopad">Table of Contents</h1>
+  <div style="margin-left: 1em;" class="toc-section">
+    <a href="#toc0">Overview</a>
+    <div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.classification/classify">classify</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.classification/cross-validate">cross-validate</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.classification/get-confusion-matrix">get-confusion-matrix</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.classification/learn-model">learn-model</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.classification/merge-confusion-matrices">merge-confusion-matrices</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.classification/print-confusion-matrix">print-confusion-matrix</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.classification/scores">scores</a>
+    </div>
+    <br />
+  </div>
+</div>
+</div>
+                <div id="content-tag"><h1 id="overview">API for <span id="namespace-name">classification</span></h1>
+by <span id="author">Unknown</span><br />
+<br />Usage:
+<pre>
+(ns your-namespace
+  (:require <span id="long-name">nerchuko.classification</span>))
+</pre><pre>
+</pre><h2>Overview</h2>
+<pre id="namespace-docstr">This namespace provides the primary functions for accessing
+nerchuko's classification capabilities.</pre>
+<br />
+<h2>Public Variables and Functions</h2>
+<div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.classification/classify">classify</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (classify model doc)
+</pre>
+  <pre id="var-docstr">Classifies doc using model and returns the class with the maximum score.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/c60012ce0d92a06826f4630cffd5be950fb2f33a/src/nerchuko/classification.clj#L29" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.classification/cross-validate">cross-validate</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (cross-validate classifier n training-dataset &amp; options__538__auto__)
+</pre>
+  <pre id="var-docstr">Performs n-fold cross-validation of training-dataset using
+classifier. Takes an optional boolean argument :print?; if
+true (default is true), prints the confusion matrices of each trial as
+well as a summary confusion matrix. The summary confusion matrix is
+obtained by adding together the confusion matrices from the
+trials. Returns the summary confusion matrix.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/c60012ce0d92a06826f4630cffd5be950fb2f33a/src/nerchuko/classification.clj#L77" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.classification/get-confusion-matrix">get-confusion-matrix</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (get-confusion-matrix model test-dataset)
+</pre>
+  <pre id="var-docstr">Generates a confusion matrix by classifying every document in test-dataset
+using model.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/c60012ce0d92a06826f4630cffd5be950fb2f33a/src/nerchuko/classification.clj#L36" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.classification/learn-model">learn-model</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (learn-model classifier training-dataset)
+</pre>
+  <pre id="var-docstr">Uses the classifier implementation set to *classifier* to learn from
+the training-dataset and generate a model. Returns the model.
+
+training-dataset must be a sequence of training examples each of which
+must be a 2-item vector of the document and the corresponding class.
+Each document should be a map with the features as the keys and the
+'quantity' of those features as the values.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/c60012ce0d92a06826f4630cffd5be950fb2f33a/src/nerchuko/classification.clj#L9" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.classification/merge-confusion-matrices">merge-confusion-matrices</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (merge-confusion-matrices &amp; matrices)
+</pre>
+  <pre id="var-docstr">Merges together any number of confusion matrices by adding together the
+corresponding values.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/c60012ce0d92a06826f4630cffd5be950fb2f33a/src/nerchuko/classification.clj#L50" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.classification/print-confusion-matrix">print-confusion-matrix</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (print-confusion-matrix matrix)
+</pre>
+  <pre id="var-docstr">Pretty prints a confusion matrix.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/c60012ce0d92a06826f4630cffd5be950fb2f33a/src/nerchuko/classification.clj#L136" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.classification/scores">scores</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (scores model doc)
+</pre>
+  <pre id="var-docstr">Classifies doc using model and returns the scores for each class as a map.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/c60012ce0d92a06826f4630cffd5be950fb2f33a/src/nerchuko/classification.clj#L22" id="var-source">Source</a>
+</div>
+
+
+</div>
+              </div>
+            </div>
+          </div>
+	</div>
+	<div id="foot">
+	  <div style="text-align: center;" id="copyright">Copyright 2010 Siddhartha Reddy</div>
+	</div>
+      </div>
+      <div id="DesignedBy">Logo &amp; site design by <a title="Visit Tom Hickey's website." href="http://www.tomhickey.com">Tom Hickey</a>.<br />
+      Clojure auto-documentation system by Tom Faulhaber.</div>
+    </div>
+    <!-- /AllContentContainer -->
+  </body>
+
+</html>

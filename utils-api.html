@@ -1,0 +1,277 @@
+<html>
+  <head>
+    <title>utils API reference (Nerchuko)</title>
+    <link href="static/favicon.png" rel="icon" />
+    <link href="static/favicon.png" rel="shortcut icon" />
+    <link media="all" type="text/css" href="static/clojure.css" rel="stylesheet" />
+    <link media="all" type="text/css" href="static/wiki.css" rel="stylesheet" />
+    <link media="all" type="text/css" href="static/internal.css" rel="stylesheet" />
+    <!-- TODO: are we using these (from clojure.org)? If so, add the files -->
+    <script src="file/view/code_highlighter.js" type="text/javascript"></script>
+    <script src="file/view/clojure.js" type="text/javascript"></script>
+    <style>.menuWrapper{height: 36px;}</style>
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" href="http://www.wikispaces.com/_/2009051601/s/internal_ie.css" type="text/css" />
+    <![endif]-->
+  </head>
+<!--
+This document was auto-generated from the source by the clojure autodoc system.
+To report errors or ask questions about the overall documentation structure, formatting,
+etc., contact Tom Faulhaber (google mail name: tomfaulhaber).
+For errors in the documentation of a particular namespace, contact the author of that
+namespace.
+-->
+  <body>
+    <div id="AllContentContainer">
+      <div id="Header">
+	<a id="Logo" href="index.html"><img alt="Clojure" height="100" width="100" src="static/clojure-icon.gif" /></a>
+	<h1><a title="page header title" id="page-header" href="index.html">Nerchuko API Documentation</a></h1>
+      </div>
+      <div id="leftcolumn"><div style="text-align: center;"></div>
+<div class="menu">
+  <div class="WikiCustomNav WikiElement wiki">
+    <a class="wiki_link" href="index.html">Overview</a><br />
+    <a class="wiki_link" href="api-index.html">API Index</a><br />
+    <a class="wiki_link" href="#">Namespaces:</a>
+    <ul id="left-sidebar-list">
+      <li><a href="classification-api.html" class="wiki_link">classification</a></li><li><a href="classifiers.naive-bayes.multinomial-api.html" class="wiki_link">classifiers.naive-bayes.multinomial</a></li><li><a href="feature-selection-api.html" class="wiki_link">feature-selection</a></li><li><a href="feature-selectors.chi-squared-api.html" class="wiki_link">feature-selectors.chi-squared</a></li><li><a href="feature-selectors.collection-frequency-api.html" class="wiki_link">feature-selectors.collection-frequency</a></li><li><a href="feature-selectors.document-frequency-api.html" class="wiki_link">feature-selectors.document-frequency</a></li><li><a href="helpers-api.html" class="wiki_link">helpers</a></li><li><a href="utils-api.html" class="wiki_link">utils</a></li>
+    </ul>
+  </div>
+</div>
+</div>
+      <div id="rightcolumn">
+	<div id="Content">
+	  <div class="contentBox"><div class="innerContentBox">
+              <div id="content_view" class="wiki wikiPage">
+                <div id="right-sidebar"><div id="toc">
+  <h1 class="nopad">Table of Contents</h1>
+  <div style="margin-left: 1em;" class="toc-section">
+    <a href="#toc0">Overview</a>
+    <div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/as-str">as-str</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/call">call</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/counts">counts</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/flatten-map">flatten-map</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/key-with-max-val">key-with-max-val</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/largest-n-by-vals">largest-n-by-vals</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/map-on">map-on</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/map-on-firsts">map-on-firsts</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/map-on-lasts">map-on-lasts</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/map-with-index">map-with-index</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/map-with-index-on">map-with-index-on</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/merge-with-+">merge-with-+</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/pairs">pairs</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/partition-random">partition-random</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/to-probabilities">to-probabilities</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/to-seq">to-seq</a>
+    </div>
+    <br />
+  </div>
+</div>
+</div>
+                <div id="content-tag"><h1 id="overview">API for <span id="namespace-name">utils</span></h1>
+by <span id="author">Unknown</span><br />
+<br />Usage:
+<pre>
+(ns your-namespace
+  (:require <span id="long-name">nerchuko.utils</span>))
+</pre><pre>
+</pre><h2>Overview</h2>
+<pre id="namespace-docstr"></pre>
+<br />
+<h2>Public Variables and Functions</h2>
+<div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/as-str">as-str</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (as-str x)
+</pre>
+  <pre id="var-docstr">If x is a Keyword or a Symbol, returns (name x),
+otherwise returns (.toString x).</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L8" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/call">call</h2>
+  <span id="var-type">macro</span><br />
+  <pre id="var-usage">Usage: (call ns f)
+       (call ns f args)
+</pre>
+  <pre id="var-docstr">Macro that expands to a call to function f in the given namespace.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L16" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/counts">counts</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (counts coll)
+</pre>
+  <pre id="var-docstr">Returns a map with the items of coll as keys and the number
+of occurrences of the item in coll as the corresponding values.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L36" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/flatten-map">flatten-map</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (flatten-map m)
+</pre>
+  <pre id="var-docstr">'Flattens' the map into a seq.
+Each key contributes one of more elements to the seq. The elements
+corresponding to any given key are obtained by calling pairs on
+the to-seq of its value.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L60" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/key-with-max-val">key-with-max-val</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (key-with-max-val map &amp; [on-all-equal])
+</pre>
+  <pre id="var-docstr">Returns the key which has the max value.
+Returns on-all-equal if all the values are equal.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L132" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/largest-n-by-vals">largest-n-by-vals</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (largest-n-by-vals n map)
+</pre>
+  <pre id="var-docstr">Returns a subset of map containing the n largest entries
+as determined by comparing the vals.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L143" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/map-on">map-on</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (map-on &amp; colls-and-f)
+</pre>
+  <pre id="var-docstr">A map that accepts the mapping function as the last argument instead of the first.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L94" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/map-on-firsts">map-on-firsts</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (map-on-firsts f seq)
+</pre>
+  <pre id="var-docstr">Takes a sequence of sequences (v1 v2 ...) and returns a lazy sequence of
+((f v1) (f v2) ...). If a collection is given, calls seq on it.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L104" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/map-on-lasts">map-on-lasts</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (map-on-lasts f pair-seq)
+</pre>
+  <pre id="var-docstr">Takes a sequence of 2-item vectors [v1 v2] and returns a lazy sequence
+of [v1 (f v2)]. If a collection is given, calls seq on it.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L112" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/map-with-index">map-with-index</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (map-with-index f &amp; colls)
+</pre>
+  <pre id="var-docstr">Calls map on the collections after cons-ing (iterate inc 0) to them.
+So f will receive the index along with the items themselves.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L118" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/map-with-index-on">map-with-index-on</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (map-with-index-on &amp; colls-and-f)
+</pre>
+  <pre id="var-docstr">Calls map on the collections after cons-ing (iterate inc 0) to them.
+So f will receive the index along with the items themselves.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L124" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/merge-with-+">merge-with-+</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (merge-with-+ &amp; maps)
+</pre>
+  <pre id="var-docstr">Calls merge-with on maps with + as the function.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L83" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/pairs">pairs</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (pairs key vals)
+</pre>
+  <pre id="var-docstr">Returns a hash-map of vectors where each vector is a pairing of key
+with a value from vals.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L54" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/partition-random">partition-random</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (partition-random n coll)
+</pre>
+  <pre id="var-docstr">Randomly divides the items in coll into n partitions.
+Returns a vector of vectors.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L70" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/to-probabilities">to-probabilities</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (to-probabilities coll)
+</pre>
+  <pre id="var-docstr">Given a coll of numbers, converts them to probabilities
+by dividing each with their total sum. Returns a seq.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L23" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/to-seq">to-seq</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (to-seq v)
+</pre>
+  <pre id="var-docstr">Returns a seq.
+If v implements Sequential, simply calls seq on it.
+Otherwise returns a seq containing v as the only element.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L45" id="var-source">Source</a>
+</div>
+
+
+</div>
+              </div>
+            </div>
+          </div>
+	</div>
+	<div id="foot">
+	  <div style="text-align: center;" id="copyright">Copyright 2010 Siddhartha Reddy</div>
+	</div>
+      </div>
+      <div id="DesignedBy">Logo &amp; site design by <a title="Visit Tom Hickey's website." href="http://www.tomhickey.com">Tom Hickey</a>.<br />
+      Clojure auto-documentation system by Tom Faulhaber.</div>
+    </div>
+    <!-- /AllContentContainer -->
+  </body>
+
+</html>
