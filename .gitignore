@@ -4,3 +4,5 @@ nerchuko.jar
 lib
 classes
 src/test
+autodoc/**
+pom.xml
