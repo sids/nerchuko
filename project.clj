@@ -1,4 +1,4 @@
-(defproject nerchuko "0.1.7"
+(defproject nerchuko "0.1.8"
   :description "Machine Learning in Clojure."
   :url "http://github.com/sids/nerchuko"
   :namespaces [nerchuko.classification

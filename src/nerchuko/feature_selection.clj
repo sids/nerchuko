@@ -28,5 +28,6 @@ training-dataset. The modified training-dataset is returned."
      (let [features (select feature-selector
                             k
                             dataset-for-select)]
-       (map-on-firsts #(select-keys % features)
-                      (prepare-dataset dataset-to-filter)))))
+       (with-meta (map-on-firsts #(select-keys % features)
+                                 (prepare-dataset dataset-to-filter))
+         {:prepared true}))))
