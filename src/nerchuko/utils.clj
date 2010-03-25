@@ -64,6 +64,7 @@ corresponding to any given key are obtained by calling pairs on
 the to-seq of its value."
   [m]
   (reduce into
+          []
           (map (fn [[k v]] (pairs k (to-seq v)))
                m)))
 
