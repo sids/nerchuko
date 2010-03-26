@@ -20,17 +20,16 @@
                        [#{:rain :mild :high :strong} :no]])
 
 (deftest naive-bayes
-  (let [training-dataset (map-on-firsts prepare-doc
-                                        training-dataset)
-        model (learn-model 'nerchuko.classifiers.naive-bayes.multinomial
-                           training-dataset)]
+  (let [model (->> training-dataset
+                   build-features-map-for-dataset
+                   (learn-model 'nerchuko.classifiers.naive-bayes.multinomial))]
     (is (= {:yes 0.3131320321244135, :no 0.6868679678755865}
            (scores model
-                   (prepare-doc
+                   (build-features-map
                     #{:sunny :hot :high :weak}))))
     (is (= :no
            (classify model
-                     (prepare-doc
+                     (build-features-map
                       #{:sunny :hot :high :weak}))))
     (is (= {:yes 9/14, :no 5/14}
            (scores model {})))

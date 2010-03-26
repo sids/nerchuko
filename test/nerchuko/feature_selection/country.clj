@@ -10,8 +10,7 @@
                     [[:tokyo :japan :chinese] :no]])
 
 (def training-dataset
-     (map-on-firsts prepare-doc
-                    training-data))
+     (build-features-map-for-dataset training-data))
 
 (deftest feature-selection-document-frequency
   (are [k features] (= (select 'nerchuko.feature-selectors.document-frequency

@@ -29,45 +29,47 @@ a classifier.
 
 (defmulti
   #^{:arglists '([doc])
-     :doc      "Returns a document that can be used as an
-input to the nerchuko classification/feature-selection functions.
-The returned doc is a map with the features as the keys and the
-number of occurrences of those features as the values.
-What the features are depends on what doc is to begin with:
+     :doc "Returns a features-map i.e. a map with features as keys and
+the number of occurrences of those features as the corresponding
+values. Most feature-selection and several of the classification
+algorithms require a features-map as the input.
 
-java.lang.String:
-    The string is tokenized (using clj.text.tokenization/tokenize)
-    and the tokens become the features. The number of times each
-    token occurs in the string is the corresponding value.
+Here is how different kind of docs get converted to a features-map:
 
-java.util.Collection (vectors, lists, sets etc.):
-    Each item in the seq is treated as a feature and the number of
-    occurrences of each token is the corresponding value.
+Strings: The string is tokenized (using
+    clj-text.tokenization/tokenize) and the tokens become the
+    features. The number of times each token occurs in the string is
+    the corresponding value.
 
-java.util.Map:
-    First, all the string vals are tokenized. Then
-    nerchuko.utils/flatten-map is called to obtain a seq.
-    prepare-doc is recursively called on this to get the final
-    return value.
-    But, if doc's metadata has the key :prepared set to true,
-    the doc is returned unmodified."}
-  prepare-doc class)
+Collections (vectors, lists, sets etc.): Each item in the seq is
+    treated as a feature and the number of occurrences of the item is
+    the corresponding value.
 
-(defmethod prepare-doc String [doc]
-  (prepare-doc (tokenize doc)))
+Maps: First, all the string vals are tokenized. Then
+    nerchuko.utils/flatten-map is called to obtain a
+    seq. build-features-map is recursively called on this to get the
+    final return value."}
+  build-features-map class)
 
-(defmethod prepare-doc java.util.Map [doc]
-  (if (:prepared (meta doc))
-    doc
-    (->> doc
-         (map (fn [[key val]]
-                (if (string? val)
-                  {key (tokenize val)}
-                  {key val})))
-         (reduce merge)
-         flatten-map
-         prepare-doc)))
+(defmethod build-features-map String [doc]
+  (build-features-map (tokenize doc)))
 
-(defmethod prepare-doc java.util.Collection [doc]
-  (with-meta (counts doc)
-    {:prepared true}))
+(defmethod build-features-map java.util.Map [doc]
+  (->> doc
+       (map (fn [[key val]]
+              (if (string? val)
+                {key (tokenize val)}
+                {key val})))
+       (reduce merge)
+       flatten-map
+       build-features-map))
+
+(defmethod build-features-map java.util.Collection [doc]
+  (counts doc))
+
+(defn build-features-map-for-dataset
+  "Calls build-features-map on every doc in the dataset returns a
+  dataset with the features-maps in place of the docs."
+  [dataset]
+  (map-on-firsts build-features-map
+                 dataset))
