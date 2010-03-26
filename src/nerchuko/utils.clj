@@ -44,16 +44,16 @@ of occurrences of the item in coll as the corresponding values."
 
 (defn to-seq
   "Returns a seq.
-If v implements Sequential, simply calls seq on it.
-Otherwise returns a seq containing v as the only element."
+If v implements Sequential, simply calls seq on it.  Otherwise returns
+a seq containing v as the only element."
   [v]
   (if (sequential? v)
     (seq v)
     (seq (list v))))
 
 (defn pairs
-  "Returns a hash-map of vectors where each vector is a pairing of key
-with a value from vals."
+  "Returns a seq of vectors where each vector is a pairing of key with
+a value from vals."
   [key vals]
   (map #(vector key %) vals))
 
@@ -92,27 +92,18 @@ Returns a vector of vectors."
 (defn lasts [coll]
   (map last coll))
 
-(defn map-on
-  "A map that accepts the mapping function as the last argument instead of the first."
-  [& colls-and-f]
-  (let [f (last colls-and-f)
-        colls (-> colls-and-f
-                  reverse
-                  rest
-                  reverse)]
-    (apply map f colls)))
-
 (defn map-on-firsts
-  "Takes a sequence of sequences (v1 v2 ...) and returns a lazy sequence of
-((f v1) (f v2) ...). If a collection is given, calls seq on it."
+  "Takes a sequence of sequences (v1 v2 ...) and returns a lazy
+  sequence of ((f v1) (f v2) ...). If a collection is given, calls seq
+  on it."
   [f seq]
   (map (fn [[v1 & vs]]
          (into [(f v1)] vs))
        seq))
 
 (defn map-on-lasts
-  "Takes a sequence of 2-item vectors [v1 v2] and returns a lazy sequence
-of [v1 (f v2)]. If a collection is given, calls seq on it."
+  "Takes a sequence of 2-item vectors [v1 v2] and returns a lazy
+  sequence of [v1 (f v2)]. If a collection is given, calls seq on it."
   [f pair-seq]
   (map (fn [[v1 v2]] [v1 (f v2)]) pair-seq))
 
@@ -121,12 +112,6 @@ of [v1 (f v2)]. If a collection is given, calls seq on it."
 So f will receive the index along with the items themselves."
   [f & colls]
   (apply map f (cons (iterate inc 0) colls)))
-
-(defn map-with-index-on
-  "Calls map on the collections after cons-ing (iterate inc 0) to them.
-So f will receive the index along with the items themselves."
-  [& colls-and-f]
-  (apply map-on (cons (iterate inc 0) colls-and-f)))
 
 ;;;;;; utils for selecting subsets of seqs
 

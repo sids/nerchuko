@@ -59,20 +59,21 @@ corresponding values."
   (let [folds (partition-random n
                                 training-dataset)]
     (doall
-     (map-with-index-on folds
-       (fn [idx test-dataset]
-         (let [training-dataset (apply concat
-                                       (concat (take idx folds)
-                                               (rest (drop idx folds))))
-               model            (learn-model classifier
-                                             training-dataset)
-               confusion-matrix (get-confusion-matrix model
-                                                      test-dataset)]
-           (if print?
-             (do
-               (println "\nTrial" (inc idx) (str-utils2/repeat "=" 32) "\n")
-               (print-confusion-matrix confusion-matrix)))
-           confusion-matrix))))))
+     (->> folds
+          (map-with-index
+            (fn [idx test-dataset]
+              (let [training-dataset (apply concat
+                                            (concat (take idx folds)
+                                                    (rest (drop idx folds))))
+                    model            (learn-model classifier
+                                                  training-dataset)
+                    confusion-matrix (get-confusion-matrix model
+                                                           test-dataset)]
+                (if print?
+                  (do
+                    (println "\nTrial" (inc idx) (str-utils2/repeat "=" 32) "\n")
+                    (print-confusion-matrix confusion-matrix)))
+                confusion-matrix)))))))
 
 (defnk cross-validate
   "Performs n-fold cross-validation of training-dataset using
@@ -162,25 +163,26 @@ trials. Returns the summary confusion matrix."
                                         ; header
     (println (format header-first-format "class")
              (reduce str
-                     (map-with-index-on classes
-                       (fn [index _]
-                         (format header-index-format (inc index)))))
+                     (map-with-index (fn [index _]
+                                       (format header-index-format (inc index)))
+                       classes))
              (format total-format "total")
              "correct"
              "\n")
 
                                         ; rows
-    (dorun (map-with-index-on classes
-             (fn [index class]
-               (let [row (get matrix class {})]
-                 (println (format index-format (inc index))
-                          (format class-name-format (as-str class))
-                          (reduce str
-                                  (map-on classes
-                                          (fn [class-2]
-                                            (format count-format (get row class-2 0)))))
-                          (let [total (reduce + 0 (vals row))]
-                            (str (format total-format total)
-                                 (if-not (zero? total)
-                                   (format " %5.2f%%" (* 100.0 (/ (get row class 0) total))))))))))))
+    (dorun (->> classes
+                (map-with-index
+                  (fn [index class]
+                    (let [row (get matrix class {})]
+                      (println (format index-format (inc index))
+                               (format class-name-format (as-str class))
+                               (reduce str
+                                       (map (fn [class-2]
+                                              (format count-format (get row class-2 0)))
+                                            classes))
+                               (let [total (reduce + 0 (vals row))]
+                                 (str (format total-format total)
+                                      (if-not (zero? total)
+                                        (format " %5.2f%%" (* 100.0 (/ (get row class 0) total)))))))))))))
   matrix)
