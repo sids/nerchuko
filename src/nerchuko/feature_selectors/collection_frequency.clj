@@ -2,7 +2,7 @@
   (:use nerchuko.utils)
   (:use clojure.contrib.generic.functor))
 
-(defn select
+(defn find-features
   "Returns a set of the top k most frequently occurring features.
 Multiple occurrences of a feature in a document are counted
 multiple times."

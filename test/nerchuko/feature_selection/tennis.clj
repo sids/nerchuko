@@ -23,28 +23,25 @@
      (build-features-map-for-dataset training-data))
 
 (deftest feature-selection-document-frequency
-  (are [k features] (= (select 'nerchuko.feature-selectors.document-frequency
-                               k
-                               training-dataset)
-                       features)
+  (are [k features] (= features
+                       (find-features 'nerchuko.feature-selectors.document-frequency
+                                      k training-dataset))
        1 #{:weak}
        2 #{:weak :normal}
        4 #{:strong :weak :normal :high}))
 
 (deftest feature-selection-collection-frequency
-  (are [k features] (= (select 'nerchuko.feature-selectors.collection-frequency
-                               k
-                               training-dataset)
-                       features)
+  (are [k features] (= features
+                       (find-features 'nerchuko.feature-selectors.collection-frequency
+                               k training-dataset))
        1 #{:weak}
        2 #{:weak :normal}
        4 #{:strong :weak :normal :high}))
 
 (deftest feature-selection-chi-squared
-  (are [k features] (= (select 'nerchuko.feature-selectors.chi-squared
-                               k
-                               training-dataset)
-                       features)
+  (are [k features] (= features
+                       (find-features 'nerchuko.feature-selectors.chi-squared
+                                      k training-dataset))
        1 #{:overcast}
        2 #{:overcast :normal}
        4 #{:sunny :overcast :normal :high}))

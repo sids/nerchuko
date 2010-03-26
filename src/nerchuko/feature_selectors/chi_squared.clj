@@ -55,7 +55,7 @@
                                  classes-counts))})
                  features-counts))))
 
-(defn select [k training-dataset]
+(defn find-features [k training-dataset]
   (->> training-dataset
        aggregate
        features-chi-squareds

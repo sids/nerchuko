@@ -6,26 +6,28 @@ nerchuko's feature selection capabilities."
             nerchuko.feature-selectors.document-frequency
             nerchuko.feature-selectors.collection-frequency))
 
-(defn select
-  "Return a set of the _best_ k features from the training-dataset.
-The feature selection algorithm set to *feature-selector* will be used."
-  [feature-selector k training-dataset]
+(defn find-features
+  "Return a set of the _best_ k features from the dataset using
+  feature-selector. The docs in the dataset must all be
+  features-map's."
+  [feature-selector k dataset]
   (call feature-selector
-        'select
-        [k training-dataset]))
+        'find-features
+        [k dataset]))
 
-(defn select-and-filter
-  "Select the _best_ k features based on the algorithm set to
-*feature-selecter* and then filter the features in each doc of the
-training-dataset. The modified training-dataset is returned."
-  ([feature-selector k training-dataset]
-     (select-and-filter feature-selector
-                        k
-                        training-dataset
-                        training-dataset))
-  ([feature-selector k dataset-for-select dataset-to-filter]
-     (let [features (select feature-selector
-                            k
-                            dataset-for-select)]
-       (map-on-firsts #(select-keys % features)
-                      dataset-to-filter))))
+(defn select-features
+  "Given a set of features and a dataset, filters every doc in the
+  dataset to keep only those features. The docs in the dataset must
+  all be features-map's. Returns the modified dataset."
+  [dataset features]
+  (map-on-firsts #(select-keys % features)
+                 dataset))
+
+(defn find-and-select-features
+  "Find the _best_ k features using feature-selector and then filter
+the features in each doc of the dataset to keep only those
+features. Returns the modified dataset."
+  [feature-selector k dataset]
+  (->> dataset
+       (find-features feature-selector k)
+       (select-features dataset)))
