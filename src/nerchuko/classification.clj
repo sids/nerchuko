@@ -1,7 +1,7 @@
 (ns nerchuko.classification
   "This namespace provides the primary functions for accessing
 nerchuko's classification capabilities."
-  (:use [nerchuko utils helpers])
+  (:use nerchuko.utils)
   (:require nerchuko.classifiers.naive-bayes.multinomial)
   (:use [clojure.contrib.def :only (defnk)])
   (:require [clojure.contrib.str-utils2 :as str-utils2]))
@@ -17,21 +17,21 @@ Each document should be a map with the features as the keys and the
   [classifier training-dataset]
   (call classifier
         'learn-model
-        [(prepare-dataset training-dataset)]))
+        [training-dataset]))
 
 (defn scores
   "Classifies doc using model and returns the scores for each class as a map."
   [model doc]
   (call (:classifier model)
         'scores
-        [model (prepare-doc doc)]))
+        [model doc]))
 
 (defn classify
   "Classifies doc using model and returns the class with the maximum score."
   [model doc]
   (call (:classifier model)
         'classify
-        [model (prepare-doc doc)]))
+        [model doc]))
 
 (defn get-confusion-matrix
   "Generates a confusion matrix by classifying every document in test-dataset
@@ -42,7 +42,6 @@ using model."
                              {}
                              (:classes model))]
     (->> test-dataset
-         prepare-dataset
          (map (fn [[doc class]]
                 {class {(classify model doc) 1}}))
          (reduce (partial merge-with merge-with-+))
@@ -56,10 +55,8 @@ corresponding values."
 
 (declare print-confusion-matrix)
 
-(defnk get-confusion-matrices
-  [classifier n training-dataset :print? true]
-  (let [training-dataset (prepare-dataset training-dataset)
-        folds (partition-random n
+(defnk get-confusion-matrices [classifier n training-dataset :print? true]
+  (let [folds (partition-random n
                                 training-dataset)]
     (doall
      (map-with-index-on folds

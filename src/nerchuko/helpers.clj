@@ -71,12 +71,3 @@ java.util.Map:
 (defmethod prepare-doc java.util.Collection [doc]
   (with-meta (counts doc)
     {:prepared true}))
-
-(defn prepare-dataset
-  "Calls prepare-doc on every doc in the dataset.
-Returns a dataset with all the documents prepared."
-  [dataset]
-  (if (:prepared? (meta dataset))
-    dataset
-    (map-on-firsts prepare-doc
-                   dataset)))
