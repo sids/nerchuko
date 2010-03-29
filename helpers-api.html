@@ -48,11 +48,13 @@ namespace.
   <div style="margin-left: 1em;" class="toc-section">
     <a href="#toc0">Overview</a>
     <div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.helpers/build-features-map">build-features-map</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.helpers/build-features-map-for-dataset">build-features-map-for-dataset</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#nerchuko.helpers/load-model">load-model</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#nerchuko.helpers/model">model</a>
-    </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.helpers/prepare-doc">prepare-doc</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#nerchuko.helpers/save-model">save-model</a>
     </div>
@@ -74,12 +76,50 @@ by <span id="author">Unknown</span><br />
 <div id="var-entry">
   <br />
   <hr />
+  <h2 id="nerchuko.helpers/build-features-map">build-features-map</h2>
+  <span id="var-type">multimethod</span><br />
+  <pre id="var-usage">Usage: (build-features-map doc)
+</pre>
+  <pre id="var-docstr">Returns a features-map i.e. a map with features as keys and
+the number of occurrences of those features as the corresponding
+values. Most feature-selection and several of the classification
+algorithms require a features-map as the input.
+
+Here is how different kind of docs get converted to a features-map:
+
+Strings: The string is tokenized (using
+    clj-text.tokenization/tokenize) and the tokens become the
+    features. The number of times each token occurs in the string is
+    the corresponding value.
+
+Collections (vectors, lists, sets etc.): Each item in the seq is
+    treated as a feature and the number of occurrences of the item is
+    the corresponding value.
+
+Maps: First, all the string vals are tokenized. Then
+    nerchuko.utils/flatten-map is called to obtain a
+    seq. build-features-map is recursively called on this to get the
+    final return value.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/e96873b1abe9d9c56b016c1a0cb9fd2e51b49772/src/nerchuko/helpers.clj#L30" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.helpers/build-features-map-for-dataset">build-features-map-for-dataset</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (build-features-map-for-dataset dataset)
+</pre>
+  <pre id="var-docstr">Calls build-features-map on every doc in the dataset returns a
+dataset with the features-maps in place of the docs.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/e96873b1abe9d9c56b016c1a0cb9fd2e51b49772/src/nerchuko/helpers.clj#L70" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
   <h2 id="nerchuko.helpers/load-model">load-model</h2>
   <span id="var-type">function</span><br />
   <pre id="var-usage">Usage: (load-model file)
 </pre>
   <pre id="var-docstr">Load model from a file.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/f43747e5896890e0d1c001362cba34d6161b5998/src/nerchuko/helpers.clj#L15" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/e96873b1abe9d9c56b016c1a0cb9fd2e51b49772/src/nerchuko/helpers.clj#L15" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -92,37 +132,7 @@ a classifier.
              classifier used to generate the model.
 :classes     A set of all the classes.
 :features    A set of all the features.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/f43747e5896890e0d1c001362cba34d6161b5998/src/nerchuko/helpers.clj#L20" id="var-source">Source</a>
-</div><div id="var-entry">
-  <br />
-  <hr />
-  <h2 id="nerchuko.helpers/prepare-doc">prepare-doc</h2>
-  <span id="var-type">multimethod</span><br />
-  <pre id="var-usage">Usage: (prepare-doc doc)
-</pre>
-  <pre id="var-docstr">Returns a document that can be used as an
-input to the nerchuko classification/feature-selection functions.
-The returned doc is a map with the features as the keys and the
-number of occurrences of those features as the values.
-What the features are depends on what doc is to begin with:
-
-java.lang.String:
-    The string is tokenized (using clj.text.tokenization/tokenize)
-    and the tokens become the features. The number of times each
-    token occurs in the string is the corresponding value.
-
-java.util.Collection (vectors, lists, sets etc.):
-    Each item in the seq is treated as a feature and the number of
-    occurrences of each token is the corresponding value.
-
-java.util.Map:
-    First, all the string vals are tokenized. Then
-    nerchuko.utils/flatten-map is called to obtain a seq.
-    prepare-doc is recursively called on this to get the final
-    return value.
-    But, if doc's metadata has the key :prepared set to true,
-    the doc is returned unmodified.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/f43747e5896890e0d1c001362cba34d6161b5998/src/nerchuko/helpers.clj#L30" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/e96873b1abe9d9c56b016c1a0cb9fd2e51b49772/src/nerchuko/helpers.clj#L20" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -131,7 +141,7 @@ java.util.Map:
   <pre id="var-usage">Usage: (save-model file model)
 </pre>
   <pre id="var-docstr">Saves model to a file.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/f43747e5896890e0d1c001362cba34d6161b5998/src/nerchuko/helpers.clj#L8" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/e96873b1abe9d9c56b016c1a0cb9fd2e51b49772/src/nerchuko/helpers.clj#L8" id="var-source">Source</a>
 </div>
 
 

@@ -60,15 +60,11 @@ namespace.
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#nerchuko.utils/largest-n-by-vals">largest-n-by-vals</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.utils/map-on">map-on</a>
-    </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#nerchuko.utils/map-on-firsts">map-on-firsts</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#nerchuko.utils/map-on-lasts">map-on-lasts</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#nerchuko.utils/map-with-index">map-with-index</a>
-    </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.utils/map-with-index-on">map-with-index-on</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#nerchuko.utils/merge-with-+">merge-with-+</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
@@ -104,7 +100,7 @@ by <span id="author">Unknown</span><br />
 </pre>
   <pre id="var-docstr">If x is a Keyword or a Symbol, returns (name x),
 otherwise returns (.toString x).</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L8" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/68f770cb58cf98803bc42132051f1a96c9937414/src/nerchuko/utils.clj#L8" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -114,7 +110,7 @@ otherwise returns (.toString x).</pre>
        (call ns f args)
 </pre>
   <pre id="var-docstr">Macro that expands to a call to function f in the given namespace.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L16" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/68f770cb58cf98803bc42132051f1a96c9937414/src/nerchuko/utils.clj#L16" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -124,7 +120,7 @@ otherwise returns (.toString x).</pre>
 </pre>
   <pre id="var-docstr">Returns a map with the items of coll as keys and the number
 of occurrences of the item in coll as the corresponding values.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L36" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/68f770cb58cf98803bc42132051f1a96c9937414/src/nerchuko/utils.clj#L36" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -136,7 +132,7 @@ of occurrences of the item in coll as the corresponding values.</pre>
 Each key contributes one of more elements to the seq. The elements
 corresponding to any given key are obtained by calling pairs on
 the to-seq of its value.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L60" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/68f770cb58cf98803bc42132051f1a96c9937414/src/nerchuko/utils.clj#L60" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -146,7 +142,7 @@ the to-seq of its value.</pre>
 </pre>
   <pre id="var-docstr">Returns the key which has the max value.
 Returns on-all-equal if all the values are equal.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L132" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/68f770cb58cf98803bc42132051f1a96c9937414/src/nerchuko/utils.clj#L118" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -156,16 +152,7 @@ Returns on-all-equal if all the values are equal.</pre>
 </pre>
   <pre id="var-docstr">Returns a subset of map containing the n largest entries
 as determined by comparing the vals.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L143" id="var-source">Source</a>
-</div><div id="var-entry">
-  <br />
-  <hr />
-  <h2 id="nerchuko.utils/map-on">map-on</h2>
-  <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (map-on &amp; colls-and-f)
-</pre>
-  <pre id="var-docstr">A map that accepts the mapping function as the last argument instead of the first.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L94" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/68f770cb58cf98803bc42132051f1a96c9937414/src/nerchuko/utils.clj#L129" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -173,9 +160,10 @@ as determined by comparing the vals.</pre>
   <span id="var-type">function</span><br />
   <pre id="var-usage">Usage: (map-on-firsts f seq)
 </pre>
-  <pre id="var-docstr">Takes a sequence of sequences (v1 v2 ...) and returns a lazy sequence of
-((f v1) (f v2) ...). If a collection is given, calls seq on it.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L104" id="var-source">Source</a>
+  <pre id="var-docstr">Takes a sequence of sequences (v1 v2 ...) and returns a lazy
+sequence of ((f v1) (f v2) ...). If a collection is given, calls seq
+on it.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/68f770cb58cf98803bc42132051f1a96c9937414/src/nerchuko/utils.clj#L95" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -183,9 +171,9 @@ as determined by comparing the vals.</pre>
   <span id="var-type">function</span><br />
   <pre id="var-usage">Usage: (map-on-lasts f pair-seq)
 </pre>
-  <pre id="var-docstr">Takes a sequence of 2-item vectors [v1 v2] and returns a lazy sequence
-of [v1 (f v2)]. If a collection is given, calls seq on it.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L112" id="var-source">Source</a>
+  <pre id="var-docstr">Takes a sequence of 2-item vectors [v1 v2] and returns a lazy
+sequence of [v1 (f v2)]. If a collection is given, calls seq on it.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/68f770cb58cf98803bc42132051f1a96c9937414/src/nerchuko/utils.clj#L104" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -195,17 +183,7 @@ of [v1 (f v2)]. If a collection is given, calls seq on it.</pre>
 </pre>
   <pre id="var-docstr">Calls map on the collections after cons-ing (iterate inc 0) to them.
 So f will receive the index along with the items themselves.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L118" id="var-source">Source</a>
-</div><div id="var-entry">
-  <br />
-  <hr />
-  <h2 id="nerchuko.utils/map-with-index-on">map-with-index-on</h2>
-  <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (map-with-index-on &amp; colls-and-f)
-</pre>
-  <pre id="var-docstr">Calls map on the collections after cons-ing (iterate inc 0) to them.
-So f will receive the index along with the items themselves.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L124" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/68f770cb58cf98803bc42132051f1a96c9937414/src/nerchuko/utils.clj#L110" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -214,7 +192,7 @@ So f will receive the index along with the items themselves.</pre>
   <pre id="var-usage">Usage: (merge-with-+ &amp; maps)
 </pre>
   <pre id="var-docstr">Calls merge-with on maps with + as the function.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L83" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/68f770cb58cf98803bc42132051f1a96c9937414/src/nerchuko/utils.clj#L84" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -222,9 +200,9 @@ So f will receive the index along with the items themselves.</pre>
   <span id="var-type">function</span><br />
   <pre id="var-usage">Usage: (pairs key vals)
 </pre>
-  <pre id="var-docstr">Returns a hash-map of vectors where each vector is a pairing of key
-with a value from vals.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L54" id="var-source">Source</a>
+  <pre id="var-docstr">Returns a seq of vectors where each vector is a pairing of key with
+a value from vals.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/68f770cb58cf98803bc42132051f1a96c9937414/src/nerchuko/utils.clj#L54" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -234,7 +212,7 @@ with a value from vals.</pre>
 </pre>
   <pre id="var-docstr">Randomly divides the items in coll into n partitions.
 Returns a vector of vectors.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L70" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/68f770cb58cf98803bc42132051f1a96c9937414/src/nerchuko/utils.clj#L71" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -244,7 +222,7 @@ Returns a vector of vectors.</pre>
 </pre>
   <pre id="var-docstr">Given a coll of numbers, converts them to probabilities
 by dividing each with their total sum. Returns a seq.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L23" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/68f770cb58cf98803bc42132051f1a96c9937414/src/nerchuko/utils.clj#L23" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -253,9 +231,9 @@ by dividing each with their total sum. Returns a seq.</pre>
   <pre id="var-usage">Usage: (to-seq v)
 </pre>
   <pre id="var-docstr">Returns a seq.
-If v implements Sequential, simply calls seq on it.
-Otherwise returns a seq containing v as the only element.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/940a1319bb9c432bebb2846c425031e1ace76dd6/src/nerchuko/utils.clj#L45" id="var-source">Source</a>
+If v implements Sequential, simply calls seq on it.  Otherwise returns
+a seq containing v as the only element.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/68f770cb58cf98803bc42132051f1a96c9937414/src/nerchuko/utils.clj#L45" id="var-source">Source</a>
 </div>
 
 

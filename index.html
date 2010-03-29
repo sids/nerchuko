@@ -102,7 +102,8 @@ nerchuko's classification capabilities.</pre>
   <h2 id="classifiers.naive-bayes.multinomial">classifiers.naive-bayes.multinomial</h2>
   by <span id="author">unknown author</span><br />
   <a href="classifiers.naive-bayes.multinomial-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr"></pre>
+  <pre id="namespace-docstr">An implementation of the Naive Bayes classification technique,
+using the multinomial model for counting the features.</pre>
   
   Public variables and functions:
   <span id="var-link"><a href="classifiers.naive-bayes.multinomial-api.html#nerchuko.classifiers.naive-bayes.multinomial/classifier" id="var-tag">classifier</a> </span><span id="var-link"><a href="classifiers.naive-bayes.multinomial-api.html#nerchuko.classifiers.naive-bayes.multinomial/classify" id="var-tag">classify</a> </span><span id="var-link"><a href="classifiers.naive-bayes.multinomial-api.html#nerchuko.classifiers.naive-bayes.multinomial/learn-model" id="var-tag">learn-model</a> </span><span id="var-link"><a href="classifiers.naive-bayes.multinomial-api.html#nerchuko.classifiers.naive-bayes.multinomial/scores" id="var-tag">scores</a> </span><br />
@@ -117,7 +118,7 @@ nerchuko's classification capabilities.</pre>
 nerchuko's feature selection capabilities.</pre>
   
   Public variables and functions:
-  <span id="var-link"><a href="feature-selection-api.html#nerchuko.feature-selection/select" id="var-tag">select</a> </span><span id="var-link"><a href="feature-selection-api.html#nerchuko.feature-selection/select-and-filter" id="var-tag">select-and-filter</a> </span><br />
+  <span id="var-link"><a href="feature-selection-api.html#nerchuko.feature-selection/find-and-select-features" id="var-tag">find-and-select-features</a> </span><span id="var-link"><a href="feature-selection-api.html#nerchuko.feature-selection/find-features" id="var-tag">find-features</a> </span><span id="var-link"><a href="feature-selection-api.html#nerchuko.feature-selection/select-features" id="var-tag">select-features</a> </span><br />
   
 </div><div id="namespace-entry">
   <br />
@@ -139,7 +140,7 @@ nerchuko's feature selection capabilities.</pre>
   <pre id="namespace-docstr"></pre>
   
   Public variables and functions:
-  <span id="var-link"><a href="feature-selectors.collection-frequency-api.html#nerchuko.feature-selectors.collection-frequency/select" id="var-tag">select</a> </span><br />
+  <span id="var-link"><a href="feature-selectors.collection-frequency-api.html#nerchuko.feature-selectors.collection-frequency/find-features" id="var-tag">find-features</a> </span><br />
   
 </div><div id="namespace-entry">
   <br />
@@ -150,7 +151,7 @@ nerchuko's feature selection capabilities.</pre>
   <pre id="namespace-docstr"></pre>
   
   Public variables and functions:
-  <span id="var-link"><a href="feature-selectors.document-frequency-api.html#nerchuko.feature-selectors.document-frequency/select" id="var-tag">select</a> </span><br />
+  <span id="var-link"><a href="feature-selectors.document-frequency-api.html#nerchuko.feature-selectors.document-frequency/find-features" id="var-tag">find-features</a> </span><br />
   
 </div><div id="namespace-entry">
   <br />
@@ -161,7 +162,7 @@ nerchuko's feature selection capabilities.</pre>
   <pre id="namespace-docstr"></pre>
   
   Public variables and functions:
-  <span id="var-link"><a href="helpers-api.html#nerchuko.helpers/load-model" id="var-tag">load-model</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/model" id="var-tag">model</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/prepare-doc" id="var-tag">prepare-doc</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/save-model" id="var-tag">save-model</a> </span><br />
+  <span id="var-link"><a href="helpers-api.html#nerchuko.helpers/build-features-map" id="var-tag">build-features-map</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/build-features-map-for-dataset" id="var-tag">build-features-map-for-dataset</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/load-model" id="var-tag">load-model</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/model" id="var-tag">model</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/save-model" id="var-tag">save-model</a> </span><br />
   
 </div><div id="namespace-entry">
   <br />
@@ -172,7 +173,7 @@ nerchuko's feature selection capabilities.</pre>
   <pre id="namespace-docstr"></pre>
   
   Public variables and functions:
-  <span id="var-link"><a href="utils-api.html#nerchuko.utils/as-str" id="var-tag">as-str</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/call" id="var-tag">call</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/counts" id="var-tag">counts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/flatten-map" id="var-tag">flatten-map</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/key-with-max-val" id="var-tag">key-with-max-val</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/largest-n-by-vals" id="var-tag">largest-n-by-vals</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-on" id="var-tag">map-on</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-on-firsts" id="var-tag">map-on-firsts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-on-lasts" id="var-tag">map-on-lasts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-with-index" id="var-tag">map-with-index</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-with-index-on" id="var-tag">map-with-index-on</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/merge-with-+" id="var-tag">merge-with-+</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/pairs" id="var-tag">pairs</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/partition-random" id="var-tag">partition-random</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/to-probabilities" id="var-tag">to-probabilities</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/to-seq" id="var-tag">to-seq</a> </span><br />
+  <span id="var-link"><a href="utils-api.html#nerchuko.utils/as-str" id="var-tag">as-str</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/call" id="var-tag">call</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/counts" id="var-tag">counts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/flatten-map" id="var-tag">flatten-map</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/key-with-max-val" id="var-tag">key-with-max-val</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/largest-n-by-vals" id="var-tag">largest-n-by-vals</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-on-firsts" id="var-tag">map-on-firsts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-on-lasts" id="var-tag">map-on-lasts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-with-index" id="var-tag">map-with-index</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/merge-with-+" id="var-tag">merge-with-+</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/pairs" id="var-tag">pairs</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/partition-random" id="var-tag">partition-random</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/to-probabilities" id="var-tag">to-probabilities</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/to-seq" id="var-tag">to-seq</a> </span><br />
   
 </div>
 </div>

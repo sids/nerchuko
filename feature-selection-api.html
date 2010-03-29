@@ -48,9 +48,11 @@ namespace.
   <div style="margin-left: 1em;" class="toc-section">
     <a href="#toc0">Overview</a>
     <div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.feature-selection/select">select</a>
+      <a href="#nerchuko.feature-selection/find-and-select-features">find-and-select-features</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.feature-selection/select-and-filter">select-and-filter</a>
+      <a href="#nerchuko.feature-selection/find-features">find-features</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.feature-selection/select-features">select-features</a>
     </div>
     <br />
   </div>
@@ -71,25 +73,36 @@ nerchuko's feature selection capabilities.</pre>
 <div id="var-entry">
   <br />
   <hr />
-  <h2 id="nerchuko.feature-selection/select">select</h2>
+  <h2 id="nerchuko.feature-selection/find-and-select-features">find-and-select-features</h2>
   <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (select feature-selector k training-dataset)
+  <pre id="var-usage">Usage: (find-and-select-features feature-selector k dataset)
 </pre>
-  <pre id="var-docstr">Return a set of the _best_ k features from the training-dataset.
-The feature selection algorithm set to *feature-selector* will be used.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/c548b99e7e6323332c7a51f04b7598967f4c730c/src/nerchuko/feature_selection.clj#L9" id="var-source">Source</a>
+  <pre id="var-docstr">Find the _best_ k features using feature-selector and then filter
+the features in each doc of the dataset to keep only those
+features. Returns the modified dataset.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/cdab4cb33ddf2fe4f0753bb9e7bdcc1e85202441/src/nerchuko/feature_selection.clj#L26" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
-  <h2 id="nerchuko.feature-selection/select-and-filter">select-and-filter</h2>
+  <h2 id="nerchuko.feature-selection/find-features">find-features</h2>
   <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (select-and-filter feature-selector k training-dataset)
-       (select-and-filter feature-selector k dataset-for-select dataset-to-filter)
+  <pre id="var-usage">Usage: (find-features feature-selector k dataset)
 </pre>
-  <pre id="var-docstr">Select the _best_ k features based on the algorithm set to
-*feature-selecter* and then filter the features in each doc of the
-training-dataset. The modified training-dataset is returned.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/c548b99e7e6323332c7a51f04b7598967f4c730c/src/nerchuko/feature_selection.clj#L17" id="var-source">Source</a>
+  <pre id="var-docstr">Return a set of the _best_ k features from the dataset using
+feature-selector. The docs in the dataset must all be
+features-map's.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/cdab4cb33ddf2fe4f0753bb9e7bdcc1e85202441/src/nerchuko/feature_selection.clj#L9" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.feature-selection/select-features">select-features</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (select-features dataset features)
+</pre>
+  <pre id="var-docstr">Given a set of features and a dataset, filters every doc in the
+dataset to keep only those features. The docs in the dataset must
+all be features-map's. Returns the modified dataset.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/cdab4cb33ddf2fe4f0753bb9e7bdcc1e85202441/src/nerchuko/feature_selection.clj#L18" id="var-source">Source</a>
 </div>
 
 
