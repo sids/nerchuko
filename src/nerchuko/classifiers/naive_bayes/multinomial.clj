@@ -2,8 +2,10 @@
   "An implementation of the Naive Bayes classification technique,
 using the multinomial model for counting the features."
   (:use nerchuko.utils
-        nerchuko.helpers)
+        nerchuko.helpers
+        nerchuko.text.helpers)
   (:use [clojure.set :only (intersection)]
+        [clojure.contrib.def :only (defnk)]
         clojure.contrib.generic.math-functions
         clojure.contrib.generic.functor))
 
@@ -31,7 +33,25 @@ The aggregate information is returned as a vector of:
         denominator (+ feature-classes-total features-total)]
     (fmap #(/ (inc %) denominator) feature-classes-counts)))
 
-(defn learn-model
+(defmulti prepare-doc type)
+
+(defmethod prepare-doc :default
+  [x]
+  (bag x))
+
+(defmethod prepare-doc String
+  [s]
+  (-> s
+      tokenize
+      bag))
+
+(defmethod prepare-doc java.util.Map
+  [m]
+  (->> m
+       tokenize-map
+       bag))
+
+(defnk learn-model
   "Returns the classifier model learned from the training-dataset.
 
 The training data must be a sequence of training examples each of which
@@ -42,8 +62,11 @@ The model is a map with the following keys:
 :features, the hash-set of all the features.
 :priors, prior probabilities for each class.
 :cond-probs, conditional probabilities for each class for each feature."
-  [training-dataset]
-  (let [[classes features classes-counts features-classes-counts] (aggregate training-dataset)
+  [training-dataset :prepare? false]
+  (let [prepared-training-dataset (if prepare?
+                                    (map-on-firsts prepare-doc training-dataset)
+                                    training-dataset)
+        [classes features classes-counts features-classes-counts] (aggregate prepared-training-dataset)
         docs-total (reduce + (vals classes-counts))
         features-total (count features)
         features-0s (fmap dec (counts features))]
@@ -62,7 +85,7 @@ The model is a map with the following keys:
 returns the log of the likelihood that the document belongs to the
 class.  Essentially, this returns log of the product of the
 conditional probabilities of the features that appear in the doc."
-[doc class-cond-probs]
+  [doc class-cond-probs]
   (->> doc
        (map (fn [[feature feature-count]]
               (pow (class-cond-probs feature) feature-count)))
@@ -85,25 +108,29 @@ class and the likelihood of the document belonging to that class."
                      (+ (log prior) class-likelihood)))
                  classes))))
 
-(defn scores
+(defnk scores
   "Returns the a posteriori probabilities of the document
 belonging to each class, estimated using the Naive Bayes
 classifier over model."
-  [model doc]
-  (let [es (->> (estimates model doc)
+  [model doc :prepare? false]
+  (let [prepared-doc (if prepare?
+                       (prepare-doc doc)
+                       doc)
+        es (->> (estimates model doc)
                 (fmap exp))]
     (zipmap (keys es) (to-probabilities (vals es)))))
 
-(defn classify
+(defnk classify
   "Classifies the doc using a Naive Bayes classifier based on model.
 Returns the most probable class."
-  ([model doc & [default-class]]
-     (let [classes-probabilities (scores model doc)]
-       (key-with-max-val classes-probabilities default-class))))
+  [model doc :default-class nil :prepare? false]
+  (let [classes-probabilities (scores model doc :prepare? prepare?)]
+    (key-with-max-val classes-probabilities default-class)))
 
-(defn classifier
+(defnk classifier
   "Returns (partial classify model).
 The return value can be used as a classifier function that classifies
 a given doc."
-  [model]
-  (partial classify model))
+  [model :prepare? false]
+  (fn [doc]
+    (classify model doc :prepare? prepare?)))

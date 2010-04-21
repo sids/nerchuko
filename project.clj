@@ -1,10 +1,14 @@
-(defproject nerchuko "0.1.14"
+(defproject nerchuko "0.1.15"
   :description "Machine Learning in Clojure."
   :url "http://github.com/sids/nerchuko"
   :namespaces [nerchuko.classification
                nerchuko.feature-selection
                nerchuko.utils
-               nerchuko.helpers]
+               nerchuko.helpers
+               nerchuko.classifiers.naive-bayes.multinomial
+               nerchuko.feature-selectors.document-frequency
+               nerchuko.feature-selectors.collection-frequency
+               nerchuko.feature-selectors.chi-sqaured]
   :dependencies [[org.clojure/clojure "1.1.0-master-SNAPSHOT"]
                  [org.clojure/clojure-contrib "1.0-SNAPSHOT"]
                  [clj-text "0.0.3"]]
