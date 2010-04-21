@@ -21,16 +21,14 @@
 
 (deftest naive-bayes
   (let [model (->> training-dataset
-                   build-features-map-for-dataset
+                   (map-on-firsts bag)
                    (learn-model 'nerchuko.classifiers.naive-bayes.multinomial))]
     (is (= {:yes 0.3131320321244135, :no 0.6868679678755865}
            (scores model
-                   (build-features-map
-                    #{:sunny :hot :high :weak}))))
+                   (bag #{:sunny :hot :high :weak}))))
     (is (= :no
            (classify model
-                     (build-features-map
-                      #{:sunny :hot :high :weak}))))
+                     (bag #{:sunny :hot :high :weak}))))
     (is (= {:yes 9/14, :no 5/14}
            (scores model {})))
     (is (= :yes

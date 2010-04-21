@@ -11,16 +11,14 @@
 
 (deftest naive-bayes
   (let [model (->> training-dataset
-                   build-features-map-for-dataset
+                   (map-on-firsts bag)
                    (learn-model 'nerchuko.classifiers.naive-bayes.multinomial))]
     (is (= {:yes 0.6897586117634673, :no 0.31024138823653274}
            (scores model
-                   (build-features-map
-                    [:chinese :chinese :chinese :tokyo :japan]))))
+                   (bag [:chinese :chinese :chinese :tokyo :japan]))))
     (is (= :yes
            (classify model
-                     (build-features-map
-                      [:chinese :chinese :chinese :tokyo :japan]))))
+                     (bag [:chinese :chinese :chinese :tokyo :japan]))))
     (is (= {:yes 3/4, :no 1/4}
            (scores model {})))
     (is (= :yes

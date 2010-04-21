@@ -3,7 +3,8 @@
 as converting documents to the necessary format etc."
   (:use nerchuko.utils
         clj-text.tokenization)
-  (:use [clojure.contrib.duck-streams :only (spit)]))
+  (:use [clojure.contrib.duck-streams :only (spit)]
+        clojure.contrib.generic.functor))
 
 (defn save-model
   "Saves model to a file."
@@ -28,48 +29,74 @@ a classifier.
   :classifier :classes :features)
 
 (defmulti
-  #^{:arglists '([doc])
-     :doc "Returns a features-map i.e. a map with features as keys and
-the number of occurrences of those features as the corresponding
-values. Most feature-selection and several of the classification
-algorithms require a features-map as the input.
+  #^{:arglists '([coll-or-obj])
+     :doc "Creates a bag (multiset) from coll. It is represented
+simply as a map of the elements to the number times they appear.
 
-Here is how different kind of docs get converted to a features-map:
+The exact way in which the bag is constructed depends on the type of
+coll-or-obj.
 
-Strings: The string is tokenized (using
-    clj-text.tokenization/tokenize) and the tokens become the
-    features. The number of times each token occurs in the string is
-    the corresponding value.
+nil: An empty bag (an empty map) is returned.
 
-Collections (vectors, lists, sets etc.): Each item in the seq is
-    treated as a feature and the number of occurrences of the item is
-    the corresponding value.
+Vector/List/Set/etc.: Each item in the coll is treated as an element
+    of the bag.
 
-Maps: First, all the string vals are tokenized. Then
-    nerchuko.utils/flatten-map is called to obtain a
-    seq. build-features-map is recursively called on this to get the
-    final return value."}
-  build-features-map class)
+Map: First, all the vals are converted to a bag. Next, the elements of
+    these bags are modified by prefixing them with the corresponding
+    key in the original map. All the resulting bags are then merged
+    together to form the final result.
 
-(defmethod build-features-map String [doc]
-  (build-features-map (tokenize doc)))
+Other: {coll-or-obj 1} is returned.
 
-(defmethod build-features-map java.util.Map [doc]
-  (->> doc
-       (map (fn [[key val]]
-              (if (string? val)
-                {key (tokenize val)}
-                {key val})))
-       (reduce merge)
-       flatten-map
-       build-features-map))
+Examples:
 
-(defmethod build-features-map java.util.Collection [doc]
-  (counts doc))
+    [:a 19 :b 67 :b :a :a]
+  becomes:
+    {:a 3, :b 2, 19 1, 67 1}
 
-(defn build-features-map-for-dataset
-  "Calls build-features-map on every doc in the dataset returns a
-  dataset with the features-maps in place of the docs."
-  [dataset]
-  (map-on-firsts build-features-map
-                 dataset))
+    42
+  becomes:
+    {42 1}
+
+    \"pheonix\"
+  becomes:
+    {\"phoenix\" 1}
+
+    (new Object)
+  becomes:
+    {#<Object java.lang.Object@1d4ee7e> 1}
+
+    {:a 42
+     :b \"hello\"
+     :c [\"hello\" \"world\" \"hello\"]}
+  first becomes (intermediate value):
+    {:a {42 1}
+     :b {\"hello\" 1}
+     :c {\"hello\" 2 \"world\" 1]}
+  and finally:
+    {[:a 42] 1
+     [:b \"hello\"] 1
+     [:c \"hello\"] 2
+     [:c \"world\"] 1}"}
+  bag type)
+
+(defmethod bag :default [x]
+  {x 1})
+
+(defmethod bag nil [_]
+  {})
+
+(defmethod bag java.util.Collection [coll]
+  (counts coll))
+
+(defmethod bag java.util.Map
+  ([m]
+     (let [prefix-keys (fn [prefix m]   ; prefixes each key of m with
+                                        ; prefix i.e. [prefix key]
+                         (map-keys #(vector prefix %)
+                                   m))]
+       (->> m
+            (fmap bag)
+            (map (fn [[k v]]
+                   (prefix-keys k v)))
+            (into {})))))

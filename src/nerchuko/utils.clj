@@ -1,7 +1,8 @@
 (ns nerchuko.utils
   "General Clojure utilities. These are used pretty heavily within
 the nerchuko code itself and might prove to be quite useful even
-for applications using nerchuko.")
+for applications using nerchuko."
+  (:use [clojure.set :only (difference)]))
 
 ;;;;;; miscellaneus utils
 
@@ -51,6 +52,26 @@ a seq containing v as the only element."
     (seq v)
     (seq (list v))))
 
+(defn on-submap
+  "Calls f on a submap of m and merges the result into m.
+
+f must accept a map and return a map (or a seq that can be turned
+into a map by calling (into {})).
+
+The submap selection can be done by specifying a list of keys as
+keyword arguments :only or :except."
+  [f m & options]
+  (let [{except :except only :only} (apply hash-map options)
+        keys-to-select (if only
+                         only
+                         (difference (apply hash-set (keys m))
+                                     (apply hash-set except)))]
+    (->> keys-to-select
+         (select-keys m)
+         f
+         (into {})
+         (merge m))))
+
 (defn pairs
   "Returns a seq of vectors where each vector is a pairing of key with
 a value from vals."
@@ -91,6 +112,16 @@ Returns a vector of vectors."
 
 (defn lasts [coll]
   (map last coll))
+
+(defn map-keys
+  "Modifies the keys of the map m by calling f for each
+of them."
+  [f m]
+  (->> m
+       (map (fn [[k v]]
+              [(f k) v])
+            )
+       (into {})))
 
 (defn map-on-firsts
   "Takes a sequence of sequences (v1 v2 ...) and returns a lazy
