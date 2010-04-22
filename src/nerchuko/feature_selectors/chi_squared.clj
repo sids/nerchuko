@@ -1,7 +1,7 @@
 (ns nerchuko.feature-selectors.chi-squared
   (:use nerchuko.utils)
-  (:use clojure.contrib.generic.math-functions
-        clojure.contrib.generic.functor))
+  (:use [clojure.contrib.generic math-functions functor]
+        [clojure.contrib.seq-utils :only (frequencies)]))
 
 (defn- aggregate [training-dataset]
   (->> training-dataset
@@ -10,7 +10,7 @@
             (let [doc-features (keys doc)]
               [(inc docs-count)
                (merge-with-+ classes-counts {class 1})
-               (merge-with-+ features-counts (counts doc-features))
+               (merge-with-+ features-counts (frequencies doc-features))
                (reduce (partial merge-with merge-with-+)
                        features-classes-counts
                        (map (fn [feature]

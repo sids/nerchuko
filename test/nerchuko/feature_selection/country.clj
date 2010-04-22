@@ -10,7 +10,7 @@
                     [[:tokyo :japan :chinese] :no]])
 
 (def training-dataset
-     (map-on-firsts bag training-data))
+     (map-firsts bag training-data))
 
 (deftest feature-selection-document-frequency
   (are [k features] (= features

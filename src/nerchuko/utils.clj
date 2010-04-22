@@ -7,23 +7,25 @@ for applications using nerchuko."
 ;;;;;; miscellaneus utils
 
 (defn as-str
-  "If x is a Keyword or a Symbol, returns (name x),
-otherwise returns (.toString x)."
+  "If x is a Keyword or a Symbol, returns (name x), otherwise
+returns (.toString x)."
   [x]
   (cond
     (or (keyword? x) (symbol? x)) (name x)
     :default (str x)))
 
-(defmacro call
-  "Macro that expands to a call to function f in the given namespace."
-  ([ns f]
-     `(call ns f []))
-  ([ns f args]
-     `(apply (ns-resolve (the-ns (symbol ~ns)) ~f) ~args)))
+(defn call-in-ns
+  "Resolves f in the namespace ns and calls it with args.
+ns and f must be symbols or strings."
+  [ns f & args]
+  (-> (symbol ns)
+      the-ns
+      (ns-resolve (symbol f))
+      (apply args)))
 
 (defn to-probabilities
-  "Given a coll of numbers, converts them to probabilities
-by dividing each with their total sum. Returns a seq."
+  "Given a coll of numbers, converts them to probabilities by dividing
+each with their total sum. Returns a seq."
   [coll]
   (let [total (reduce + coll)]
     (map #(if-not (zero? total)
@@ -33,24 +35,6 @@ by dividing each with their total sum. Returns a seq."
 ;;;;;; utils for transforming data structures (one data structure to another)
 
 (declare merge-with-+)
-
-(defn counts
-  "Returns a map with the items of coll as keys and the number
-of occurrences of the item in coll as the corresponding values."
-  [coll]
-  (if (seq coll)
-    (reduce merge-with-+
-            (map #(hash-map % 1) coll))
-    {}))
-
-(defn to-seq
-  "Returns a seq.
-If v implements Sequential, simply calls seq on it.  Otherwise returns
-a seq containing v as the only element."
-  [v]
-  (if (sequential? v)
-    (seq v)
-    (seq (list v))))
 
 (defn on-submap
   "Calls f on a submap of m and merges the result into m.
@@ -71,23 +55,6 @@ keyword arguments :only or :except."
          f
          (into {})
          (merge m))))
-
-(defn pairs
-  "Returns a seq of vectors where each vector is a pairing of key with
-a value from vals."
-  [key vals]
-  (map #(vector key %) vals))
-
-(defn flatten-map
-  "'Flattens' the map into a seq.
-Each key contributes one of more elements to the seq. The elements
-corresponding to any given key are obtained by calling pairs on
-the to-seq of its value."
-  [m]
-  (reduce into
-          []
-          (map (fn [[k v]] (pairs k (to-seq v)))
-               m)))
 
 (defn partition-random
   "Randomly divides the items in coll into n partitions.
@@ -123,7 +90,7 @@ of them."
             )
        (into {})))
 
-(defn map-on-firsts
+(defn map-firsts
   "Takes a sequence of sequences (v1 v2 ...) and returns a lazy
   sequence of ((f v1) (f v2) ...). If a collection is given, calls seq
   on it."
@@ -132,7 +99,7 @@ of them."
          (into [(f v1)] vs))
        seq))
 
-(defn map-on-lasts
+(defn map-lasts
   "Takes a sequence of 2-item vectors [v1 v2] and returns a lazy
   sequence of [v1 (f v2)]. If a collection is given, calls seq on it."
   [f pair-seq]

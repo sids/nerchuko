@@ -1,13 +1,12 @@
 (ns nerchuko.classifiers.naive-bayes.multinomial
   "An implementation of the Naive Bayes classification technique,
 using the multinomial model for counting the features."
-  (:use nerchuko.utils
-        nerchuko.helpers
+  (:use [nerchuko utils helpers]
         nerchuko.text.helpers)
   (:use [clojure.set :only (intersection)]
         [clojure.contrib.def :only (defnk)]
-        clojure.contrib.generic.math-functions
-        clojure.contrib.generic.functor))
+        [clojure.contrib.seq-utils :only (frequencies)]
+        [clojure.contrib.generic math-functions functor]))
 
 (defn- aggregate
   "Returns the aggregate information gleaned from the training data.
@@ -41,14 +40,12 @@ The aggregate information is returned as a vector of:
 
 (defmethod prepare-doc String
   [s]
-  (-> s
-      tokenize
-      bag))
+  (bag-of-words s))
 
 (defmethod prepare-doc java.util.Map
   [m]
   (->> m
-       tokenize-map
+       tokenize-vals
        bag))
 
 (defnk learn-model
@@ -64,12 +61,12 @@ The model is a map with the following keys:
 :cond-probs, conditional probabilities for each class for each feature."
   [training-dataset :prepare? false]
   (let [prepared-training-dataset (if prepare?
-                                    (map-on-firsts prepare-doc training-dataset)
+                                    (map-firsts prepare-doc training-dataset)
                                     training-dataset)
         [classes features classes-counts features-classes-counts] (aggregate prepared-training-dataset)
         docs-total (reduce + (vals classes-counts))
         features-total (count features)
-        features-0s (fmap dec (counts features))]
+        features-0s (fmap dec (frequencies features))]
     (struct-map model
       :classifier 'nerchuko.classifiers.naive-bayes.multinomial
       :classes classes

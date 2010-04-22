@@ -1,5 +1,6 @@
 (ns nerchuko.text.helpers
-  (:use [nerchuko.utils :only (on-submap)])
+  (:use [nerchuko.utils :only (on-submap)]
+        [nerchuko.helpers :only (bag)])
   (:use clojure.contrib.generic.functor
         [clojure.contrib.def :only (defnk)]
         [clojure.contrib.seq-utils :only (separate)])
@@ -11,39 +12,39 @@ Uses clj.text.tokenization/tokenize of tokenization."
   [s]
   (t/tokenize s))
 
-(defn tokenize-map
-  "Given a map, replaces string values with a list of
-tokens from the string. Uses tokenize of tokenization.
+(defn tokenize-vals
+  "Given a map, replaces its string vals with a list of tokens from
+the string. Uses tokenize for tokenization.
 
-Additional keyword arguments :only or :except can be
-passed to limit the keys whose values are acter upon.
+Additional keyword arguments :only or :except can be passed to limit
+the keys whose values are acter upon.
 
 For example:
 
-  (def m {:a \"hello world!\"
-          :b 2
-          :c [\"this will never be tokenized\"]
-          :d \"good bye\"})
+  => (def m {:a \"hello world!\"
+            :b 2
+            :c [\"this will never be tokenized\"]
+            :d \"good bye\"})
 
-  (tokenize-map m)
-  => {:a (\"hello\" \"world!\")
-      :b 2
-      :c [\"this will never be tokenized\"]
-      :d (\"good\" \"bye\")}
+  => (tokenize-vals m)
+  {:a (\"hello\" \"world!\")
+   :b 2
+   :c [\"this will never be tokenized\"]
+   :d (\"good\" \"bye\")}
 
-  (tokenize-map m :only #{:a :b})
-  => {:a (\"hello\" \"world!\")
-      :b 2
-      :c [\"this will never be tokenized\"]
-      :d \"good bye\"}
+  => (tokenize-vals m :only #{:a :b})
+  {:a (\"hello\" \"world!\")
+   :b 2
+   :c [\"this will never be tokenized\"]
+   :d \"good bye\"}
 
-  (tokenize-map m :except #{:a :c})
-  => {:a \"hello world!\"
-      :b 2
-      :c [\"this will never be tokenized\"]
-      :d (\"good\" \"bye\")}"
+  => (tokenize-vals m :except #{:a :c})
+  {:a \"hello world!\"
+   :b 2
+   :c [\"this will never be tokenized\"]
+   :d (\"good\" \"bye\")}"
   ([m & options]
-     (apply on-submap tokenize-map m
+     (apply on-submap tokenize-vals m
             options))
   ([m]
      (fmap (fn [x]
@@ -51,3 +52,10 @@ For example:
                (tokenize x)
                x))
            m)))
+
+(defn bag-of-words
+  "Tokenizes s and constructs a bag (multiset) of the tokens"
+  [s]
+  (->> s
+       tokenize
+       bag))

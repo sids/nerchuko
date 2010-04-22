@@ -21,7 +21,7 @@
 
 (deftest naive-bayes
   (let [model (->> training-dataset
-                   (map-on-firsts bag)
+                   (map-firsts bag)
                    (learn-model 'nerchuko.classifiers.naive-bayes.multinomial))]
     (is (= {:yes 0.3131320321244135, :no 0.6868679678755865}
            (scores model

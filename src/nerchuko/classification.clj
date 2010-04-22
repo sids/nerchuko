@@ -15,23 +15,20 @@ must be a 2-item vector of the document and the corresponding class.
 Each document should be a map with the features as the keys and the
 'quantity' of those features as the values."
   [classifier training-dataset :prepare? false]
-  (call classifier
-        'learn-model
-        [training-dataset :prepare? prepare?]))
+  (call-in-ns classifier 'learn-model
+              training-dataset :prepare? prepare?))
 
 (defnk scores
   "Classifies doc using model and returns the scores for each class as a map."
   [model doc :prepare? false]
-  (call (:classifier model)
-        'scores
-        [model doc :prepare? prepare?]))
+  (call-in-ns (:classifier model) 'scores
+              model doc :prepare? prepare?))
 
 (defnk classify
   "Classifies doc using model and returns the class with the maximum score."
   [model doc :prepare? false]
-  (call (:classifier model)
-        'classify
-        [model doc :prepare? prepare?]))
+  (call-in-ns (:classifier model) 'classify model
+              doc :prepare? prepare?))
 
 (defnk get-confusion-matrix
   "Generates a confusion matrix by classifying every document in test-dataset
