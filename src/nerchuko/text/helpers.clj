@@ -59,3 +59,10 @@ For example:
   (->> s
        tokenize
        bag))
+
+(defn set-of-words
+  "Tokenizes s and constructs a bag (multiset) of the tokens"
+  [s]
+  (->> s
+       tokenize
+       set))

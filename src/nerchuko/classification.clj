@@ -2,7 +2,7 @@
   "This namespace provides the primary functions for accessing
 nerchuko's classification capabilities."
   (:use nerchuko.utils)
-  (:require nerchuko.classifiers.naive-bayes.multinomial)
+  (:require [nerchuko.classifiers.naive-bayes multinomial bernoulli])
   (:use [clojure.contrib.def :only (defnk)])
   (:require [clojure.contrib.str-utils2 :as str-utils2]))
 

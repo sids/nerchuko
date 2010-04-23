@@ -20,16 +20,29 @@
                        [#{:rain :mild :high :strong} :no]])
 
 (deftest naive-bayes
-  (let [model (->> training-dataset
+  (let [multinomial-model (->> training-dataset
                    (map-firsts bag)
-                   (learn-model 'nerchuko.classifiers.naive-bayes.multinomial))]
+                   (learn-model 'nerchuko.classifiers.naive-bayes.multinomial))
+        bernoulli-model (->> training-dataset
+                   (map-firsts bag)
+                   (learn-model 'nerchuko.classifiers.naive-bayes.bernoulli))]
     (is (= {:yes 0.3131320321244135, :no 0.6868679678755865}
-           (scores model
+           (scores multinomial-model
+                   (bag #{:sunny :hot :high :weak}))))
+    (is (= {:no 0.8415604739564735, :yes 0.15843952604352654}
+           (scores bernoulli-model
                    (bag #{:sunny :hot :high :weak}))))
     (is (= :no
-           (classify model
+           (classify multinomial-model
+                     (bag #{:sunny :hot :high :weak}))))
+    (is (= :no
+           (classify bernoulli-model
                      (bag #{:sunny :hot :high :weak}))))
     (is (= {:yes 9/14, :no 5/14}
-           (scores model {})))
+           (scores multinomial-model {})))
+    (is (= {:no 0.2848800102948953, :yes 0.7151199897051047}
+           (scores bernoulli-model #{})))
     (is (= :yes
-           (classify model {})))))
+           (classify multinomial-model {})))
+    (is (= :yes
+           (classify bernoulli-model #{})))))
