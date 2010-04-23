@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>feature-selectors.collection-frequency API reference (Nerchuko)</title>
+    <title>text.helpers API reference (Nerchuko)</title>
     <link href="static/favicon.png" rel="icon" />
     <link href="static/favicon.png" rel="shortcut icon" />
     <link media="all" type="text/css" href="static/clojure.css" rel="stylesheet" />
@@ -48,18 +48,22 @@ namespace.
   <div style="margin-left: 1em;" class="toc-section">
     <a href="#toc0">Overview</a>
     <div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.feature-selectors.collection-frequency/find-features">find-features</a>
+      <a href="#nerchuko.text.helpers/bag-of-words">bag-of-words</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.text.helpers/tokenize">tokenize</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.text.helpers/tokenize-vals">tokenize-vals</a>
     </div>
     <br />
   </div>
 </div>
 </div>
-                <div id="content-tag"><h1 id="overview">API for <span id="namespace-name">feature-selectors.collection-frequency</span></h1>
+                <div id="content-tag"><h1 id="overview">API for <span id="namespace-name">text.helpers</span></h1>
 by <span id="author">Unknown</span><br />
 <br />Usage:
 <pre>
 (ns your-namespace
-  (:require <span id="long-name">nerchuko.feature-selectors.collection-frequency</span>))
+  (:require <span id="long-name">nerchuko.text.helpers</span>))
 </pre><pre>
 </pre><h2>Overview</h2>
 <pre id="namespace-docstr"></pre>
@@ -68,14 +72,61 @@ by <span id="author">Unknown</span><br />
 <div id="var-entry">
   <br />
   <hr />
-  <h2 id="nerchuko.feature-selectors.collection-frequency/find-features">find-features</h2>
+  <h2 id="nerchuko.text.helpers/bag-of-words">bag-of-words</h2>
   <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (find-features k training-dataset)
+  <pre id="var-usage">Usage: (bag-of-words s)
 </pre>
-  <pre id="var-docstr">Returns a set of the top k most frequently occurring features.
-Multiple occurrences of a feature in a document are counted
-multiple times.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/cdab4cb33ddf2fe4f0753bb9e7bdcc1e85202441/src/nerchuko/feature_selectors/collection_frequency.clj#L5" id="var-source">Source</a>
+  <pre id="var-docstr">Tokenizes s and constructs a bag (multiset) of the tokens</pre>
+  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/text/helpers.clj#L56" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.text.helpers/tokenize">tokenize</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (tokenize s)
+</pre>
+  <pre id="var-docstr">Given a string, returns a list of tokens.
+Uses clj.text.tokenization/tokenize of tokenization.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/text/helpers.clj#L9" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.text.helpers/tokenize-vals">tokenize-vals</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (tokenize-vals m &amp; options)
+       (tokenize-vals m)
+</pre>
+  <pre id="var-docstr">Given a map, replaces its string vals with a list of tokens from
+the string. Uses tokenize for tokenization.
+
+Additional keyword arguments :only or :except can be passed to limit
+the keys whose values are acter upon.
+
+For example:
+
+  =&gt; (def m {:a "hello world!"
+            :b 2
+            :c ["this will never be tokenized"]
+            :d "good bye"})
+
+  =&gt; (tokenize-vals m)
+  {:a ("hello" "world!")
+   :b 2
+   :c ["this will never be tokenized"]
+   :d ("good" "bye")}
+
+  =&gt; (tokenize-vals m :only #{:a :b})
+  {:a ("hello" "world!")
+   :b 2
+   :c ["this will never be tokenized"]
+   :d "good bye"}
+
+  =&gt; (tokenize-vals m :except #{:a :c})
+  {:a "hello world!"
+   :b 2
+   :c ["this will never be tokenized"]
+   :d ("good" "bye")}</pre>
+  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/text/helpers.clj#L15" id="var-source">Source</a>
 </div>
 
 

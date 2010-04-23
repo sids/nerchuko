@@ -34,7 +34,7 @@ namespace.
     <a class="wiki_link" href="api-index.html">API Index</a><br />
     <a class="wiki_link" href="#">Namespaces:</a>
     <ul id="left-sidebar-list">
-      <li><a href="classification-api.html" class="wiki_link">classification</a></li><li><a href="classifiers.naive-bayes.multinomial-api.html" class="wiki_link">classifiers.naive-bayes.multinomial</a></li><li><a href="feature-selection-api.html" class="wiki_link">feature-selection</a></li><li><a href="feature-selectors.chi-squared-api.html" class="wiki_link">feature-selectors.chi-squared</a></li><li><a href="feature-selectors.collection-frequency-api.html" class="wiki_link">feature-selectors.collection-frequency</a></li><li><a href="feature-selectors.document-frequency-api.html" class="wiki_link">feature-selectors.document-frequency</a></li><li><a href="helpers-api.html" class="wiki_link">helpers</a></li><li><a href="utils-api.html" class="wiki_link">utils</a></li>
+      <li><a href="classification-api.html" class="wiki_link">classification</a></li><li><a href="classifiers.naive-bayes.multinomial-api.html" class="wiki_link">classifiers.naive-bayes.multinomial</a></li><li><a href="feature-selection-api.html" class="wiki_link">feature-selection</a></li><li><a href="feature-selectors.chi-squared-api.html" class="wiki_link">feature-selectors.chi-squared</a></li><li><a href="feature-selectors.collection-frequency-api.html" class="wiki_link">feature-selectors.collection-frequency</a></li><li><a href="feature-selectors.document-frequency-api.html" class="wiki_link">feature-selectors.document-frequency</a></li><li><a href="helpers-api.html" class="wiki_link">helpers</a></li><li><a href="text.helpers-api.html" class="wiki_link">text.helpers</a></li><li><a href="utils-api.html" class="wiki_link">utils</a></li>
     </ul>
   </div>
 </div>
@@ -48,9 +48,7 @@ namespace.
   <div style="margin-left: 1em;" class="toc-section">
     <a href="#toc0">Overview</a>
     <div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.helpers/build-features-map">build-features-map</a>
-    </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.helpers/build-features-map-for-dataset">build-features-map-for-dataset</a>
+      <a href="#nerchuko.helpers/bag">bag</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#nerchuko.helpers/load-model">load-model</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
@@ -70,47 +68,66 @@ by <span id="author">Unknown</span><br />
   (:require <span id="long-name">nerchuko.helpers</span>))
 </pre><pre>
 </pre><h2>Overview</h2>
-<pre id="namespace-docstr"></pre>
+<pre id="namespace-docstr">Functions that help with various auxiliary tasks such as converting
+documents to the necessary format etc.</pre>
 <br />
 <h2>Public Variables and Functions</h2>
 <div id="var-entry">
   <br />
   <hr />
-  <h2 id="nerchuko.helpers/build-features-map">build-features-map</h2>
+  <h2 id="nerchuko.helpers/bag">bag</h2>
   <span id="var-type">multimethod</span><br />
-  <pre id="var-usage">Usage: (build-features-map doc)
+  <pre id="var-usage">Usage: (bag coll-or-obj)
 </pre>
-  <pre id="var-docstr">Returns a features-map i.e. a map with features as keys and
-the number of occurrences of those features as the corresponding
-values. Most feature-selection and several of the classification
-algorithms require a features-map as the input.
+  <pre id="var-docstr">Creates a bag (multiset) from coll. It is represented
+simply as a map of the elements to the number times they appear.
 
-Here is how different kind of docs get converted to a features-map:
+The exact way in which the bag is constructed depends on the type of
+coll-or-obj.
 
-Strings: The string is tokenized (using
-    clj-text.tokenization/tokenize) and the tokens become the
-    features. The number of times each token occurs in the string is
-    the corresponding value.
+nil: An empty bag (an empty map) is returned.
 
-Collections (vectors, lists, sets etc.): Each item in the seq is
-    treated as a feature and the number of occurrences of the item is
-    the corresponding value.
+Vector/List/Set/etc.: Each item in the coll is treated as an element
+    of the bag.
 
-Maps: First, all the string vals are tokenized. Then
-    nerchuko.utils/flatten-map is called to obtain a
-    seq. build-features-map is recursively called on this to get the
-    final return value.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/e96873b1abe9d9c56b016c1a0cb9fd2e51b49772/src/nerchuko/helpers.clj#L30" id="var-source">Source</a>
-</div><div id="var-entry">
-  <br />
-  <hr />
-  <h2 id="nerchuko.helpers/build-features-map-for-dataset">build-features-map-for-dataset</h2>
-  <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (build-features-map-for-dataset dataset)
-</pre>
-  <pre id="var-docstr">Calls build-features-map on every doc in the dataset returns a
-dataset with the features-maps in place of the docs.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/e96873b1abe9d9c56b016c1a0cb9fd2e51b49772/src/nerchuko/helpers.clj#L70" id="var-source">Source</a>
+Map: First, all the vals are converted to a bag. Next, the elements of
+    these bags are modified by prefixing them with the corresponding
+    key in the original map. All the resulting bags are then merged
+    together to form the final result.
+
+Other: {coll-or-obj 1} is returned.
+
+Examples:
+
+    [:a 19 :b 67 :b :a :a]
+  becomes:
+    {:a 3, :b 2, 19 1, 67 1}
+
+    42
+  becomes:
+    {42 1}
+
+    "pheonix"
+  becomes:
+    {"phoenix" 1}
+
+    (new Object)
+  becomes:
+    {#&lt;Object java.lang.Object@1d4ee7e&gt; 1}
+
+    {:a 42
+     :b "hello"
+     :c ["hello" "world" "hello"]}
+  first becomes (intermediate value):
+    {:a {42 1}
+     :b {"hello" 1}
+     :c {"hello" 2 "world" 1]}
+  and finally:
+    {[:a 42] 1
+     [:b "hello"] 1
+     [:c "hello"] 2
+     [:c "world"] 1}</pre>
+  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/helpers.clj#L32" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -119,7 +136,7 @@ dataset with the features-maps in place of the docs.</pre>
   <pre id="var-usage">Usage: (load-model file)
 </pre>
   <pre id="var-docstr">Load model from a file.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/e96873b1abe9d9c56b016c1a0cb9fd2e51b49772/src/nerchuko/helpers.clj#L15" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/helpers.clj#L17" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -128,11 +145,11 @@ dataset with the features-maps in place of the docs.</pre>
   <pre id="var-usage"></pre>
   <pre id="var-docstr">A structure basis for a model generated by
 a classifier.
-:classifier  A symbol representing the namespace of the
-             classifier used to generate the model.
-:classes     A set of all the classes.
-:features    A set of all the features.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/e96873b1abe9d9c56b016c1a0cb9fd2e51b49772/src/nerchuko/helpers.clj#L20" id="var-source">Source</a>
+:classifier A symbol representing the namespace of the classifier used
+            to generate the model.
+:classes    A set of all the classes.
+:features   A set of all the features.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/helpers.clj#L22" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -141,7 +158,7 @@ a classifier.
   <pre id="var-usage">Usage: (save-model file model)
 </pre>
   <pre id="var-docstr">Saves model to a file.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/e96873b1abe9d9c56b016c1a0cb9fd2e51b49772/src/nerchuko/helpers.clj#L8" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/helpers.clj#L10" id="var-source">Source</a>
 </div>
 
 
