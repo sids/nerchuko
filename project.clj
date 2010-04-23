@@ -18,4 +18,5 @@
             :page-title "Nerchuko API Documentation"
             :web-src-dir "http://github.com/sids/nerchuko/blob/"
             :trim-prefix "nerchuko."
+            :load-except-list [#"src/nerchuko/examples/*"]
             :copyright "Copyright 2010 Siddhartha Reddy"})

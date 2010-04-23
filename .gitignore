@@ -6,3 +6,4 @@ classes
 src/test
 autodoc/**
 pom.xml
+/data/
