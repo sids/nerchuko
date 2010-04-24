@@ -6,7 +6,7 @@ nerchuko's classification capabilities."
   (:use [clojure.contrib.def :only (defnk)])
   (:require [clojure.contrib.str-utils2 :as str-utils2]))
 
-(defnk learn-model
+(defn learn-model
   "Uses the classifier implementation set to *classifier* to learn from
 the training-dataset and generate a model. Returns the model.
 
@@ -14,33 +14,33 @@ training-dataset must be a sequence of training examples each of which
 must be a 2-item vector of the document and the corresponding class.
 Each document should be a map with the features as the keys and the
 'quantity' of those features as the values."
-  [classifier training-dataset :prepare? false]
+  [classifier training-dataset]
   (call-in-ns classifier 'learn-model
-              training-dataset :prepare? prepare?))
+              training-dataset))
 
-(defnk scores
+(defn scores
   "Classifies doc using model and returns the scores for each class as a map."
-  [model doc :prepare? false]
+  [model doc]
   (call-in-ns (:classifier model) 'scores
-              model doc :prepare? prepare?))
+              model doc))
 
-(defnk classify
+(defn classify
   "Classifies doc using model and returns the class with the maximum score."
-  [model doc :prepare? false]
-  (call-in-ns (:classifier model) 'classify model
-              doc :prepare? prepare?))
+  [model doc]
+  (call-in-ns (:classifier model) 'classify
+              model doc))
 
-(defnk get-confusion-matrix
+(defn get-confusion-matrix
   "Generates a confusion matrix by classifying every document in test-dataset
 using model."
-  [model test-dataset :prepare? false]
+  [model test-dataset]
   (let [empty-matrix (reduce (fn [h class]
                                (assoc h class {}))
                              {}
                              (:classes model))]
     (->> test-dataset
          (map (fn [[doc class]]
-                {class {(classify model doc :prepare? prepare?) 1}}))
+                {class {(classify model doc) 1}}))
          (reduce (partial merge-with merge-with-+))
          (merge empty-matrix))))
 
@@ -53,7 +53,7 @@ corresponding values."
 (declare print-confusion-matrix)
 
 (defnk get-confusion-matrices
-  [classifier n training-dataset :print? true :prepare? false]
+  [classifier n training-dataset :print? true]
   (let [folds (partition-random n
                                 training-dataset)]
     (doall
@@ -64,11 +64,9 @@ corresponding values."
                                             (concat (take idx folds)
                                                     (rest (drop idx folds))))
                     model            (learn-model classifier
-                                                  training-dataset
-                                                  :prepare? prepare?)
+                                                  training-dataset)
                     confusion-matrix (get-confusion-matrix model
-                                                           test-dataset
-                                                           :prepare? prepare?)]
+                                                           test-dataset)]
                 (if print?
                   (do
                     (println "\nTrial" (inc idx) (str-utils2/repeat "=" 32) "\n")
@@ -82,11 +80,10 @@ true (default is true), prints the confusion matrices of each trial as
 well as a summary confusion matrix. The summary confusion matrix is
 obtained by adding together the confusion matrices from the
 trials. Returns the summary confusion matrix."
-  [classifier n training-dataset :print? true :prepare? false]
+  [classifier n training-dataset :print? true]
   (let [confusion-matrices (get-confusion-matrices classifier n
                                                    training-dataset
-                                                   :print? print?
-                                                   :prepare? prepare?)
+                                                   :print? print?)
         summary-matrix     (apply merge-confusion-matrices
                                   confusion-matrices)]
     (if print?

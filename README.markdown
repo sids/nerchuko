@@ -69,15 +69,12 @@ Here is a quick example of using Nerchuko for classification:
     (def classifier 'nerchuko.classifiers.naive-bayes.multinomial)
 
     (def model (learn-model classifier
-                            training-dataset
-                            :prepare? true))
+                            training-dataset))
 
     (classify model
-              doc-to-classify
-              :prepare? true)
+              doc-to-classify)
     (scores model
-            doc-to-classify
-            :prepare? true)
+            doc-to-classify)
 
 All the classifiers that ship with Nerchuko are in the namespace
 nerchuko.classifiers.*. nerchuko.classification provides some helpers
@@ -85,8 +82,8 @@ that accept the name of the classifier and call the appropriate
 functions in it (learn-model, classify, scores etc.); this should be
 preferred over directly calling the functions in the classifiers
 (apart from providing a unified interface, this has the added
-advantage of provisioning easy experimentation -- by allowing use of
-different classifiers simply by changing a name at one place.)
+advantage of easy experimentation -- by allowing use of different
+classifiers simply by changing a name at one place.)
 
 Typically, using Nerchuko for classification tasks involves the
 following tasks:
@@ -106,10 +103,8 @@ classifier, the values could be numeric, categorical or a mixture of
 both.
 
 Refer the documentation of the classifier you are using for the
-representation it requires. You can pass an optional keyword argument
-:prepare? set to true to have the classifier automatically convert
-your documents to the representation it requires (do this only if your
-documents are not already in the required format). Refer the
+representation it requires. Most of the classifiers will automatically
+convert documents to the representation they require. Refer the
 documentation of the prepare-doc function in the classifier to learn
 how this transformation will be done.
 
@@ -120,6 +115,7 @@ preparing the documents:
 * [nerchuko.text.helpers/tokenize](http://sids.github.com/nerchuko/text.helpers-api.html#nerchuko.text.helpers/tokenize)
 * [nerchuko.text.helpers/tokenize-vals](http://sids.github.com/nerchuko/text.helpers-api.html#nerchuko.text.helpers/tokenize-vals)
 * [nerchuko.text.helpers/bag-of-words](http://sids.github.com/nerchuko/text.helpers-api.html#nerchuko.text.helpers/bag-of-words)
+* [nerchuko.text.helpers/set-of-words](http://sids.github.com/nerchuko/text.helpers-api.html#nerchuko.text.helpers/bag-of-words)
 
 **Important**: Please note that documents should usually be prepared
   in the exact same way when used as a part of the training/test
