@@ -34,7 +34,7 @@ namespace.
     <a class="wiki_link" href="api-index.html">API Index</a><br />
     <a class="wiki_link" href="#">Namespaces:</a>
     <ul id="left-sidebar-list">
-      <li><a href="classification-api.html" class="wiki_link">classification</a></li><li><a href="classifiers.naive-bayes.multinomial-api.html" class="wiki_link">classifiers.naive-bayes.multinomial</a></li><li><a href="feature-selection-api.html" class="wiki_link">feature-selection</a></li><li><a href="feature-selectors.chi-squared-api.html" class="wiki_link">feature-selectors.chi-squared</a></li><li><a href="feature-selectors.collection-frequency-api.html" class="wiki_link">feature-selectors.collection-frequency</a></li><li><a href="feature-selectors.document-frequency-api.html" class="wiki_link">feature-selectors.document-frequency</a></li><li><a href="helpers-api.html" class="wiki_link">helpers</a></li><li><a href="text.helpers-api.html" class="wiki_link">text.helpers</a></li><li><a href="utils-api.html" class="wiki_link">utils</a></li>
+      <li><a href="classification-api.html" class="wiki_link">classification</a></li><li><a href="classifiers.naive-bayes.bernoulli-api.html" class="wiki_link">classifiers.naive-bayes.bernoulli</a></li><li><a href="classifiers.naive-bayes.multinomial-api.html" class="wiki_link">classifiers.naive-bayes.multinomial</a></li><li><a href="feature-selection-api.html" class="wiki_link">feature-selection</a></li><li><a href="feature-selectors.chi-squared-api.html" class="wiki_link">feature-selectors.chi-squared</a></li><li><a href="feature-selectors.collection-frequency-api.html" class="wiki_link">feature-selectors.collection-frequency</a></li><li><a href="feature-selectors.document-frequency-api.html" class="wiki_link">feature-selectors.document-frequency</a></li><li><a href="helpers-api.html" class="wiki_link">helpers</a></li><li><a href="text.helpers-api.html" class="wiki_link">text.helpers</a></li><li><a href="utils-api.html" class="wiki_link">utils</a></li>
     </ul>
   </div>
 </div>
@@ -48,11 +48,11 @@ namespace.
   <div style="margin-left: 1em;" class="toc-section">
     <a href="#toc0">Overview</a>
     <div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.text.helpers/bag-of-words">bag-of-words</a>
+      <a href="#nerchuko.text.helpers/bag-of-tokens">bag-of-tokens</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.text.helpers/set-of-tokens">set-of-tokens</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#nerchuko.text.helpers/tokenize">tokenize</a>
-    </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.text.helpers/tokenize-vals">tokenize-vals</a>
     </div>
     <br />
   </div>
@@ -72,12 +72,21 @@ by <span id="author">Unknown</span><br />
 <div id="var-entry">
   <br />
   <hr />
-  <h2 id="nerchuko.text.helpers/bag-of-words">bag-of-words</h2>
+  <h2 id="nerchuko.text.helpers/bag-of-tokens">bag-of-tokens</h2>
   <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (bag-of-words s)
+  <pre id="var-usage">Usage: (bag-of-tokens s)
 </pre>
   <pre id="var-docstr">Tokenizes s and constructs a bag (multiset) of the tokens</pre>
-  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/text/helpers.clj#L56" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/1bfb04b89f796e0b046ad7715f8baae3ca7bb644/src/nerchuko/text/helpers.clj#L14" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.text.helpers/set-of-tokens">set-of-tokens</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (set-of-tokens s)
+</pre>
+  <pre id="var-docstr">Tokenizes s and constructs a bag (multiset) of the tokens</pre>
+  <a href="http://github.com/sids/nerchuko/blob/1bfb04b89f796e0b046ad7715f8baae3ca7bb644/src/nerchuko/text/helpers.clj#L21" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -87,46 +96,7 @@ by <span id="author">Unknown</span><br />
 </pre>
   <pre id="var-docstr">Given a string, returns a list of tokens.
 Uses clj.text.tokenization/tokenize of tokenization.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/text/helpers.clj#L9" id="var-source">Source</a>
-</div><div id="var-entry">
-  <br />
-  <hr />
-  <h2 id="nerchuko.text.helpers/tokenize-vals">tokenize-vals</h2>
-  <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (tokenize-vals m &amp; options)
-       (tokenize-vals m)
-</pre>
-  <pre id="var-docstr">Given a map, replaces its string vals with a list of tokens from
-the string. Uses tokenize for tokenization.
-
-Additional keyword arguments :only or :except can be passed to limit
-the keys whose values are acter upon.
-
-For example:
-
-  =&gt; (def m {:a "hello world!"
-            :b 2
-            :c ["this will never be tokenized"]
-            :d "good bye"})
-
-  =&gt; (tokenize-vals m)
-  {:a ("hello" "world!")
-   :b 2
-   :c ["this will never be tokenized"]
-   :d ("good" "bye")}
-
-  =&gt; (tokenize-vals m :only #{:a :b})
-  {:a ("hello" "world!")
-   :b 2
-   :c ["this will never be tokenized"]
-   :d "good bye"}
-
-  =&gt; (tokenize-vals m :except #{:a :c})
-  {:a "hello world!"
-   :b 2
-   :c ["this will never be tokenized"]
-   :d ("good" "bye")}</pre>
-  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/text/helpers.clj#L15" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/1bfb04b89f796e0b046ad7715f8baae3ca7bb644/src/nerchuko/text/helpers.clj#L8" id="var-source">Source</a>
 </div>
 
 

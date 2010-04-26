@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>feature-selection API reference (Nerchuko)</title>
+    <title>classifiers.naive-bayes.bernoulli API reference (Nerchuko)</title>
     <link href="static/favicon.png" rel="icon" />
     <link href="static/favicon.png" rel="shortcut icon" />
     <link media="all" type="text/css" href="static/clojure.css" rel="stylesheet" />
@@ -48,61 +48,107 @@ namespace.
   <div style="margin-left: 1em;" class="toc-section">
     <a href="#toc0">Overview</a>
     <div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.feature-selection/find-and-select-features">find-and-select-features</a>
+      <a href="#nerchuko.classifiers.naive-bayes.bernoulli/classifier">classifier</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.feature-selection/find-features">find-features</a>
+      <a href="#nerchuko.classifiers.naive-bayes.bernoulli/classify">classify</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.feature-selection/select-features">select-features</a>
+      <a href="#nerchuko.classifiers.naive-bayes.bernoulli/learn-model">learn-model</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.classifiers.naive-bayes.bernoulli/prepare-doc">prepare-doc</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.classifiers.naive-bayes.bernoulli/scores">scores</a>
     </div>
     <br />
   </div>
 </div>
 </div>
-                <div id="content-tag"><h1 id="overview">API for <span id="namespace-name">feature-selection</span></h1>
+                <div id="content-tag"><h1 id="overview">API for <span id="namespace-name">classifiers.naive-bayes.bernoulli</span></h1>
 by <span id="author">Unknown</span><br />
 <br />Usage:
 <pre>
 (ns your-namespace
-  (:require <span id="long-name">nerchuko.feature-selection</span>))
+  (:require <span id="long-name">nerchuko.classifiers.naive-bayes.bernoulli</span>))
 </pre><pre>
 </pre><h2>Overview</h2>
-<pre id="namespace-docstr">This namespace provides the primary functions for accessing
-nerchuko's feature selection capabilities.</pre>
+<pre id="namespace-docstr"></pre>
 <br />
 <h2>Public Variables and Functions</h2>
 <div id="var-entry">
   <br />
   <hr />
-  <h2 id="nerchuko.feature-selection/find-and-select-features">find-and-select-features</h2>
+  <h2 id="nerchuko.classifiers.naive-bayes.bernoulli/classifier">classifier</h2>
   <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (find-and-select-features feature-selector k dataset)
+  <pre id="var-usage">Usage: (classifier model)
 </pre>
-  <pre id="var-docstr">Find the _best_ k features using feature-selector and then filter
-the features in each doc of the dataset to keep only those
-features. Returns the modified dataset.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/feature_selection.clj#L23" id="var-source">Source</a>
+  <pre id="var-docstr">Returns (partial classify model).
+The return value can be used as a classifier function that classifies
+a given doc.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/1bfb04b89f796e0b046ad7715f8baae3ca7bb644/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L175" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
-  <h2 id="nerchuko.feature-selection/find-features">find-features</h2>
+  <h2 id="nerchuko.classifiers.naive-bayes.bernoulli/classify">classify</h2>
   <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (find-features feature-selector k dataset)
+  <pre id="var-usage">Usage: (classify model doc &amp; [default-class])
 </pre>
-  <pre id="var-docstr">Return a set of the _best_ k features from the dataset using
-feature-selector. The docs in the dataset must all be
-features-map's.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/feature_selection.clj#L7" id="var-source">Source</a>
+  <pre id="var-docstr">Classifies the doc using a Naive Bayes classifier based on model.
+Returns the most probable class.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/1bfb04b89f796e0b046ad7715f8baae3ca7bb644/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L168" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
-  <h2 id="nerchuko.feature-selection/select-features">select-features</h2>
+  <h2 id="nerchuko.classifiers.naive-bayes.bernoulli/learn-model">learn-model</h2>
   <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (select-features dataset features)
+  <pre id="var-usage">Usage: (learn-model training-dataset)
 </pre>
-  <pre id="var-docstr">Given a set of features and a dataset, filters every doc in the
-dataset to keep only those features. The docs in the dataset must
-all be features-map's. Returns the modified dataset.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/feature_selection.clj#L15" id="var-source">Source</a>
+  <pre id="var-docstr">Returns the classifier model learned from the training-dataset.
+
+The training-dataset must be a seq of training examples each of which
+must be a 2-item vector of the document and the correct class of that
+document. prepare-doc will be called on each document.
+
+The model is a map with the following keys:
+:classifier, a symbol naming this namespace.
+:classes, a hash-set of all the classes.
+:features, a hash-set of all the features.
+:priors, prior probabilities for each class.
+:cond-probs, conditional probabilities (probability of feature given
+  class) for each class for each feature.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/1bfb04b89f796e0b046ad7715f8baae3ca7bb644/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L93" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.classifiers.naive-bayes.bernoulli/prepare-doc">prepare-doc</h2>
+  <span id="var-type">multimethod</span><br />
+  <pre id="var-usage">Usage: (prepare-doc doc)
+</pre>
+  <pre id="var-docstr">Converts the given doc to a Set of features.
+
+How the Set is created depends on what doc is:
+
+If doc is a Collection, each distinct element of the collection is
+considered a feature.
+
+If doc is a String, it is tokenized and the tokens are considered as
+the features. Uses nerchuko.text.helpers/set-of-words.
+
+If doc is a Map, it is treated as an attreibute map and the keys are
+considered as the features. The values must all be numbers; otherwise,
+an IllegalArgumentException is thrown.
+
+If doc is anything else, an IllegalArgumentException is thrown.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/1bfb04b89f796e0b046ad7715f8baae3ca7bb644/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L10" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.classifiers.naive-bayes.bernoulli/scores">scores</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (scores model doc)
+</pre>
+  <pre id="var-docstr">Returns the a posteriori probabilities of the document
+belonging to each class, estimated using the Naive Bayes
+classifier over model.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/1bfb04b89f796e0b046ad7715f8baae3ca7bb644/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L156" id="var-source">Source</a>
 </div>
 
 

@@ -34,7 +34,7 @@ namespace.
     <a class="wiki_link" href="api-index.html">API Index</a><br />
     <a class="wiki_link" href="#">Namespaces:</a>
     <ul id="left-sidebar-list">
-      <li><a href="classification-api.html" class="wiki_link">classification</a></li><li><a href="classifiers.naive-bayes.multinomial-api.html" class="wiki_link">classifiers.naive-bayes.multinomial</a></li><li><a href="feature-selection-api.html" class="wiki_link">feature-selection</a></li><li><a href="feature-selectors.chi-squared-api.html" class="wiki_link">feature-selectors.chi-squared</a></li><li><a href="feature-selectors.collection-frequency-api.html" class="wiki_link">feature-selectors.collection-frequency</a></li><li><a href="feature-selectors.document-frequency-api.html" class="wiki_link">feature-selectors.document-frequency</a></li><li><a href="helpers-api.html" class="wiki_link">helpers</a></li><li><a href="text.helpers-api.html" class="wiki_link">text.helpers</a></li><li><a href="utils-api.html" class="wiki_link">utils</a></li>
+      <li><a href="classification-api.html" class="wiki_link">classification</a></li><li><a href="classifiers.naive-bayes.bernoulli-api.html" class="wiki_link">classifiers.naive-bayes.bernoulli</a></li><li><a href="classifiers.naive-bayes.multinomial-api.html" class="wiki_link">classifiers.naive-bayes.multinomial</a></li><li><a href="feature-selection-api.html" class="wiki_link">feature-selection</a></li><li><a href="feature-selectors.chi-squared-api.html" class="wiki_link">feature-selectors.chi-squared</a></li><li><a href="feature-selectors.collection-frequency-api.html" class="wiki_link">feature-selectors.collection-frequency</a></li><li><a href="feature-selectors.document-frequency-api.html" class="wiki_link">feature-selectors.document-frequency</a></li><li><a href="helpers-api.html" class="wiki_link">helpers</a></li><li><a href="text.helpers-api.html" class="wiki_link">text.helpers</a></li><li><a href="utils-api.html" class="wiki_link">utils</a></li>
     </ul>
   </div>
 </div>
@@ -47,6 +47,10 @@ namespace.
   <h1 class="nopad">Table of Contents</h1>
   <div style="margin-left: 1em;" class="toc-section">
     <a href="#classification">classification</a>
+    
+    <br />
+  </div><div style="margin-left: 1em;" class="toc-section">
+    <a href="#classifiers.naive-bayes.bernoulli">classifiers.naive-bayes.bernoulli</a>
     
     <br />
   </div><div style="margin-left: 1em;" class="toc-section">
@@ -103,14 +107,24 @@ nerchuko's classification capabilities.</pre>
 </div><div id="namespace-entry">
   <br />
   <hr />
+  <h2 id="classifiers.naive-bayes.bernoulli">classifiers.naive-bayes.bernoulli</h2>
+  by <span id="author">unknown author</span><br />
+  <a href="classifiers.naive-bayes.bernoulli-api.html" id="api-link">Detailed API documentation</a><br />
+  <pre id="namespace-docstr"></pre>
+  
+  Public variables and functions:
+  <span id="var-link"><a href="classifiers.naive-bayes.bernoulli-api.html#nerchuko.classifiers.naive-bayes.bernoulli/classifier" id="var-tag">classifier</a> </span><span id="var-link"><a href="classifiers.naive-bayes.bernoulli-api.html#nerchuko.classifiers.naive-bayes.bernoulli/classify" id="var-tag">classify</a> </span><span id="var-link"><a href="classifiers.naive-bayes.bernoulli-api.html#nerchuko.classifiers.naive-bayes.bernoulli/learn-model" id="var-tag">learn-model</a> </span><span id="var-link"><a href="classifiers.naive-bayes.bernoulli-api.html#nerchuko.classifiers.naive-bayes.bernoulli/prepare-doc" id="var-tag">prepare-doc</a> </span><span id="var-link"><a href="classifiers.naive-bayes.bernoulli-api.html#nerchuko.classifiers.naive-bayes.bernoulli/scores" id="var-tag">scores</a> </span><br />
+  
+</div><div id="namespace-entry">
+  <br />
+  <hr />
   <h2 id="classifiers.naive-bayes.multinomial">classifiers.naive-bayes.multinomial</h2>
   by <span id="author">unknown author</span><br />
   <a href="classifiers.naive-bayes.multinomial-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr">An implementation of the Naive Bayes classification technique,
-using the multinomial model for counting the features.</pre>
+  <pre id="namespace-docstr"></pre>
   
   Public variables and functions:
-  <span id="var-link"><a href="classifiers.naive-bayes.multinomial-api.html#nerchuko.classifiers.naive-bayes.multinomial/classifier" id="var-tag">classifier</a> </span><span id="var-link"><a href="classifiers.naive-bayes.multinomial-api.html#nerchuko.classifiers.naive-bayes.multinomial/classify" id="var-tag">classify</a> </span><span id="var-link"><a href="classifiers.naive-bayes.multinomial-api.html#nerchuko.classifiers.naive-bayes.multinomial/learn-model" id="var-tag">learn-model</a> </span><span id="var-link"><a href="classifiers.naive-bayes.multinomial-api.html#nerchuko.classifiers.naive-bayes.multinomial/scores" id="var-tag">scores</a> </span><br />
+  <span id="var-link"><a href="classifiers.naive-bayes.multinomial-api.html#nerchuko.classifiers.naive-bayes.multinomial/classifier" id="var-tag">classifier</a> </span><span id="var-link"><a href="classifiers.naive-bayes.multinomial-api.html#nerchuko.classifiers.naive-bayes.multinomial/classify" id="var-tag">classify</a> </span><span id="var-link"><a href="classifiers.naive-bayes.multinomial-api.html#nerchuko.classifiers.naive-bayes.multinomial/learn-model" id="var-tag">learn-model</a> </span><span id="var-link"><a href="classifiers.naive-bayes.multinomial-api.html#nerchuko.classifiers.naive-bayes.multinomial/prepare-doc" id="var-tag">prepare-doc</a> </span><span id="var-link"><a href="classifiers.naive-bayes.multinomial-api.html#nerchuko.classifiers.naive-bayes.multinomial/scores" id="var-tag">scores</a> </span><br />
   
 </div><div id="namespace-entry">
   <br />
@@ -163,11 +177,10 @@ nerchuko's feature selection capabilities.</pre>
   <h2 id="helpers">helpers</h2>
   by <span id="author">unknown author</span><br />
   <a href="helpers-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr">Functions that help with various auxiliary tasks such as converting
-documents to the necessary format etc.</pre>
+  <pre id="namespace-docstr"></pre>
   
   Public variables and functions:
-  <span id="var-link"><a href="helpers-api.html#nerchuko.helpers/bag" id="var-tag">bag</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/load-model" id="var-tag">load-model</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/model" id="var-tag">model</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/save-model" id="var-tag">save-model</a> </span><br />
+  <span id="var-link"><a href="helpers-api.html#nerchuko.helpers/load-model" id="var-tag">load-model</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/model" id="var-tag">model</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/save-model" id="var-tag">save-model</a> </span><br />
   
 </div><div id="namespace-entry">
   <br />
@@ -178,7 +191,7 @@ documents to the necessary format etc.</pre>
   <pre id="namespace-docstr"></pre>
   
   Public variables and functions:
-  <span id="var-link"><a href="text.helpers-api.html#nerchuko.text.helpers/bag-of-words" id="var-tag">bag-of-words</a> </span><span id="var-link"><a href="text.helpers-api.html#nerchuko.text.helpers/tokenize" id="var-tag">tokenize</a> </span><span id="var-link"><a href="text.helpers-api.html#nerchuko.text.helpers/tokenize-vals" id="var-tag">tokenize-vals</a> </span><br />
+  <span id="var-link"><a href="text.helpers-api.html#nerchuko.text.helpers/bag-of-tokens" id="var-tag">bag-of-tokens</a> </span><span id="var-link"><a href="text.helpers-api.html#nerchuko.text.helpers/set-of-tokens" id="var-tag">set-of-tokens</a> </span><span id="var-link"><a href="text.helpers-api.html#nerchuko.text.helpers/tokenize" id="var-tag">tokenize</a> </span><br />
   
 </div><div id="namespace-entry">
   <br />
@@ -186,12 +199,10 @@ documents to the necessary format etc.</pre>
   <h2 id="utils">utils</h2>
   by <span id="author">unknown author</span><br />
   <a href="utils-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr">General Clojure utilities. These are used pretty heavily within
-the nerchuko code itself and might prove to be quite useful even
-for applications using nerchuko.</pre>
+  <pre id="namespace-docstr"></pre>
   
   Public variables and functions:
-  <span id="var-link"><a href="utils-api.html#nerchuko.utils/as-str" id="var-tag">as-str</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/call-in-ns" id="var-tag">call-in-ns</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/key-with-max-val" id="var-tag">key-with-max-val</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/largest-n-by-vals" id="var-tag">largest-n-by-vals</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-firsts" id="var-tag">map-firsts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-keys" id="var-tag">map-keys</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-lasts" id="var-tag">map-lasts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-with-index" id="var-tag">map-with-index</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/merge-with-+" id="var-tag">merge-with-+</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/on-submap" id="var-tag">on-submap</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/partition-random" id="var-tag">partition-random</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/to-probabilities" id="var-tag">to-probabilities</a> </span><br />
+  <span id="var-link"><a href="utils-api.html#nerchuko.utils/as-str" id="var-tag">as-str</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/call-in-ns" id="var-tag">call-in-ns</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/flatten-map" id="var-tag">flatten-map</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/key-with-max-val" id="var-tag">key-with-max-val</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/largest-n-by-vals" id="var-tag">largest-n-by-vals</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-firsts" id="var-tag">map-firsts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-keys" id="var-tag">map-keys</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-lasts" id="var-tag">map-lasts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-with-index" id="var-tag">map-with-index</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/merge-with-+" id="var-tag">merge-with-+</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/on-submap" id="var-tag">on-submap</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/partition-random" id="var-tag">partition-random</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/to-probabilities" id="var-tag">to-probabilities</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/to-seq" id="var-tag">to-seq</a> </span><br />
   
 </div>
 </div>
