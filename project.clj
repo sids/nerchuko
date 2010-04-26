@@ -5,7 +5,9 @@
                nerchuko.feature-selection
                nerchuko.utils
                nerchuko.helpers
+               nerchuko.text.helpers
                nerchuko.classifiers.naive-bayes.multinomial
+               nerchuko.classifiers.naive-bayes.bernoulli
                nerchuko.feature-selectors.document-frequency
                nerchuko.feature-selectors.collection-frequency
                nerchuko.feature-selectors.chi-squared]
