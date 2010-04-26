@@ -34,7 +34,32 @@ each with their total sum. Returns a seq."
 
 ;;;;;; utils for transforming data structures (one data structure to another)
 
-(declare merge-with-+)
+(defn to-seq
+  "Returns a seq.
+If v implements Seqable, simply calls seq on it.  Otherwise returns
+a seq containing v as the only element."
+  [v]
+  (if (isa? (class v) clojure.lang.Seqable)
+    (seq v)
+    (seq (list v))))
+
+(defn flatten-map
+  "'Flattens' the map into a seq.
+Elements of the seq are all 2-element vectors where the first element
+is a key of m. The second elements are all derived from the values of
+m as following: if a value of m is Seqable, every element of that seq
+would appear as a second item; otherwise, the value itself will appear
+as a second item.
+
+For example:
+    => (flatten-map {:a 1 :b [\"hello\" \"world\"] :c {:x 2 :y 3} :d \"good bye\"})
+    ([:a 1] [:b \"hello\"] [:b \"world\"] [:c [:x 2]] [:c [:y 3]] [:d \"good bye\"])"
+  [m]
+  (seq
+   (reduce into []
+           (map (fn [[k v]]
+                  (map #(vector k %) (to-seq v)))
+                m))))
 
 (defn on-submap
   "Calls f on a submap of m and merges the result into m.
