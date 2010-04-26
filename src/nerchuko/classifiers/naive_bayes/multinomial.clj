@@ -4,7 +4,6 @@ using the multinomial model."
   (:use [nerchuko utils helpers]
         nerchuko.text.helpers)
   (:use [clojure.set :only (intersection)]
-        [clojure.contrib.def :only (defnk)]
         [clojure.contrib.seq-utils :only (frequencies)]
         [clojure.contrib.generic math-functions functor]
         clojure.contrib.pprint))
@@ -41,11 +40,11 @@ If doc is anything else, throws an IllegalArgumentException."}
 
 (defmethod prepare-doc java.util.Collection
   [coll]
-  (bag coll))
+  (frequencies coll))
 
 (defmethod prepare-doc String
   [s]
-  (bag-of-words s))
+  (bag-of-tokens s))
 
 (defmethod prepare-doc :default
   [_]

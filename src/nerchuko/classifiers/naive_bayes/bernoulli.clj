@@ -4,7 +4,6 @@ using the multivariate Bernoulli model."
   (:use [nerchuko utils helpers]
         nerchuko.text.helpers)
   (:use [clojure.set]
-        [clojure.contrib.def :only (defnk)]
         [clojure.contrib.seq-utils :only (frequencies)]
         [clojure.contrib.generic math-functions functor]))
 
@@ -36,7 +35,7 @@ If doc is anything else, an IllegalArgumentException is thrown."}
 
 (defmethod prepare-doc String
   [s]
-  (set-of-words s))
+  (set-of-tokens s))
 
 (defmethod prepare-doc java.util.Map
   [m]

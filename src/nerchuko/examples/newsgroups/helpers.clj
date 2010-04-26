@@ -1,7 +1,8 @@
 (ns nerchuko.examples.newsgroups.helpers
   (:use [nerchuko helpers utils]
         nerchuko.text.helpers)
-  (:use [clojure.contrib.str-utils2 :only (lower-case)]))
+  (:use [clojure.contrib.str-utils2 :only (lower-case)]
+        [clojure.contrib.seq-utils :only (frequencies)]))
 
 (defn- get-files
   "Given a seq of directories, returns a seq of all the files in them
@@ -19,7 +20,7 @@
   (-> file
       slurp
       tokenize
-      bag))
+      frequencies))
 
 (defn load-training-dataset
   "Given a seq of directories, returns a training dataset loaded from
