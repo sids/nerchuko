@@ -11,12 +11,13 @@ Selection](http://en.wikipedia.org/wiki/Feature_selection),
 [Cross-validation](http://en.wikipedia.org/wiki/Cross-validation_%28statistics%29)
 etc.
 
-[API Documentation](http://sids.github.com/nerchuko)
-
 ## Getting Started
 
 Please note that Nerchuko is under active development. There may be
 bugs and the API may change without notice.
+
+The API documentation can be found here:
+[http://sids.github.com/nerchuko](http://sids.github.com/nerchuko).
 
 ### Use with *leiningen* or *maven*
 Nerchujo is hosted on [Clojars](http://clojars.org/). You can find the
@@ -39,7 +40,7 @@ system, use the following command to get the Nerchuko source code:
 
     git clone git://github.com/sids/nerchuko.git
 
-Otherwise, you can directly download the source code from here:
+Otherwise, you can download the source code from here:
 [http://github.com/sids/nerchuko/tarball/master](http://github.com/sids/nerchuko/tarball/master).
 
 You will need
@@ -50,82 +51,41 @@ using the following command:
     cd nerchuko
     lein jar
 
-## API
+## Classification
 
-The API documentation can be found here:
-[http://sids.github.com/nerchuko](http://sids.github.com/nerchuko).
+Nerchuko's classification capabilities can be accessed through
+[nerchuko.classification](http://sids.github.com/nerchuko/classification-api.html).
+Documentation for the namespace provides a simple example of how to use
+it. For a more elaborate example, look at the [20 Newsgroups
+example](http://github.com/sids/nerchuko/tree/master/src/nerchuko/examples/newsgroups/).
 
-## Usage: Classification
+The nerchuko.classification namespace also includes other functions
+that might be useful when dealing with classification tasks: n-fold
+cross validation; produce, manipulate & print confusion matrices.
+More helper functions can be found in the namespaces
+[nerchuko.helpers](http://sids.github.com/nerchuko/helpers-api.html).
 
-Here is a quick example of using Nerchuko for classification:
+When working on text classification, functions in the
+[nerchuko.text.helpers](http://sids.github.com/nerchuko/helpers-api.html)
+namespace might be useful.
 
-    (require 'nerchuko.classification)
+Nerchuko includes implementations for the following classifiers:
+ * [Naive Bayes Multinomial](http://sids.github.com/nerchuko/classifiers.naive-bayes.multinomial-api.html)
+ * [Naive Bayes Bernoulli](http://sids.github.com/nerchuko/classifiers.naive-bayes.bernoulli-api.html)
 
-    (def training-dataset '(["" :interesting]
-                            ["" :not-interesting]
-                            ["" :not-interesting]
-                            ["" :interesting]))
-    (def doc-to-classify "")
-    (def classifier 'nerchuko.classifiers.naive-bayes.multinomial)
+#### Feature Selection
 
-    (def model (learn-model classifier
-                            training-dataset))
+Nerchuko's feature selection capabilities can be accessed through
+[nerchuko.feature-selection](http://sids.github.com/nerchuko/feature-selection-api.html).
+Documentation for the namespace provides simple example of how to use
+it. For a more elaborate example, look at the [20 Newsgroups
+example](http://github.com/sids/nerchuko/tree/master/src/nerchuko/examples/newsgroups/).
 
-    (classify model
-              doc-to-classify)
-    (scores model
-            doc-to-classify)
-
-All the classifiers that ship with Nerchuko are in the namespace
-nerchuko.classifiers.*. nerchuko.classification provides some helpers
-that accept the name of the classifier and call the appropriate
-functions in it (learn-model, classify, scores etc.); this should be
-preferred over directly calling the functions in the classifiers
-(apart from providing a unified interface, this has the added
-advantage of easy experimentation -- by allowing use of different
-classifiers simply by changing a name at one place.)
-
-Typically, using Nerchuko for classification tasks involves the
-following tasks:
-
-### Load training dataset
-
-Training dataset must be a seq of examples, each example being a
-2-item vector comprising a document and the correct class for the
-document.
-
-### Prepare the documents for use with Nerchuko:
-
-Different Nerchuko classifiers require the documents to be represented
-in different ways. Typically, the documents need to be represented as
-a map of attributes ("features") mapped to values. Depending on the
-classifier, the values could be numeric, categorical or a mixture of
-both.
-
-Refer the documentation of the classifier you are using for the
-representation it requires. Most of the classifiers will automatically
-convert documents to the representation they require. Refer the
-documentation of the prepare-doc function in the classifier to learn
-how this transformation will be done.
-
-Nerchuko provides several helper functions that could be very useful when
-preparing the documents:
-
-* [nerchuko.helpers/bag](http://sids.github.com/nerchuko/helpers-api.html#nerchuko.helpers/bag)
-* [nerchuko.text.helpers/tokenize](http://sids.github.com/nerchuko/text.helpers-api.html#nerchuko.text.helpers/tokenize)
-* [nerchuko.text.helpers/tokenize-vals](http://sids.github.com/nerchuko/text.helpers-api.html#nerchuko.text.helpers/tokenize-vals)
-* [nerchuko.text.helpers/bag-of-words](http://sids.github.com/nerchuko/text.helpers-api.html#nerchuko.text.helpers/bag-of-words)
-* [nerchuko.text.helpers/set-of-words](http://sids.github.com/nerchuko/text.helpers-api.html#nerchuko.text.helpers/bag-of-words)
-
-**Important**: Please note that documents should usually be prepared
-  in the exact same way when used as a part of the training/test
-  datasets and when being directly used for classification.
-
-### Feature selection:
-
-### Learning a model:
-
-### Classify new instances:
+Nerchuko includes implementations for the following feature selection
+techniques:
+ * [Chi-Square](http://sids.github.com/nerchuko/feature-selectors.chi-squared-api.html)
+ * [Document Frequency](http://sids.github.com/nerchuko/feature-selectors.document-frequency-api.html)
+ * [Collection Frequency](http://sids.github.com/nerchuko/feature-selectors.collection-frequency-api.html)
 
 ## Examples
 
@@ -135,13 +95,47 @@ directory for some examples demonstrating the usage of Nerchuko. These
 examples use Nerchuko to work with some standard machine learning
 datasets. This is currently the best way to learn to use Nerchuko.
 
+You can run the examples using the command
+
+    lein run-example
+
+This will print out a short help with instructions on running specific examples.
+
 ### [20 Newsgroups Data Set](http://people.csail.mit.edu/jrennie/20Newsgroups/)
 
 > The 20 Newsgroups data set is a collection of approximately 20,000
 > newsgroup documents, partitioned (nearly) evenly across 20 different
 > newsgroups.
 
+This is a very simple and good example demonstrating the usage of
+Nerchuko for text classification/categorization.
 
+Download the data set from the above link and then run this using the
+command:
+
+    lein run-example newsgroups
+
+### [Spambade Data Set](http://archive.ics.uci.edu/ml/datasets/Spambase)
+
+> The "spam" concept is diverse: advertisements for products/web sites,
+> make money fast schemes, chain letters, pornography...
+>
+> Our collection of spam e-mails came from our postmaster and
+> individuals who had filed spam. Our collection of non-spam e-mails
+> came from filed work and personal e-mails, and hence the word 'george'
+> and the area code '650' are indicators of non-spam. These are useful
+> when constructing a personalized spam filter. One would either have to
+> blind such non-spam indicators or get a very wide collection of
+> non-spam to generate a general purpose spam filter.
+
+Although this might seem like another example for text classification,
+the the text has been preprocessed and we are presented with a numeric
+data set.
+
+Download the data set from the above link and then run this using the
+command:
+
+    lein run-example spambase
 
 ## License
 

@@ -1,6 +1,43 @@
 (ns nerchuko.feature-selection
-  "This namespace provides the primary functions for accessing
-nerchuko's feature selection capabilities."
+  "This namespace provides the primary interface to nerchuko's feature
+selection capabilities.
+
+Here is a typical (simplified) workflow for feature selection:
+
+    ;; access feature selection capabilities through this namespace
+    (use 'nerchuko.classification)
+
+    ;; load training dataset: training dataset must be a seq of
+    ;; 2-element vectors where the first element is a document
+    ;; and the second element the correct class of that document
+    (def training-dataset '([\"\" :interesting]
+                            [\"\" :not-interesting]
+                            [\"\" :not-interesting]
+                            [\"\" :interesting]))
+
+    ;; pick a feature-selector: all the feature-selectors are in the
+    ;; namespace nerchuko.feature-selectors
+    (def feature-selector 'nerchuko.feature-selectors.chi-squared)
+
+    ;; decide the number k of features to select
+    (def k 40)
+    ;; you'll probably want to experiment with different values to
+    ;; determine what works best for your dataset
+
+    ;; select the best k features from the dataset
+    (def features
+         (find-features feature-selector k training-dataset))
+
+    ;; create an altered dataset that contains only the selected
+    ;; features
+    (def better-training-dataset
+         (select-features training-dataset features))
+
+    ;; or do both the above in one shot
+    (def better-training-dataset
+         (find-and-select-features feature-selector k training-dataset))
+
+    ;; better-training-dataset can now be used for classification etc."
   (:use nerchuko.utils)
   (:require [nerchuko.feature-selectors chi-squared document-frequency collection-frequency]))
 

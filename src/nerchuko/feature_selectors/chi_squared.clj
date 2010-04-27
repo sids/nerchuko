@@ -1,4 +1,10 @@
 (ns nerchuko.feature-selectors.chi-squared
+  "Selection of features based on the chi-square test of
+independence.
+
+This feature selector works with numeric features map. If given
+documents are in any other representation, they are converted to a
+numeric features map using prepare-doc."
   (:use nerchuko.utils)
   (:use [clojure.contrib.generic math-functions functor]
         [clojure.contrib.seq-utils :only (frequencies)]))

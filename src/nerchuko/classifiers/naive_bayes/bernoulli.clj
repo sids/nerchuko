@@ -1,6 +1,10 @@
 (ns nerchuko.classifiers.naive-bayes.bernoulli
   "An implementation of the Naive Bayes classification technique,
-using the multivariate Bernoulli model."
+using the multivariate Bernoulli model.
+
+This classifer works with a set of features. If given documents are in
+any other representation, they are converted to a set of features
+using prepare-doc."
   (:use [nerchuko utils helpers]
         nerchuko.text.helpers)
   (:use [clojure.set]

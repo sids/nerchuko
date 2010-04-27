@@ -1,6 +1,62 @@
 (ns nerchuko.classification
-  "This namespace provides the primary functions for accessing
-nerchuko's classification capabilities."
+  "This namespace is the primary interface to nerchuko's classification capabilities.
+
+Here is a typical (simplified) workflow for classification:
+
+    ;; access classification capabilities through this namespace
+    (use 'nerchuko.classification)
+
+    ;; keep some helper functions handy
+    (require '[nerchuko.helpers :as h])
+
+    ;; load training dataset: training dataset must be a seq of
+    ;; 2-element vectors where the first element is a document
+    ;; and the second element the correct class of that document
+    (def training-dataset '([\"\" :interesting]
+                            [\"\" :not-interesting]
+                            [\"\" :not-interesting]
+                            [\"\" :interesting]))
+
+    ;; optionally, modify the training-dataset to only keep the
+    ;; best k features: see nerchuko.feature-selection
+
+    ;; pick a classifier: all the classifiers are in the namespace
+    ;; nerchuko.classifiers
+    (def classifier 'nerchuko.classifiers.naive-bayes.multinomial)
+
+    ;; print a confusion matrix to understand the effectiveness of
+    ;; the classifier using n-fold cross-validation (10-fold is
+    ;; commonly used)
+    (cross-validate classifier 10)
+
+    ;; train: learn a model from the training dataset
+    (def model
+         (learn-model classifier training-dataset))
+
+    ;; if you have a test/validation dataset
+    ;; (same structure as training dataset)
+    (def test-dataset '([\"\" :interesting]
+                        [\"\" :not-interesting]
+                        [\"\" :not-interesting]
+                        [\"\" :interesting]))
+
+    ;; print a confusion matrix showing how well the model works on it
+    (print-confusion-matrix (get-confusion-matrix model test-dataset))
+
+    ;; save the mode to disk
+    (h/save-model \"interesting.model\" model)
+
+    ;; later, when you have a document to classify
+    (def doc-to-classify \"\")
+
+    ;; load the saved model
+    (def model (h/load-model \"interesting.model\"))
+
+    ;; and classify the document
+    (classify model doc-to-classify)
+
+    ;; or get scores for each class
+    (scores model doc-to-classify)"
   (:use nerchuko.utils)
   (:require [nerchuko.classifiers.naive-bayes multinomial bernoulli])
   (:use [clojure.contrib.def :only (defnk)])

@@ -1,6 +1,10 @@
 (ns nerchuko.classifiers.naive-bayes.multinomial
   "An implementation of the Naive Bayes classification technique,
-using the multinomial model."
+using the multinomial model.
+
+This classifer works with numeric features map. If given documents are
+in any other representation, they are converted to a numeric features
+map using prepare-doc."
   (:use [nerchuko utils helpers]
         nerchuko.text.helpers)
   (:use [clojure.set :only (intersection)]
