@@ -98,8 +98,59 @@ namespace.
   <h2 id="classification">classification</h2>
   by <span id="author">unknown author</span><br />
   <a href="classification-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr">This namespace provides the primary functions for accessing
-nerchuko's classification capabilities.</pre>
+  <pre id="namespace-docstr">This namespace is the primary interface to nerchuko's classification capabilities.
+
+Here is a typical (simplified) workflow for classification:
+
+    ;; access classification features through this namespace
+    (use 'nerchuko.classification)
+
+    ;; keep some helper functions handy
+    (require '[nerchuko.helpers :as h])
+
+    ;; load training dataset: training dataset must be a seq of
+    ;; 2-element vectors where the first element is a document
+    ;; and the second element the correct class of that document
+    (def training-dataset '(["" :interesting]
+                            ["" :not-interesting]
+                            ["" :not-interesting]
+                            ["" :interesting]))
+
+    ;; pick a classifier: all the classifiers are in the namespace
+    ;; nerchuko.classifiers
+    (def classifier 'nerchuko.classifiers.naive-bayes.multinomial)
+
+    ;; print a confusion matrix to understand the effectiveness of
+    ;; the classifier using n-fold cross-validation
+    (cross-validate classifier 10)
+
+    ;; train: learn a model from the training dataset
+    (def model (learn-model classifier training-dataset))
+
+    ;; if you have a test/validation dataset
+    ;; (same structure as training dataset)
+    (def test-dataset '(["" :interesting]
+                        ["" :not-interesting]
+                        ["" :not-interesting]
+                        ["" :interesting]))
+
+    ;; print a confusion matrix showing how well the model works on it
+    (print-confusion-matrix (get-confusion-matrix model test-dataset))
+
+    ;; save the mode to disk
+    (h/save-model "interesting.model" model)
+
+    ;; later, when you have a document to classify
+    (def doc-to-classify "")
+
+    ;; load the saved model
+    (def model (h/load-model "interesting.model"))
+
+    ;; and classify the document
+    (classify model doc-to-classify)
+
+    ;; or get scores for each class
+    (scores model doc-to-classify)</pre>
   
   Public variables and functions:
   <span id="var-link"><a href="classification-api.html#nerchuko.classification/classify" id="var-tag">classify</a> </span><span id="var-link"><a href="classification-api.html#nerchuko.classification/cross-validate" id="var-tag">cross-validate</a> </span><span id="var-link"><a href="classification-api.html#nerchuko.classification/get-confusion-matrix" id="var-tag">get-confusion-matrix</a> </span><span id="var-link"><a href="classification-api.html#nerchuko.classification/learn-model" id="var-tag">learn-model</a> </span><span id="var-link"><a href="classification-api.html#nerchuko.classification/merge-confusion-matrices" id="var-tag">merge-confusion-matrices</a> </span><span id="var-link"><a href="classification-api.html#nerchuko.classification/print-confusion-matrix" id="var-tag">print-confusion-matrix</a> </span><span id="var-link"><a href="classification-api.html#nerchuko.classification/scores" id="var-tag">scores</a> </span><br />
@@ -177,7 +228,8 @@ nerchuko's feature selection capabilities.</pre>
   <h2 id="helpers">helpers</h2>
   by <span id="author">unknown author</span><br />
   <a href="helpers-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr"></pre>
+  <pre id="namespace-docstr">Functions that help with various auxiliary tasks such as converting
+documents to the necessary format etc.</pre>
   
   Public variables and functions:
   <span id="var-link"><a href="helpers-api.html#nerchuko.helpers/load-model" id="var-tag">load-model</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/model" id="var-tag">model</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/save-model" id="var-tag">save-model</a> </span><br />
@@ -199,7 +251,9 @@ nerchuko's feature selection capabilities.</pre>
   <h2 id="utils">utils</h2>
   by <span id="author">unknown author</span><br />
   <a href="utils-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr"></pre>
+  <pre id="namespace-docstr">General Clojure utilities. These are used pretty heavily within
+the nerchuko code itself and might prove to be quite useful even
+for applications using nerchuko.</pre>
   
   Public variables and functions:
   <span id="var-link"><a href="utils-api.html#nerchuko.utils/as-str" id="var-tag">as-str</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/call-in-ns" id="var-tag">call-in-ns</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/flatten-map" id="var-tag">flatten-map</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/key-with-max-val" id="var-tag">key-with-max-val</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/largest-n-by-vals" id="var-tag">largest-n-by-vals</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-firsts" id="var-tag">map-firsts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-keys" id="var-tag">map-keys</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-lasts" id="var-tag">map-lasts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-with-index" id="var-tag">map-with-index</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/merge-with-+" id="var-tag">merge-with-+</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/on-submap" id="var-tag">on-submap</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/partition-random" id="var-tag">partition-random</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/to-probabilities" id="var-tag">to-probabilities</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/to-seq" id="var-tag">to-seq</a> </span><br />

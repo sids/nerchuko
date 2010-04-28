@@ -74,8 +74,59 @@ by <span id="author">Unknown</span><br />
   (:require <span id="long-name">nerchuko.classification</span>))
 </pre><pre>
 </pre><h2>Overview</h2>
-<pre id="namespace-docstr">This namespace provides the primary functions for accessing
-nerchuko's classification capabilities.</pre>
+<pre id="namespace-docstr">This namespace is the primary interface to nerchuko's classification capabilities.
+
+Here is a typical (simplified) workflow for classification:
+
+    ;; access classification features through this namespace
+    (use 'nerchuko.classification)
+
+    ;; keep some helper functions handy
+    (require '[nerchuko.helpers :as h])
+
+    ;; load training dataset: training dataset must be a seq of
+    ;; 2-element vectors where the first element is a document
+    ;; and the second element the correct class of that document
+    (def training-dataset '(["" :interesting]
+                            ["" :not-interesting]
+                            ["" :not-interesting]
+                            ["" :interesting]))
+
+    ;; pick a classifier: all the classifiers are in the namespace
+    ;; nerchuko.classifiers
+    (def classifier 'nerchuko.classifiers.naive-bayes.multinomial)
+
+    ;; print a confusion matrix to understand the effectiveness of
+    ;; the classifier using n-fold cross-validation
+    (cross-validate classifier 10)
+
+    ;; train: learn a model from the training dataset
+    (def model (learn-model classifier training-dataset))
+
+    ;; if you have a test/validation dataset
+    ;; (same structure as training dataset)
+    (def test-dataset '(["" :interesting]
+                        ["" :not-interesting]
+                        ["" :not-interesting]
+                        ["" :interesting]))
+
+    ;; print a confusion matrix showing how well the model works on it
+    (print-confusion-matrix (get-confusion-matrix model test-dataset))
+
+    ;; save the mode to disk
+    (h/save-model "interesting.model" model)
+
+    ;; later, when you have a document to classify
+    (def doc-to-classify "")
+
+    ;; load the saved model
+    (def model (h/load-model "interesting.model"))
+
+    ;; and classify the document
+    (classify model doc-to-classify)
+
+    ;; or get scores for each class
+    (scores model doc-to-classify)</pre>
 <br />
 <h2>Public Variables and Functions</h2>
 <div id="var-entry">
@@ -86,7 +137,7 @@ nerchuko's classification capabilities.</pre>
   <pre id="var-usage">Usage: (classify model doc)
 </pre>
   <pre id="var-docstr">Classifies doc using model and returns the class with the maximum score.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/2a8a7def0550a59d98b0dd2600053faee8c70757/src/nerchuko/classification.clj#L27" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/f00e4da6ad3cdfdab142aab2eb9aa36227c50170/src/nerchuko/classification.clj#L78" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -100,7 +151,7 @@ true (default is true), prints the confusion matrices of each trial as
 well as a summary confusion matrix. The summary confusion matrix is
 obtained by adding together the confusion matrices from the
 trials. Returns the summary confusion matrix.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/2a8a7def0550a59d98b0dd2600053faee8c70757/src/nerchuko/classification.clj#L76" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/f00e4da6ad3cdfdab142aab2eb9aa36227c50170/src/nerchuko/classification.clj#L127" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -110,7 +161,7 @@ trials. Returns the summary confusion matrix.</pre>
 </pre>
   <pre id="var-docstr">Generates a confusion matrix by classifying every document in test-dataset
 using model.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/2a8a7def0550a59d98b0dd2600053faee8c70757/src/nerchuko/classification.clj#L33" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/f00e4da6ad3cdfdab142aab2eb9aa36227c50170/src/nerchuko/classification.clj#L84" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -125,7 +176,7 @@ training-dataset must be a sequence of training examples each of which
 must be a 2-item vector of the document and the corresponding class.
 Each document should be a map with the features as the keys and the
 'quantity' of those features as the values.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/2a8a7def0550a59d98b0dd2600053faee8c70757/src/nerchuko/classification.clj#L9" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/f00e4da6ad3cdfdab142aab2eb9aa36227c50170/src/nerchuko/classification.clj#L60" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -135,7 +186,7 @@ Each document should be a map with the features as the keys and the
 </pre>
   <pre id="var-docstr">Merges together any number of confusion matrices by adding together the
 corresponding values.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/2a8a7def0550a59d98b0dd2600053faee8c70757/src/nerchuko/classification.clj#L47" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/f00e4da6ad3cdfdab142aab2eb9aa36227c50170/src/nerchuko/classification.clj#L98" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -144,7 +195,7 @@ corresponding values.</pre>
   <pre id="var-usage">Usage: (print-confusion-matrix matrix)
 </pre>
   <pre id="var-docstr">Pretty prints a confusion matrix.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/2a8a7def0550a59d98b0dd2600053faee8c70757/src/nerchuko/classification.clj#L135" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/f00e4da6ad3cdfdab142aab2eb9aa36227c50170/src/nerchuko/classification.clj#L186" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -153,7 +204,7 @@ corresponding values.</pre>
   <pre id="var-usage">Usage: (scores model doc)
 </pre>
   <pre id="var-docstr">Classifies doc using model and returns the scores for each class as a map.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/2a8a7def0550a59d98b0dd2600053faee8c70757/src/nerchuko/classification.clj#L21" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/f00e4da6ad3cdfdab142aab2eb9aa36227c50170/src/nerchuko/classification.clj#L72" id="var-source">Source</a>
 </div>
 
 
