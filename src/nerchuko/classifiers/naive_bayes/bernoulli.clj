@@ -11,49 +11,11 @@ using prepare-doc."
         [clojure.contrib.seq-utils :only (frequencies)]
         [clojure.contrib.generic math-functions functor]))
 
-(defmulti
-  #^{:arglists '([doc])
-     :doc "Converts the given doc to a Set of features.
-
-How the Set is created depends on what doc is:
-
-If doc is a Collection, each distinct element of the collection is
-considered a feature.
-
-If doc is a String, it is tokenized and the tokens are considered as
-the features. Uses nerchuko.text.helpers/set-of-words.
-
-If doc is a Map, it is treated as an attreibute map and the keys are
-considered as the features. The values must all be numbers; otherwise,
-an IllegalArgumentException is thrown.
-
-If doc is anything else, an IllegalArgumentException is thrown."}
-  prepare-doc type)
-
-(defmethod prepare-doc java.util.Set
-  [x] x)
-
-(defmethod prepare-doc java.util.Collection
-  [coll]
-  (set coll))
-
-(defmethod prepare-doc String
-  [s]
-  (set-of-tokens s))
-
-(defmethod prepare-doc java.util.Map
-  [m]
-  (if (every? number? (vals m))
-    (->> m
-         keys
-         set)
-    (throw (IllegalArgumentException.
-            "If document is a map, all the vals must be numbers."))))
-
-(defmethod prepare-doc :default
-  [x]
-  (throw (IllegalArgumentException.
-          "Document must be one of: String, Collection, Map.")))
+(defn prepare-doc
+  "Converts the given doc to a set of features using
+nerchuko.helpers/features-set."
+  [doc]
+  (features-set doc))
 
 (defn- aggregate
   "Returns the aggregate information gleaned from the training dataset.

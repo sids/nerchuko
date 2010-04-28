@@ -61,25 +61,49 @@ For example:
                   (map #(vector k %) (to-seq v)))
                 m))))
 
-(defn on-submap
-  "Calls f on a submap of m and merges the result into m.
+(declare firsts)
 
-f must accept a map and return a map (or a seq that can be turned
-into a map by calling (into {})).
+(defn select-keys-by
+  "Like select-keys but the entries to select are determined based on
+a selector function. The selector function is passed one entry at a
+time (as two args) and must return a logical true to indicate that the
+entry must be selected."
+  [m f]
+  (->> m
+       (filter (fn [[k v]]
+                 (f k v)))
+       (into {})))
 
-The submap selection can be done by specifying a list of keys as
-keyword arguments :only or :except."
+(defn unselect-keys
+  "Opposite of select-keys: returns a map containing only those
+entries whose key is not in keys."
+  [m keyseq]
+  (select-keys m
+               (difference (set (keys m))
+                           keyseq)))
+
+(defn replace-submap
+  "Selects a submap of map m and replaces it with the result of
+calling f on that submap.
+
+f must accept a map and return a map (or a seq that can be turned into
+a map by calling (into {})).
+
+The submap selection can be done either by specifying a function using
+the keyword argument :selector or by specifying a list of keys to
+keep/drop as keyword arguments :only/:except."
   [f m & options]
-  (let [{except :except only :only} (apply hash-map options)
-        keys-to-select (if only
-                         only
-                         (difference (apply hash-set (keys m))
-                                     (apply hash-set except)))]
-    (->> keys-to-select
-         (select-keys m)
-         f
-         (into {})
-         (merge m))))
+  (let [{except   :except
+         only     :only
+         selector :selector} (apply hash-map options)
+         submap-to-replace   (cond
+                              selector (select-keys-by m selector)
+                              only     (select-keys m only)
+                              except   (unselect-keys m except))
+         submap-to-keep       (unselect-keys m (keys submap-to-replace))]
+    (merge submap-to-keep
+           (into {}
+                 (f submap-to-replace)))))
 
 (defn partition-random
   "Randomly divides the items in coll into n partitions.

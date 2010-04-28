@@ -2,10 +2,10 @@
   "Functions that help with various auxiliary tasks such as converting
 documents to the necessary format etc."
   (:use nerchuko.utils
-        clj-text.tokenization)
+        nerchuko.text.helpers)
   (:use [clojure.contrib.duck-streams :only (spit)]
         clojure.contrib.generic.functor
-        [clojure.contrib.seq-utils :only (frequencies)]))
+        [clojure.contrib.seq-utils :only (frequencies flatten)]))
 
 (defn save-model
   "Saves model to a file."
@@ -28,3 +28,63 @@ a classifier.
 :features   A set of all the features."}
   model
   :classifier :classes :features)
+
+(defmulti numeric-features-map type)
+
+(defmethod numeric-features-map String
+  [s]
+  (bag-of-tokens s))
+
+(defmethod numeric-features-map java.util.Collection
+  [coll]
+  (->> coll
+       (tokenize)
+       (flatten)
+       (frequencies)))
+
+(defmethod numeric-features-map java.util.Map
+  [m]
+  (replace-submap #(->> %
+                        (tokenize)
+                        (flatten-map)
+                        (frequencies))
+                  m
+                  :selector (fn [_ v]
+                              (not (number? v)))))
+
+(defmethod numeric-features-map :default
+  [_]
+  (throw (IllegalArgumentException.
+          "Document must be one of: String, Collection, Map.")))
+
+(defmulti features-set type)
+
+(defmethod features-set String
+  [s]
+  (set-of-tokens s))
+
+(defmethod features-set java.util.Collection
+  [coll]
+  (->> coll
+       (tokenize)
+       (flatten)
+       (set)))
+
+(defmethod features-set java.util.Map
+  [m]
+  (->> m
+       (into {})
+       (fmap #(condp = %
+                true 1
+                false 0
+                %))
+       (numeric-features-map)
+       (filter (fn [[k v]]
+                 (not= v 0)))
+       (firsts)
+       (set)))
+
+(defmethod features-set :default
+  [_]
+  (throw (IllegalArgumentException.
+          "Document must be one of: String, Collection, Map.")))
