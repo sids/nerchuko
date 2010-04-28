@@ -1,7 +1,8 @@
 (ns nerchuko.examples.newsgroups.helpers
   (:use [nerchuko helpers utils]
         nerchuko.text.helpers)
-  (:use [clojure.contrib.str-utils2 :only (lower-case)]
+  (:use [clojure.contrib.duck-streams :only (read-lines)]
+        [clojure.contrib.str-utils :only (str-join)]
         [clojure.contrib.seq-utils :only (frequencies)]))
 
 (defn- get-files
@@ -17,10 +18,10 @@
 
 (defn load-doc
   [file]
-  (-> file
-      slurp
-      tokenize
-      frequencies))
+  (->> file
+       (read-lines)
+       (drop-while not-empty)           ; gets rid of the header
+       (numeric-features-map)))
 
 (defn load-training-dataset
   "Given a seq of directories, returns a training dataset loaded from

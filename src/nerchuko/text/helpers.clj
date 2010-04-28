@@ -1,4 +1,5 @@
 (ns nerchuko.text.helpers
+  "Functions that are helpful when dealing with text documents."
   (:use [nerchuko.utils :only (flatten-map)])
   (:use clojure.contrib.generic.functor
         [clojure.contrib.def :only (defnk)]

@@ -2,7 +2,8 @@
   (:gen-class)
   (:use nerchuko.examples.newsgroups.helpers)
   (:use [nerchuko helpers classification feature-selection])
-  (:use clojure.contrib.command-line))
+  (:use clojure.contrib.command-line
+                clojure.contrib.pprint))
 
 (defn -main [& args]
   (with-command-line (if (seq args) args ["--help"])
