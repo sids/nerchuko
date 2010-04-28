@@ -78,7 +78,7 @@ by <span id="author">Unknown</span><br />
 
 Here is a typical (simplified) workflow for classification:
 
-    ;; access classification features through this namespace
+    ;; access classification capabilities through this namespace
     (use 'nerchuko.classification)
 
     ;; keep some helper functions handy
@@ -92,16 +92,21 @@ Here is a typical (simplified) workflow for classification:
                             ["" :not-interesting]
                             ["" :interesting]))
 
+    ;; optionally, modify the training-dataset to only keep the
+    ;; best k features: see nerchuko.feature-selection
+
     ;; pick a classifier: all the classifiers are in the namespace
     ;; nerchuko.classifiers
     (def classifier 'nerchuko.classifiers.naive-bayes.multinomial)
 
     ;; print a confusion matrix to understand the effectiveness of
-    ;; the classifier using n-fold cross-validation
+    ;; the classifier using n-fold cross-validation (10-fold is
+    ;; commonly used)
     (cross-validate classifier 10)
 
     ;; train: learn a model from the training dataset
-    (def model (learn-model classifier training-dataset))
+    (def model
+         (learn-model classifier training-dataset))
 
     ;; if you have a test/validation dataset
     ;; (same structure as training dataset)
@@ -137,7 +142,7 @@ Here is a typical (simplified) workflow for classification:
   <pre id="var-usage">Usage: (classify model doc)
 </pre>
   <pre id="var-docstr">Classifies doc using model and returns the class with the maximum score.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/f00e4da6ad3cdfdab142aab2eb9aa36227c50170/src/nerchuko/classification.clj#L78" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/61dc147b7c23e63faee3019cdb113528baef97a7/src/nerchuko/classification.clj#L83" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -151,7 +156,7 @@ true (default is true), prints the confusion matrices of each trial as
 well as a summary confusion matrix. The summary confusion matrix is
 obtained by adding together the confusion matrices from the
 trials. Returns the summary confusion matrix.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/f00e4da6ad3cdfdab142aab2eb9aa36227c50170/src/nerchuko/classification.clj#L127" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/61dc147b7c23e63faee3019cdb113528baef97a7/src/nerchuko/classification.clj#L132" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -161,7 +166,7 @@ trials. Returns the summary confusion matrix.</pre>
 </pre>
   <pre id="var-docstr">Generates a confusion matrix by classifying every document in test-dataset
 using model.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/f00e4da6ad3cdfdab142aab2eb9aa36227c50170/src/nerchuko/classification.clj#L84" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/61dc147b7c23e63faee3019cdb113528baef97a7/src/nerchuko/classification.clj#L89" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -176,7 +181,7 @@ training-dataset must be a sequence of training examples each of which
 must be a 2-item vector of the document and the corresponding class.
 Each document should be a map with the features as the keys and the
 'quantity' of those features as the values.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/f00e4da6ad3cdfdab142aab2eb9aa36227c50170/src/nerchuko/classification.clj#L60" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/61dc147b7c23e63faee3019cdb113528baef97a7/src/nerchuko/classification.clj#L65" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -186,7 +191,7 @@ Each document should be a map with the features as the keys and the
 </pre>
   <pre id="var-docstr">Merges together any number of confusion matrices by adding together the
 corresponding values.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/f00e4da6ad3cdfdab142aab2eb9aa36227c50170/src/nerchuko/classification.clj#L98" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/61dc147b7c23e63faee3019cdb113528baef97a7/src/nerchuko/classification.clj#L103" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -195,7 +200,7 @@ corresponding values.</pre>
   <pre id="var-usage">Usage: (print-confusion-matrix matrix)
 </pre>
   <pre id="var-docstr">Pretty prints a confusion matrix.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/f00e4da6ad3cdfdab142aab2eb9aa36227c50170/src/nerchuko/classification.clj#L186" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/61dc147b7c23e63faee3019cdb113528baef97a7/src/nerchuko/classification.clj#L191" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -204,7 +209,7 @@ corresponding values.</pre>
   <pre id="var-usage">Usage: (scores model doc)
 </pre>
   <pre id="var-docstr">Classifies doc using model and returns the scores for each class as a map.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/f00e4da6ad3cdfdab142aab2eb9aa36227c50170/src/nerchuko/classification.clj#L72" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/61dc147b7c23e63faee3019cdb113528baef97a7/src/nerchuko/classification.clj#L77" id="var-source">Source</a>
 </div>
 
 

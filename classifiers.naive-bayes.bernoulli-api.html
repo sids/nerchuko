@@ -83,7 +83,7 @@ by <span id="author">Unknown</span><br />
   <pre id="var-docstr">Returns (partial classify model).
 The return value can be used as a classifier function that classifies
 a given doc.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b5838363120dc51756afb6b6003cf0248f6656c4/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L175" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L141" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -93,7 +93,7 @@ a given doc.</pre>
 </pre>
   <pre id="var-docstr">Classifies the doc using a Naive Bayes classifier based on model.
 Returns the most probable class.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b5838363120dc51756afb6b6003cf0248f6656c4/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L168" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L134" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -114,30 +114,17 @@ The model is a map with the following keys:
 :priors, prior probabilities for each class.
 :cond-probs, conditional probabilities (probability of feature given
   class) for each class for each feature.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b5838363120dc51756afb6b6003cf0248f6656c4/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L93" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L59" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
   <h2 id="nerchuko.classifiers.naive-bayes.bernoulli/prepare-doc">prepare-doc</h2>
-  <span id="var-type">multimethod</span><br />
+  <span id="var-type">function</span><br />
   <pre id="var-usage">Usage: (prepare-doc doc)
 </pre>
-  <pre id="var-docstr">Converts the given doc to a Set of features.
-
-How the Set is created depends on what doc is:
-
-If doc is a Collection, each distinct element of the collection is
-considered a feature.
-
-If doc is a String, it is tokenized and the tokens are considered as
-the features. Uses nerchuko.text.helpers/set-of-words.
-
-If doc is a Map, it is treated as an attreibute map and the keys are
-considered as the features. The values must all be numbers; otherwise,
-an IllegalArgumentException is thrown.
-
-If doc is anything else, an IllegalArgumentException is thrown.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b5838363120dc51756afb6b6003cf0248f6656c4/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L10" id="var-source">Source</a>
+  <pre id="var-docstr">Converts the given doc to a set of features using
+nerchuko.helpers/features-set.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L14" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -148,7 +135,7 @@ If doc is anything else, an IllegalArgumentException is thrown.</pre>
   <pre id="var-docstr">Returns the a posteriori probabilities of the document
 belonging to each class, estimated using the Naive Bayes
 classifier over model.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b5838363120dc51756afb6b6003cf0248f6656c4/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L156" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L122" id="var-source">Source</a>
 </div>
 
 

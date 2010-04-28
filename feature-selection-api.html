@@ -66,8 +66,45 @@ by <span id="author">Unknown</span><br />
   (:require <span id="long-name">nerchuko.feature-selection</span>))
 </pre><pre>
 </pre><h2>Overview</h2>
-<pre id="namespace-docstr">This namespace provides the primary functions for accessing
-nerchuko's feature selection capabilities.</pre>
+<pre id="namespace-docstr">This namespace provides the primary interface to nerchuko's feature
+selection capabilities.
+
+Here is a typical (simplified) workflow for feature selection:
+
+    ;; access feature selection capabilities through this namespace
+    (use 'nerchuko.classification)
+
+    ;; load training dataset: training dataset must be a seq of
+    ;; 2-element vectors where the first element is a document
+    ;; and the second element the correct class of that document
+    (def training-dataset '(["" :interesting]
+                            ["" :not-interesting]
+                            ["" :not-interesting]
+                            ["" :interesting]))
+
+    ;; pick a feature-selector: all the feature-selectors are in the
+    ;; namespace nerchuko.feature-selectors
+    (def feature-selector 'nerchuko.feature-selectors.chi-squared)
+
+    ;; decide the number k of features to select
+    (def k 40)
+    ;; you'll probably want to experiment with different values to
+    ;; determine what works best for your dataset
+
+    ;; select the best k features from the dataset
+    (def features
+         (find-features feature-selector k training-dataset))
+
+    ;; create an altered dataset that contains only the selected
+    ;; features
+    (def better-training-dataset
+         (select-features training-dataset features))
+
+    ;; or do both the above in one shot
+    (def better-training-dataset
+         (find-and-select-features feature-selector k training-dataset))
+
+    ;; better-training-dataset can now be used for classification etc.</pre>
 <br />
 <h2>Public Variables and Functions</h2>
 <div id="var-entry">
@@ -80,7 +117,7 @@ nerchuko's feature selection capabilities.</pre>
   <pre id="var-docstr">Find the _best_ k features using feature-selector and then filter
 the features in each doc of the dataset to keep only those
 features. Returns the modified dataset.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/feature_selection.clj#L23" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/61dc147b7c23e63faee3019cdb113528baef97a7/src/nerchuko/feature_selection.clj#L60" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -91,7 +128,7 @@ features. Returns the modified dataset.</pre>
   <pre id="var-docstr">Return a set of the _best_ k features from the dataset using
 feature-selector. The docs in the dataset must all be
 features-map's.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/feature_selection.clj#L7" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/61dc147b7c23e63faee3019cdb113528baef97a7/src/nerchuko/feature_selection.clj#L44" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -102,7 +139,7 @@ features-map's.</pre>
   <pre id="var-docstr">Given a set of features and a dataset, filters every doc in the
 dataset to keep only those features. The docs in the dataset must
 all be features-map's. Returns the modified dataset.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/e7575c028d907ec0fa5ff060fcdd14aea0ffeeb8/src/nerchuko/feature_selection.clj#L15" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/61dc147b7c23e63faee3019cdb113528baef97a7/src/nerchuko/feature_selection.clj#L52" id="var-source">Source</a>
 </div>
 
 

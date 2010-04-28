@@ -49,6 +49,8 @@ namespace.
     <a href="#toc0">Overview</a>
     <div style="margin-left: 1em;" class="toc-entry">
       <a href="#nerchuko.feature-selectors.collection-frequency/find-features">find-features</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.feature-selectors.collection-frequency/prepare-doc">prepare-doc</a>
     </div>
     <br />
   </div>
@@ -75,7 +77,17 @@ by <span id="author">Unknown</span><br />
   <pre id="var-docstr">Returns a set of the top k most frequently occurring features.
 Multiple occurrences of a feature in a document are counted
 multiple times.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/cdab4cb33ddf2fe4f0753bb9e7bdcc1e85202441/src/nerchuko/feature_selectors/collection_frequency.clj#L5" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/feature_selectors/collection_frequency.clj#L18" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.feature-selectors.collection-frequency/prepare-doc">prepare-doc</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (prepare-doc doc)
+</pre>
+  <pre id="var-docstr">Converts doc to a numeric features map by calling
+nerchuko.helpers/numeric-features-map.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/feature_selectors/collection_frequency.clj#L12" id="var-source">Source</a>
 </div>
 
 

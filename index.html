@@ -102,7 +102,7 @@ namespace.
 
 Here is a typical (simplified) workflow for classification:
 
-    ;; access classification features through this namespace
+    ;; access classification capabilities through this namespace
     (use 'nerchuko.classification)
 
     ;; keep some helper functions handy
@@ -116,16 +116,21 @@ Here is a typical (simplified) workflow for classification:
                             ["" :not-interesting]
                             ["" :interesting]))
 
+    ;; optionally, modify the training-dataset to only keep the
+    ;; best k features: see nerchuko.feature-selection
+
     ;; pick a classifier: all the classifiers are in the namespace
     ;; nerchuko.classifiers
     (def classifier 'nerchuko.classifiers.naive-bayes.multinomial)
 
     ;; print a confusion matrix to understand the effectiveness of
-    ;; the classifier using n-fold cross-validation
+    ;; the classifier using n-fold cross-validation (10-fold is
+    ;; commonly used)
     (cross-validate classifier 10)
 
     ;; train: learn a model from the training dataset
-    (def model (learn-model classifier training-dataset))
+    (def model
+         (learn-model classifier training-dataset))
 
     ;; if you have a test/validation dataset
     ;; (same structure as training dataset)
@@ -183,8 +188,45 @@ Here is a typical (simplified) workflow for classification:
   <h2 id="feature-selection">feature-selection</h2>
   by <span id="author">unknown author</span><br />
   <a href="feature-selection-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr">This namespace provides the primary functions for accessing
-nerchuko's feature selection capabilities.</pre>
+  <pre id="namespace-docstr">This namespace provides the primary interface to nerchuko's feature
+selection capabilities.
+
+Here is a typical (simplified) workflow for feature selection:
+
+    ;; access feature selection capabilities through this namespace
+    (use 'nerchuko.classification)
+
+    ;; load training dataset: training dataset must be a seq of
+    ;; 2-element vectors where the first element is a document
+    ;; and the second element the correct class of that document
+    (def training-dataset '(["" :interesting]
+                            ["" :not-interesting]
+                            ["" :not-interesting]
+                            ["" :interesting]))
+
+    ;; pick a feature-selector: all the feature-selectors are in the
+    ;; namespace nerchuko.feature-selectors
+    (def feature-selector 'nerchuko.feature-selectors.chi-squared)
+
+    ;; decide the number k of features to select
+    (def k 40)
+    ;; you'll probably want to experiment with different values to
+    ;; determine what works best for your dataset
+
+    ;; select the best k features from the dataset
+    (def features
+         (find-features feature-selector k training-dataset))
+
+    ;; create an altered dataset that contains only the selected
+    ;; features
+    (def better-training-dataset
+         (select-features training-dataset features))
+
+    ;; or do both the above in one shot
+    (def better-training-dataset
+         (find-and-select-features feature-selector k training-dataset))
+
+    ;; better-training-dataset can now be used for classification etc.</pre>
   
   Public variables and functions:
   <span id="var-link"><a href="feature-selection-api.html#nerchuko.feature-selection/find-and-select-features" id="var-tag">find-and-select-features</a> </span><span id="var-link"><a href="feature-selection-api.html#nerchuko.feature-selection/find-features" id="var-tag">find-features</a> </span><span id="var-link"><a href="feature-selection-api.html#nerchuko.feature-selection/select-features" id="var-tag">select-features</a> </span><br />
@@ -198,7 +240,7 @@ nerchuko's feature selection capabilities.</pre>
   <pre id="namespace-docstr"></pre>
   
   Public variables and functions:
-  <br />
+  <span id="var-link"><a href="feature-selectors.chi-squared-api.html#nerchuko.feature-selectors.chi-squared/prepare-doc" id="var-tag">prepare-doc</a> </span><br />
   
 </div><div id="namespace-entry">
   <br />
@@ -209,7 +251,7 @@ nerchuko's feature selection capabilities.</pre>
   <pre id="namespace-docstr"></pre>
   
   Public variables and functions:
-  <span id="var-link"><a href="feature-selectors.collection-frequency-api.html#nerchuko.feature-selectors.collection-frequency/find-features" id="var-tag">find-features</a> </span><br />
+  <span id="var-link"><a href="feature-selectors.collection-frequency-api.html#nerchuko.feature-selectors.collection-frequency/find-features" id="var-tag">find-features</a> </span><span id="var-link"><a href="feature-selectors.collection-frequency-api.html#nerchuko.feature-selectors.collection-frequency/prepare-doc" id="var-tag">prepare-doc</a> </span><br />
   
 </div><div id="namespace-entry">
   <br />
@@ -220,7 +262,7 @@ nerchuko's feature selection capabilities.</pre>
   <pre id="namespace-docstr"></pre>
   
   Public variables and functions:
-  <span id="var-link"><a href="feature-selectors.document-frequency-api.html#nerchuko.feature-selectors.document-frequency/find-features" id="var-tag">find-features</a> </span><br />
+  <span id="var-link"><a href="feature-selectors.document-frequency-api.html#nerchuko.feature-selectors.document-frequency/find-features" id="var-tag">find-features</a> </span><span id="var-link"><a href="feature-selectors.document-frequency-api.html#nerchuko.feature-selectors.document-frequency/prepare-doc" id="var-tag">prepare-doc</a> </span><br />
   
 </div><div id="namespace-entry">
   <br />
@@ -228,8 +270,7 @@ nerchuko's feature selection capabilities.</pre>
   <h2 id="helpers">helpers</h2>
   by <span id="author">unknown author</span><br />
   <a href="helpers-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr">Functions that help with various auxiliary tasks such as converting
-documents to the necessary format etc.</pre>
+  <pre id="namespace-docstr"></pre>
   
   Public variables and functions:
   <span id="var-link"><a href="helpers-api.html#nerchuko.helpers/load-model" id="var-tag">load-model</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/model" id="var-tag">model</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/save-model" id="var-tag">save-model</a> </span><br />
@@ -251,12 +292,10 @@ documents to the necessary format etc.</pre>
   <h2 id="utils">utils</h2>
   by <span id="author">unknown author</span><br />
   <a href="utils-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr">General Clojure utilities. These are used pretty heavily within
-the nerchuko code itself and might prove to be quite useful even
-for applications using nerchuko.</pre>
+  <pre id="namespace-docstr"></pre>
   
   Public variables and functions:
-  <span id="var-link"><a href="utils-api.html#nerchuko.utils/as-str" id="var-tag">as-str</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/call-in-ns" id="var-tag">call-in-ns</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/flatten-map" id="var-tag">flatten-map</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/key-with-max-val" id="var-tag">key-with-max-val</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/largest-n-by-vals" id="var-tag">largest-n-by-vals</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-firsts" id="var-tag">map-firsts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-keys" id="var-tag">map-keys</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-lasts" id="var-tag">map-lasts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-with-index" id="var-tag">map-with-index</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/merge-with-+" id="var-tag">merge-with-+</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/on-submap" id="var-tag">on-submap</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/partition-random" id="var-tag">partition-random</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/to-probabilities" id="var-tag">to-probabilities</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/to-seq" id="var-tag">to-seq</a> </span><br />
+  <span id="var-link"><a href="utils-api.html#nerchuko.utils/as-str" id="var-tag">as-str</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/call-in-ns" id="var-tag">call-in-ns</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/flatten-map" id="var-tag">flatten-map</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/key-with-max-val" id="var-tag">key-with-max-val</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/largest-n-by-vals" id="var-tag">largest-n-by-vals</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-firsts" id="var-tag">map-firsts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-keys" id="var-tag">map-keys</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-lasts" id="var-tag">map-lasts</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/map-with-index" id="var-tag">map-with-index</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/merge-with-+" id="var-tag">merge-with-+</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/partition-random" id="var-tag">partition-random</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/replace-submap" id="var-tag">replace-submap</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/select-keys-by" id="var-tag">select-keys-by</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/to-probabilities" id="var-tag">to-probabilities</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/to-seq" id="var-tag">to-seq</a> </span><span id="var-link"><a href="utils-api.html#nerchuko.utils/unselect-keys" id="var-tag">unselect-keys</a> </span><br />
   
 </div>
 </div>

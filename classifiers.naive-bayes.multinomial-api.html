@@ -83,7 +83,7 @@ by <span id="author">Unknown</span><br />
   <pre id="var-docstr">Returns (partial classify model).
 The return value can be used as a classifier function that classifies
 a given doc.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b5838363120dc51756afb6b6003cf0248f6656c4/src/nerchuko/classifiers/naive_bayes/multinomial.clj#L171" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/classifiers/naive_bayes/multinomial.clj#L138" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -93,7 +93,7 @@ a given doc.</pre>
 </pre>
   <pre id="var-docstr">Classifies the doc using a Naive Bayes classifier based on model.
 Returns the most probable class.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b5838363120dc51756afb6b6003cf0248f6656c4/src/nerchuko/classifiers/naive_bayes/multinomial.clj#L164" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/classifiers/naive_bayes/multinomial.clj#L131" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -113,34 +113,17 @@ The model is a map with the following keys:
 :features, the hash-set of all the features.
 :priors, prior probabilities for each class.
 :cond-probs, conditional probabilities for each class for each feature.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b5838363120dc51756afb6b6003cf0248f6656c4/src/nerchuko/classifiers/naive_bayes/multinomial.clj#L97" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/classifiers/naive_bayes/multinomial.clj#L64" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
   <h2 id="nerchuko.classifiers.naive-bayes.multinomial/prepare-doc">prepare-doc</h2>
-  <span id="var-type">multimethod</span><br />
+  <span id="var-type">function</span><br />
   <pre id="var-usage">Usage: (prepare-doc doc)
 </pre>
-  <pre id="var-docstr">Converts the given doc to a Bag (multiset) of features,
-represented as a map with the features as keys and the number of
-occurrences of those features as the values.
-
-How the Bag is created depends on what doc is:
-
-If doc is a Map, returns it as it is after checking that all the vals
-are numbers; if any of the vals aren't numbers, throws an
-IllegalArgumentException.
-
-If doc is a Collection, returns a map with each distinct element in
-the collection as a key and its number of occurrences as the
-corresponding value.
-
-If doc is a String, tokenizes it and returns a map with each token as
-a key and the number of occurrences of the token within the document
-as the corresponding value. Uses nerchuko.text.helpers/bag-of-words.
-
-If doc is anything else, throws an IllegalArgumentException.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b5838363120dc51756afb6b6003cf0248f6656c4/src/nerchuko/classifiers/naive_bayes/multinomial.clj#L11" id="var-source">Source</a>
+  <pre id="var-docstr">Converts doc to a numeric features map by calling
+nerchuko.helpers/numeric-features-map.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/classifiers/naive_bayes/multinomial.clj#L15" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -150,7 +133,7 @@ If doc is anything else, throws an IllegalArgumentException.</pre>
 </pre>
   <pre id="var-docstr">Returns the a posteriori probabilities of the document belonging to
 each class, estimated using the Naive Bayes classifier over model.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b5838363120dc51756afb6b6003cf0248f6656c4/src/nerchuko/classifiers/naive_bayes/multinomial.clj#L153" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/classifiers/naive_bayes/multinomial.clj#L120" id="var-source">Source</a>
 </div>
 
 

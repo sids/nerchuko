@@ -68,13 +68,17 @@ namespace.
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#nerchuko.utils/merge-with-+">merge-with-+</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.utils/on-submap">on-submap</a>
-    </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#nerchuko.utils/partition-random">partition-random</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/replace-submap">replace-submap</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/select-keys-by">select-keys-by</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#nerchuko.utils/to-probabilities">to-probabilities</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a href="#nerchuko.utils/to-seq">to-seq</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.utils/unselect-keys">unselect-keys</a>
     </div>
     <br />
   </div>
@@ -88,9 +92,7 @@ by <span id="author">Unknown</span><br />
   (:require <span id="long-name">nerchuko.utils</span>))
 </pre><pre>
 </pre><h2>Overview</h2>
-<pre id="namespace-docstr">General Clojure utilities. These are used pretty heavily within
-the nerchuko code itself and might prove to be quite useful even
-for applications using nerchuko.</pre>
+<pre id="namespace-docstr"></pre>
 <br />
 <h2>Public Variables and Functions</h2>
 <div id="var-entry">
@@ -102,7 +104,7 @@ for applications using nerchuko.</pre>
 </pre>
   <pre id="var-docstr">If x is a Keyword or a Symbol, returns (name x), otherwise
 returns (.toString x).</pre>
-  <a href="http://github.com/sids/nerchuko/blob/10df0267d9d8bf995aeee1a14095c61320a7b810/src/nerchuko/utils.clj#L9" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L9" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -112,7 +114,7 @@ returns (.toString x).</pre>
 </pre>
   <pre id="var-docstr">Resolves f in the namespace ns and calls it with args.
 ns and f must be symbols or strings.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/10df0267d9d8bf995aeee1a14095c61320a7b810/src/nerchuko/utils.clj#L17" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L17" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -130,7 +132,7 @@ as a second item.
 For example:
     =&gt; (flatten-map {:a 1 :b ["hello" "world"] :c {:x 2 :y 3} :d "good bye"})
     ([:a 1] [:b "hello"] [:b "world"] [:c [:x 2]] [:c [:y 3]] [:d "good bye"])</pre>
-  <a href="http://github.com/sids/nerchuko/blob/10df0267d9d8bf995aeee1a14095c61320a7b810/src/nerchuko/utils.clj#L46" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L46" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -140,7 +142,7 @@ For example:
 </pre>
   <pre id="var-docstr">Returns the key which has the max value.
 Returns on-all-equal if all the values are equal.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/10df0267d9d8bf995aeee1a14095c61320a7b810/src/nerchuko/utils.clj#L141" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L165" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -150,7 +152,7 @@ Returns on-all-equal if all the values are equal.</pre>
 </pre>
   <pre id="var-docstr">Returns a subset of map containing the n largest entries
 as determined by comparing the vals.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/10df0267d9d8bf995aeee1a14095c61320a7b810/src/nerchuko/utils.clj#L152" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L176" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -161,7 +163,7 @@ as determined by comparing the vals.</pre>
   <pre id="var-docstr">Takes a sequence of sequences (v1 v2 ...) and returns a lazy
 sequence of ((f v1) (f v2) ...). If a collection is given, calls seq
 on it.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/10df0267d9d8bf995aeee1a14095c61320a7b810/src/nerchuko/utils.clj#L118" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L142" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -171,7 +173,7 @@ on it.</pre>
 </pre>
   <pre id="var-docstr">Modifies the keys of the map m by calling f for each
 of them.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/10df0267d9d8bf995aeee1a14095c61320a7b810/src/nerchuko/utils.clj#L108" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L132" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -181,7 +183,7 @@ of them.</pre>
 </pre>
   <pre id="var-docstr">Takes a sequence of 2-item vectors [v1 v2] and returns a lazy
 sequence of [v1 (f v2)]. If a collection is given, calls seq on it.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/10df0267d9d8bf995aeee1a14095c61320a7b810/src/nerchuko/utils.clj#L127" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L151" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -191,7 +193,7 @@ sequence of [v1 (f v2)]. If a collection is given, calls seq on it.</pre>
 </pre>
   <pre id="var-docstr">Calls map on the collections after cons-ing (iterate inc 0) to them.
 So f will receive the index along with the items themselves.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/10df0267d9d8bf995aeee1a14095c61320a7b810/src/nerchuko/utils.clj#L133" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L157" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -200,22 +202,7 @@ So f will receive the index along with the items themselves.</pre>
   <pre id="var-usage">Usage: (merge-with-+ &amp; maps)
 </pre>
   <pre id="var-docstr">Calls merge-with on maps with + as the function.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/10df0267d9d8bf995aeee1a14095c61320a7b810/src/nerchuko/utils.clj#L97" id="var-source">Source</a>
-</div><div id="var-entry">
-  <br />
-  <hr />
-  <h2 id="nerchuko.utils/on-submap">on-submap</h2>
-  <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (on-submap f m &amp; options)
-</pre>
-  <pre id="var-docstr">Calls f on a submap of m and merges the result into m.
-
-f must accept a map and return a map (or a seq that can be turned
-into a map by calling (into {})).
-
-The submap selection can be done by specifying a list of keys as
-keyword arguments :only or :except.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/10df0267d9d8bf995aeee1a14095c61320a7b810/src/nerchuko/utils.clj#L64" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L121" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -225,7 +212,36 @@ keyword arguments :only or :except.</pre>
 </pre>
   <pre id="var-docstr">Randomly divides the items in coll into n partitions.
 Returns a vector of vectors.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/10df0267d9d8bf995aeee1a14095c61320a7b810/src/nerchuko/utils.clj#L84" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L108" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/replace-submap">replace-submap</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (replace-submap f m &amp; options)
+</pre>
+  <pre id="var-docstr">Selects a submap of map m and replaces it with the result of
+calling f on that submap.
+
+f must accept a map and return a map (or a seq that can be turned into
+a map by calling (into {})).
+
+The submap selection can be done either by specifying a function using
+the keyword argument :selector or by specifying a list of keys to
+keep/drop as keyword arguments :only/:except.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L85" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/select-keys-by">select-keys-by</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (select-keys-by m f)
+</pre>
+  <pre id="var-docstr">Like select-keys but the entries to select are determined based on
+a selector function. The selector function is passed one entry at a
+time (as two args) and must return a logical true to indicate that the
+entry must be selected.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L66" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -235,7 +251,7 @@ Returns a vector of vectors.</pre>
 </pre>
   <pre id="var-docstr">Given a coll of numbers, converts them to probabilities by dividing
 each with their total sum. Returns a seq.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/10df0267d9d8bf995aeee1a14095c61320a7b810/src/nerchuko/utils.clj#L26" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L26" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -246,7 +262,17 @@ each with their total sum. Returns a seq.</pre>
   <pre id="var-docstr">Returns a seq.
 If v implements Seqable, simply calls seq on it.  Otherwise returns
 a seq containing v as the only element.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/10df0267d9d8bf995aeee1a14095c61320a7b810/src/nerchuko/utils.clj#L37" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L37" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.utils/unselect-keys">unselect-keys</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (unselect-keys m keys)
+</pre>
+  <pre id="var-docstr">Opposite of select-keys: returns a map containing only those
+entries whose key is not in keys.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/utils.clj#L77" id="var-source">Source</a>
 </div>
 
 

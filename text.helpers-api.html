@@ -76,8 +76,8 @@ by <span id="author">Unknown</span><br />
   <span id="var-type">function</span><br />
   <pre id="var-usage">Usage: (bag-of-tokens s)
 </pre>
-  <pre id="var-docstr">Tokenizes s and constructs a bag (multiset) of the tokens</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b5838363120dc51756afb6b6003cf0248f6656c4/src/nerchuko/text/helpers.clj#L14" id="var-source">Source</a>
+  <pre id="var-docstr">Tokenizes s and constructs a bag (multiset) of the tokens.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/text/helpers.clj#L34" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -85,18 +85,21 @@ by <span id="author">Unknown</span><br />
   <span id="var-type">function</span><br />
   <pre id="var-usage">Usage: (set-of-tokens s)
 </pre>
-  <pre id="var-docstr">Tokenizes s and constructs a bag (multiset) of the tokens</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b5838363120dc51756afb6b6003cf0248f6656c4/src/nerchuko/text/helpers.clj#L21" id="var-source">Source</a>
+  <pre id="var-docstr">Tokenizes s and constructs a bag (multiset) of the tokens.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/text/helpers.clj#L41" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
   <h2 id="nerchuko.text.helpers/tokenize">tokenize</h2>
-  <span id="var-type">function</span><br />
-  <pre id="var-usage">Usage: (tokenize s)
+  <span id="var-type">multimethod</span><br />
+  <pre id="var-usage">Usage: (tokenize str-or-coll)
 </pre>
-  <pre id="var-docstr">Given a string, returns a list of tokens.
-Uses clj.text.tokenization/tokenize of tokenization.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b5838363120dc51756afb6b6003cf0248f6656c4/src/nerchuko/text/helpers.clj#L8" id="var-source">Source</a>
+  <pre id="var-docstr">Given a string, returns a list of tokens.  Given any
+collection, tokenizes the values in that collection (i.e. tokenizes
+the elements of lists, vectors, sets etc. and tokenizes the vals of
+maps.  Given any other object, returns it unchanged.  Uses
+clj.text.tokenization/tokenize for tokenization.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/text/helpers.clj#L8" id="var-source">Source</a>
 </div>
 
 
