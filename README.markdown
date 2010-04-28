@@ -70,8 +70,9 @@ When working on text classification, functions in the
 namespace might be useful.
 
 Nerchuko includes implementations for the following classifiers:
- * [Naive Bayes Multinomial](http://sids.github.com/nerchuko/classifiers.naive-bayes.multinomial-api.html)
- * [Naive Bayes Bernoulli](http://sids.github.com/nerchuko/classifiers.naive-bayes.bernoulli-api.html)
+* [Naive Bayes Multinomial](http://sids.github.com/nerchuko/classifiers.naive-bayes.multinomial-api.html)
+* [Naive Bayes Bernoulli](http://sids.github.com/nerchuko/classifiers.naive-bayes.bernoulli-api.html)
+* [Complement Naive Bayes](http://sids.github.com/nerchuko/classifiers.naive-bayes.complement-api.html)
 
 #### Feature Selection
 
@@ -83,9 +84,9 @@ example](http://github.com/sids/nerchuko/tree/master/src/nerchuko/examples/newsg
 
 Nerchuko includes implementations for the following feature selection
 techniques:
- * [Chi-Square](http://sids.github.com/nerchuko/feature-selectors.chi-squared-api.html)
- * [Document Frequency](http://sids.github.com/nerchuko/feature-selectors.document-frequency-api.html)
- * [Collection Frequency](http://sids.github.com/nerchuko/feature-selectors.collection-frequency-api.html)
+* [Chi-Square](http://sids.github.com/nerchuko/feature-selectors.chi-squared-api.html)
+* [Document Frequency](http://sids.github.com/nerchuko/feature-selectors.document-frequency-api.html)
+* [Collection Frequency](http://sids.github.com/nerchuko/feature-selectors.collection-frequency-api.html)
 
 ## Examples
 

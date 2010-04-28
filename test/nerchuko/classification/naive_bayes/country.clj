@@ -32,3 +32,15 @@
                          (classify model doc))
          "chinese chinese chinese tokyo japan" :no
          ""                                    :yes)))
+
+(deftest naive-bayes-complement
+  (let [model (learn-model 'nerchuko.classifiers.naive-bayes.complement
+                           training-dataset)]
+    (are [doc result] (= result
+                         (scores model doc))
+         "chinese chinese chinese tokyo japan" {:yes 0.6897586117634675, :no 0.3102413882365326}
+         ""                                    {:yes 3/4, :no 1/4})
+    (are [doc result] (= result
+                         (classify model doc))
+         "chinese chinese chinese tokyo japan" :yes
+         ""                                    :yes)))

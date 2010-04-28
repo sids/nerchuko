@@ -58,7 +58,7 @@ Here is a typical (simplified) workflow for classification:
     ;; or get scores for each class
     (scores model doc-to-classify)"
   (:use nerchuko.utils)
-  (:require [nerchuko.classifiers.naive-bayes multinomial bernoulli])
+  (:require [nerchuko.classifiers.naive-bayes multinomial bernoulli complement])
   (:use [clojure.contrib.def :only (defnk)])
   (:require [clojure.contrib.str-utils2 :as str-utils2]))
 

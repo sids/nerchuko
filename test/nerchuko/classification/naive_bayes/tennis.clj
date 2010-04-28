@@ -42,3 +42,15 @@
                          (classify model doc))
          #{:sunny :hot :high :weak} :no
          #{}                        :yes)))
+
+(deftest naive-bayes-complement
+  (let [model (learn-model 'nerchuko.classifiers.naive-bayes.complement
+                           training-dataset)]
+    (are [doc result] (= result
+                         (scores model doc))
+         #{:sunny :hot :high :weak} {:yes 0.31313203212441315, :no 0.6868679678755869}
+         #{}                        {:yes 9/14, :no 5/14})
+    (are [doc result] (= result
+                         (classify model doc))
+         #{:sunny :hot :high :weak} :no
+         #{}                        :yes)))

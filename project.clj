@@ -1,4 +1,4 @@
-(defproject nerchuko "0.1.19"
+(defproject nerchuko "0.1.20"
   :description "Machine Learning in Clojure."
   :url "http://github.com/sids/nerchuko"
   :namespaces [nerchuko.classification
@@ -8,6 +8,7 @@
                nerchuko.text.helpers
                nerchuko.classifiers.naive-bayes.multinomial
                nerchuko.classifiers.naive-bayes.bernoulli
+               nerchuko.classifiers.naive-bayes.complement
                nerchuko.feature-selectors.document-frequency
                nerchuko.feature-selectors.collection-frequency
                nerchuko.feature-selectors.chi-squared]
