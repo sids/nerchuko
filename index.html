@@ -34,7 +34,7 @@ namespace.
     <a class="wiki_link" href="api-index.html">API Index</a><br />
     <a class="wiki_link" href="#">Namespaces:</a>
     <ul id="left-sidebar-list">
-      <li><a href="classification-api.html" class="wiki_link">classification</a></li><li><a href="classifiers.naive-bayes.bernoulli-api.html" class="wiki_link">classifiers.naive-bayes.bernoulli</a></li><li><a href="classifiers.naive-bayes.multinomial-api.html" class="wiki_link">classifiers.naive-bayes.multinomial</a></li><li><a href="feature-selection-api.html" class="wiki_link">feature-selection</a></li><li><a href="feature-selectors.chi-squared-api.html" class="wiki_link">feature-selectors.chi-squared</a></li><li><a href="feature-selectors.collection-frequency-api.html" class="wiki_link">feature-selectors.collection-frequency</a></li><li><a href="feature-selectors.document-frequency-api.html" class="wiki_link">feature-selectors.document-frequency</a></li><li><a href="helpers-api.html" class="wiki_link">helpers</a></li><li><a href="text.helpers-api.html" class="wiki_link">text.helpers</a></li><li><a href="utils-api.html" class="wiki_link">utils</a></li>
+      <li><a href="classification-api.html" class="wiki_link">classification</a></li><li><a href="classifiers.naive-bayes.bernoulli-api.html" class="wiki_link">classifiers.naive-bayes.bernoulli</a></li><li><a href="classifiers.naive-bayes.complement-api.html" class="wiki_link">classifiers.naive-bayes.complement</a></li><li><a href="classifiers.naive-bayes.multinomial-api.html" class="wiki_link">classifiers.naive-bayes.multinomial</a></li><li><a href="feature-selection-api.html" class="wiki_link">feature-selection</a></li><li><a href="feature-selectors.chi-squared-api.html" class="wiki_link">feature-selectors.chi-squared</a></li><li><a href="feature-selectors.collection-frequency-api.html" class="wiki_link">feature-selectors.collection-frequency</a></li><li><a href="feature-selectors.document-frequency-api.html" class="wiki_link">feature-selectors.document-frequency</a></li><li><a href="helpers-api.html" class="wiki_link">helpers</a></li><li><a href="text.helpers-api.html" class="wiki_link">text.helpers</a></li><li><a href="utils-api.html" class="wiki_link">utils</a></li>
     </ul>
   </div>
 </div>
@@ -51,6 +51,10 @@ namespace.
     <br />
   </div><div style="margin-left: 1em;" class="toc-section">
     <a href="#classifiers.naive-bayes.bernoulli">classifiers.naive-bayes.bernoulli</a>
+    
+    <br />
+  </div><div style="margin-left: 1em;" class="toc-section">
+    <a href="#classifiers.naive-bayes.complement">classifiers.naive-bayes.complement</a>
     
     <br />
   </div><div style="margin-left: 1em;" class="toc-section">
@@ -174,6 +178,21 @@ Here is a typical (simplified) workflow for classification:
 </div><div id="namespace-entry">
   <br />
   <hr />
+  <h2 id="classifiers.naive-bayes.complement">classifiers.naive-bayes.complement</h2>
+  by <span id="author">unknown author</span><br />
+  <a href="classifiers.naive-bayes.complement-api.html" id="api-link">Detailed API documentation</a><br />
+  <pre id="namespace-docstr">An implementation of the Complement Naive Bayes classification technique.
+
+This classifer works with numeric features map. If given documents are
+in any other representation, they are converted to a numeric features
+map using prepare-doc.</pre>
+  
+  Public variables and functions:
+  <span id="var-link"><a href="classifiers.naive-bayes.complement-api.html#nerchuko.classifiers.naive-bayes.complement/aggregate" id="var-tag">aggregate</a> </span><span id="var-link"><a href="classifiers.naive-bayes.complement-api.html#nerchuko.classifiers.naive-bayes.complement/class-cond-probs" id="var-tag">class-cond-probs</a> </span><span id="var-link"><a href="classifiers.naive-bayes.complement-api.html#nerchuko.classifiers.naive-bayes.complement/classifier" id="var-tag">classifier</a> </span><span id="var-link"><a href="classifiers.naive-bayes.complement-api.html#nerchuko.classifiers.naive-bayes.complement/classify" id="var-tag">classify</a> </span><span id="var-link"><a href="classifiers.naive-bayes.complement-api.html#nerchuko.classifiers.naive-bayes.complement/learn-model" id="var-tag">learn-model</a> </span><span id="var-link"><a href="classifiers.naive-bayes.complement-api.html#nerchuko.classifiers.naive-bayes.complement/prepare-doc" id="var-tag">prepare-doc</a> </span><span id="var-link"><a href="classifiers.naive-bayes.complement-api.html#nerchuko.classifiers.naive-bayes.complement/scores" id="var-tag">scores</a> </span><br />
+  
+</div><div id="namespace-entry">
+  <br />
+  <hr />
   <h2 id="classifiers.naive-bayes.multinomial">classifiers.naive-bayes.multinomial</h2>
   by <span id="author">unknown author</span><br />
   <a href="classifiers.naive-bayes.multinomial-api.html" id="api-link">Detailed API documentation</a><br />
@@ -270,7 +289,8 @@ Here is a typical (simplified) workflow for feature selection:
   <h2 id="helpers">helpers</h2>
   by <span id="author">unknown author</span><br />
   <a href="helpers-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr"></pre>
+  <pre id="namespace-docstr">Functions that help with various auxiliary tasks such as converting
+documents to the necessary format etc.</pre>
   
   Public variables and functions:
   <span id="var-link"><a href="helpers-api.html#nerchuko.helpers/load-model" id="var-tag">load-model</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/model" id="var-tag">model</a> </span><span id="var-link"><a href="helpers-api.html#nerchuko.helpers/save-model" id="var-tag">save-model</a> </span><br />
@@ -281,7 +301,7 @@ Here is a typical (simplified) workflow for feature selection:
   <h2 id="text.helpers">text.helpers</h2>
   by <span id="author">unknown author</span><br />
   <a href="text.helpers-api.html" id="api-link">Detailed API documentation</a><br />
-  <pre id="namespace-docstr"></pre>
+  <pre id="namespace-docstr">Functions that are helpful when dealing with text documents.</pre>
   
   Public variables and functions:
   <span id="var-link"><a href="text.helpers-api.html#nerchuko.text.helpers/bag-of-tokens" id="var-tag">bag-of-tokens</a> </span><span id="var-link"><a href="text.helpers-api.html#nerchuko.text.helpers/set-of-tokens" id="var-tag">set-of-tokens</a> </span><span id="var-link"><a href="text.helpers-api.html#nerchuko.text.helpers/tokenize" id="var-tag">tokenize</a> </span><br />

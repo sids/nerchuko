@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>classifiers.naive-bayes.bernoulli API reference (Nerchuko)</title>
+    <title>classifiers.naive-bayes.complement API reference (Nerchuko)</title>
     <link href="static/favicon.png" rel="icon" />
     <link href="static/favicon.png" rel="shortcut icon" />
     <link media="all" type="text/css" href="static/clojure.css" rel="stylesheet" />
@@ -48,94 +48,133 @@ namespace.
   <div style="margin-left: 1em;" class="toc-section">
     <a href="#toc0">Overview</a>
     <div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.classifiers.naive-bayes.bernoulli/classifier">classifier</a>
+      <a href="#nerchuko.classifiers.naive-bayes.complement/aggregate">aggregate</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.classifiers.naive-bayes.bernoulli/classify">classify</a>
+      <a href="#nerchuko.classifiers.naive-bayes.complement/class-cond-probs">class-cond-probs</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.classifiers.naive-bayes.bernoulli/learn-model">learn-model</a>
+      <a href="#nerchuko.classifiers.naive-bayes.complement/classifier">classifier</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.classifiers.naive-bayes.bernoulli/prepare-doc">prepare-doc</a>
+      <a href="#nerchuko.classifiers.naive-bayes.complement/classify">classify</a>
     </div><div style="margin-left: 1em;" class="toc-entry">
-      <a href="#nerchuko.classifiers.naive-bayes.bernoulli/scores">scores</a>
+      <a href="#nerchuko.classifiers.naive-bayes.complement/learn-model">learn-model</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.classifiers.naive-bayes.complement/prepare-doc">prepare-doc</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#nerchuko.classifiers.naive-bayes.complement/scores">scores</a>
     </div>
     <br />
   </div>
 </div>
 </div>
-                <div id="content-tag"><h1 id="overview">API for <span id="namespace-name">classifiers.naive-bayes.bernoulli</span></h1>
+                <div id="content-tag"><h1 id="overview">API for <span id="namespace-name">classifiers.naive-bayes.complement</span></h1>
 by <span id="author">Unknown</span><br />
 <br />Usage:
 <pre>
 (ns your-namespace
-  (:require <span id="long-name">nerchuko.classifiers.naive-bayes.bernoulli</span>))
+  (:require <span id="long-name">nerchuko.classifiers.naive-bayes.complement</span>))
 </pre><pre>
 </pre><h2>Overview</h2>
-<pre id="namespace-docstr"></pre>
+<pre id="namespace-docstr">An implementation of the Complement Naive Bayes classification technique.
+
+This classifer works with numeric features map. If given documents are
+in any other representation, they are converted to a numeric features
+map using prepare-doc.</pre>
 <br />
 <h2>Public Variables and Functions</h2>
 <div id="var-entry">
   <br />
   <hr />
-  <h2 id="nerchuko.classifiers.naive-bayes.bernoulli/classifier">classifier</h2>
+  <h2 id="nerchuko.classifiers.naive-bayes.complement/aggregate">aggregate</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (aggregate training-dataset)
+</pre>
+  <pre id="var-docstr">Returns the aggregate information gleaned from the training dataset.
+
+The aggregate information is returned as a map:
+:classes, all the classes in the training data, as a hash-set.
+:features, all the features in the training data, as a hash-set.
+:classes-counts, the number of documents belonging to each class,
+  as a map { classes =&gt; counts }.
+:classes-features-counts, for each class and feature, the number of
+  times the feature occurs in documents of that class (including
+  multiple occurrences), as a map { classes =&gt; { features =&gt; counts } }.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/7bdaa1521c32d73ce811570bab5fe1be47382c8b/src/nerchuko/classifiers/naive_bayes/complement.clj#L20" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.classifiers.naive-bayes.complement/class-cond-probs">class-cond-probs</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (class-cond-probs features-counts features-total class-features-counts)
+</pre>
+  <pre id="var-docstr">Returns the conditional probabilities of each feature, given a class,
+as a map { classes =&gt; { features =&gt; probabilities } }.
+
+The coditional probability is the number of occurrences of the feature
+within documents of the class divided by the total number of
+occurrences of all the features within documents of the class. To
+avoid zero values, 1-smoothing is used.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/7bdaa1521c32d73ce811570bab5fe1be47382c8b/src/nerchuko/classifiers/naive_bayes/complement.clj#L45" id="var-source">Source</a>
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="nerchuko.classifiers.naive-bayes.complement/classifier">classifier</h2>
   <span id="var-type">function</span><br />
   <pre id="var-usage">Usage: (classifier model)
 </pre>
   <pre id="var-docstr">Returns (partial classify model).
 The return value can be used as a classifier function that classifies
 a given doc.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b2783a356497221d717d8be11b65624866cb6412/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L141" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/7bdaa1521c32d73ce811570bab5fe1be47382c8b/src/nerchuko/classifiers/naive_bayes/complement.clj#L142" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
-  <h2 id="nerchuko.classifiers.naive-bayes.bernoulli/classify">classify</h2>
+  <h2 id="nerchuko.classifiers.naive-bayes.complement/classify">classify</h2>
   <span id="var-type">function</span><br />
   <pre id="var-usage">Usage: (classify model doc &amp; [default-class])
 </pre>
   <pre id="var-docstr">Classifies the doc using a Naive Bayes classifier based on model.
 Returns the most probable class.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b2783a356497221d717d8be11b65624866cb6412/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L134" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/7bdaa1521c32d73ce811570bab5fe1be47382c8b/src/nerchuko/classifiers/naive_bayes/complement.clj#L135" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
-  <h2 id="nerchuko.classifiers.naive-bayes.bernoulli/learn-model">learn-model</h2>
+  <h2 id="nerchuko.classifiers.naive-bayes.complement/learn-model">learn-model</h2>
   <span id="var-type">function</span><br />
   <pre id="var-usage">Usage: (learn-model training-dataset)
 </pre>
   <pre id="var-docstr">Returns the classifier model learned from the training-dataset.
 
-The training-dataset must be a seq of training examples each of which
-must be a 2-item vector of the document and the correct class of that
-document. prepare-doc will be called on each document.
+The training data must be a sequence of training examples each of
+which must be a 2-item vector of the document and the corresponding
+class.
 
 The model is a map with the following keys:
 :classifier, a symbol naming this namespace.
-:classes, a hash-set of all the classes.
-:features, a hash-set of all the features.
+:classes, the hash-set of all the classes.
+:features, the hash-set of all the features.
 :priors, prior probabilities for each class.
-:cond-probs, conditional probabilities (probability of feature given
-  class) for each class for each feature.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b2783a356497221d717d8be11b65624866cb6412/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L59" id="var-source">Source</a>
+:cond-probs, conditional probabilities for each class for each feature.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/7bdaa1521c32d73ce811570bab5fe1be47382c8b/src/nerchuko/classifiers/naive_bayes/complement.clj#L66" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
-  <h2 id="nerchuko.classifiers.naive-bayes.bernoulli/prepare-doc">prepare-doc</h2>
+  <h2 id="nerchuko.classifiers.naive-bayes.complement/prepare-doc">prepare-doc</h2>
   <span id="var-type">function</span><br />
   <pre id="var-usage">Usage: (prepare-doc doc)
 </pre>
-  <pre id="var-docstr">Converts the given doc to a set of features using
-nerchuko.helpers/features-set.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b2783a356497221d717d8be11b65624866cb6412/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L14" id="var-source">Source</a>
+  <pre id="var-docstr">Converts doc to a numeric features map by calling
+nerchuko.helpers/numeric-features-map.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/7bdaa1521c32d73ce811570bab5fe1be47382c8b/src/nerchuko/classifiers/naive_bayes/complement.clj#L14" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
-  <h2 id="nerchuko.classifiers.naive-bayes.bernoulli/scores">scores</h2>
+  <h2 id="nerchuko.classifiers.naive-bayes.complement/scores">scores</h2>
   <span id="var-type">function</span><br />
   <pre id="var-usage">Usage: (scores model doc)
 </pre>
-  <pre id="var-docstr">Returns the a posteriori probabilities of the document
-belonging to each class, estimated using the Naive Bayes
-classifier over model.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/b2783a356497221d717d8be11b65624866cb6412/src/nerchuko/classifiers/naive_bayes/bernoulli.clj#L122" id="var-source">Source</a>
+  <pre id="var-docstr">Returns the a posteriori probabilities of the document belonging to
+each class, estimated using the Naive Bayes classifier over model.</pre>
+  <a href="http://github.com/sids/nerchuko/blob/7bdaa1521c32d73ce811570bab5fe1be47382c8b/src/nerchuko/classifiers/naive_bayes/complement.clj#L124" id="var-source">Source</a>
 </div>
 
 

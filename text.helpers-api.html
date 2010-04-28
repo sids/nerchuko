@@ -34,7 +34,7 @@ namespace.
     <a class="wiki_link" href="api-index.html">API Index</a><br />
     <a class="wiki_link" href="#">Namespaces:</a>
     <ul id="left-sidebar-list">
-      <li><a href="classification-api.html" class="wiki_link">classification</a></li><li><a href="classifiers.naive-bayes.bernoulli-api.html" class="wiki_link">classifiers.naive-bayes.bernoulli</a></li><li><a href="classifiers.naive-bayes.multinomial-api.html" class="wiki_link">classifiers.naive-bayes.multinomial</a></li><li><a href="feature-selection-api.html" class="wiki_link">feature-selection</a></li><li><a href="feature-selectors.chi-squared-api.html" class="wiki_link">feature-selectors.chi-squared</a></li><li><a href="feature-selectors.collection-frequency-api.html" class="wiki_link">feature-selectors.collection-frequency</a></li><li><a href="feature-selectors.document-frequency-api.html" class="wiki_link">feature-selectors.document-frequency</a></li><li><a href="helpers-api.html" class="wiki_link">helpers</a></li><li><a href="text.helpers-api.html" class="wiki_link">text.helpers</a></li><li><a href="utils-api.html" class="wiki_link">utils</a></li>
+      <li><a href="classification-api.html" class="wiki_link">classification</a></li><li><a href="classifiers.naive-bayes.bernoulli-api.html" class="wiki_link">classifiers.naive-bayes.bernoulli</a></li><li><a href="classifiers.naive-bayes.complement-api.html" class="wiki_link">classifiers.naive-bayes.complement</a></li><li><a href="classifiers.naive-bayes.multinomial-api.html" class="wiki_link">classifiers.naive-bayes.multinomial</a></li><li><a href="feature-selection-api.html" class="wiki_link">feature-selection</a></li><li><a href="feature-selectors.chi-squared-api.html" class="wiki_link">feature-selectors.chi-squared</a></li><li><a href="feature-selectors.collection-frequency-api.html" class="wiki_link">feature-selectors.collection-frequency</a></li><li><a href="feature-selectors.document-frequency-api.html" class="wiki_link">feature-selectors.document-frequency</a></li><li><a href="helpers-api.html" class="wiki_link">helpers</a></li><li><a href="text.helpers-api.html" class="wiki_link">text.helpers</a></li><li><a href="utils-api.html" class="wiki_link">utils</a></li>
     </ul>
   </div>
 </div>
@@ -66,7 +66,7 @@ by <span id="author">Unknown</span><br />
   (:require <span id="long-name">nerchuko.text.helpers</span>))
 </pre><pre>
 </pre><h2>Overview</h2>
-<pre id="namespace-docstr"></pre>
+<pre id="namespace-docstr">Functions that are helpful when dealing with text documents.</pre>
 <br />
 <h2>Public Variables and Functions</h2>
 <div id="var-entry">
@@ -77,7 +77,7 @@ by <span id="author">Unknown</span><br />
   <pre id="var-usage">Usage: (bag-of-tokens s)
 </pre>
   <pre id="var-docstr">Tokenizes s and constructs a bag (multiset) of the tokens.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/text/helpers.clj#L34" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/9923622091e5fd337bf01426b09aa169284e58be/src/nerchuko/text/helpers.clj#L35" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -86,7 +86,7 @@ by <span id="author">Unknown</span><br />
   <pre id="var-usage">Usage: (set-of-tokens s)
 </pre>
   <pre id="var-docstr">Tokenizes s and constructs a bag (multiset) of the tokens.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/text/helpers.clj#L41" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/9923622091e5fd337bf01426b09aa169284e58be/src/nerchuko/text/helpers.clj#L42" id="var-source">Source</a>
 </div><div id="var-entry">
   <br />
   <hr />
@@ -99,7 +99,7 @@ collection, tokenizes the values in that collection (i.e. tokenizes
 the elements of lists, vectors, sets etc. and tokenizes the vals of
 maps.  Given any other object, returns it unchanged.  Uses
 clj.text.tokenization/tokenize for tokenization.</pre>
-  <a href="http://github.com/sids/nerchuko/blob/3c16fe3279b0cf68cb82bddc4f3d186f747f5974/src/nerchuko/text/helpers.clj#L8" id="var-source">Source</a>
+  <a href="http://github.com/sids/nerchuko/blob/9923622091e5fd337bf01426b09aa169284e58be/src/nerchuko/text/helpers.clj#L9" id="var-source">Source</a>
 </div>
 
 
