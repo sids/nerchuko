@@ -45,8 +45,8 @@ If doc is anything else, an IllegalArgumentException is thrown."}
   [m]
   (if (every? number? (vals m))
     (->> m
-       keys
-       set)
+         keys
+         set)
     (throw (IllegalArgumentException.
             "If document is a map, all the vals must be numbers."))))
 
