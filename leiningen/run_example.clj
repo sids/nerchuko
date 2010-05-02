@@ -18,8 +18,4 @@ spambase"
                         (require ns#)
                         (@(ns-resolve ns# '~'-main) ~@args)
                         nil))
-    (doseq [line (drop 3 (line-seq
-                          (java.io.BufferedReader.
-                           (java.io.StringReader.
-                            (with-out-str (doc run-example))))))]
-      (println line))))
+    (println (:doc (meta (var run-example))))))
