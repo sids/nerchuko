@@ -29,7 +29,10 @@ a classifier.
   model
   :classifier :classes :features)
 
-(defmulti numeric-features-map type)
+(defmulti
+  #^{:doc "Converts a document into a numeric features map."
+     :arglists '([string] [coll] [map])}
+  numeric-features-map type)
 
 (defmethod numeric-features-map String
   [s]
@@ -56,6 +59,11 @@ a classifier.
   [_]
   (throw (IllegalArgumentException.
           "Document must be one of: String, Collection, Map.")))
+
+(defn numeric-dataset
+  "Converts all the documents in a dataset to numeric features maps."
+  [dataset]
+  (map-firsts numeric-features-map dataset))
 
 (defmulti features-set type)
 

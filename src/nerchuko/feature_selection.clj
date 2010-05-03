@@ -5,15 +5,23 @@ selection capabilities.
 Here is a typical (simplified) workflow for feature selection:
 
     ;; access feature selection capabilities through this namespace
-    (use 'nerchuko.classification)
+    (require '[nerchuko.feature-selection :as fs])
+
+    ;; also keep some helper functions handy
+    (require '[nerchuko.helpers :as h])
 
     ;; load training dataset: training dataset must be a seq of
     ;; 2-element vectors where the first element is a document
     ;; and the second element the correct class of that document
-    (def training-dataset '([\"\" :interesting]
-                            [\"\" :not-interesting]
-                            [\"\" :not-interesting]
-                            [\"\" :interesting]))
+    (def training-data '([\"\" :interesting]
+                         [\"\" :not-interesting]
+                         [\"\" :not-interesting]
+                         [\"\" :interesting]))
+
+    ;; convert all the documents in the training data into numeric
+    ;; documents -- most feature selection algorithms are able to
+    ;; work only with numeric documents
+    (def training-dataset (h/numeric-dataset training-data))
 
     ;; pick a feature-selector: all the feature-selectors are in the
     ;; namespace nerchuko.feature-selectors
@@ -26,16 +34,16 @@ Here is a typical (simplified) workflow for feature selection:
 
     ;; select the best k features from the dataset
     (def features
-         (find-features feature-selector k training-dataset))
+         (fs/find-features feature-selector k training-dataset))
 
     ;; create an altered dataset that contains only the selected
     ;; features
     (def better-training-dataset
-         (select-features training-dataset features))
+         (fs/select-features training-dataset features))
 
     ;; or do both the above in one shot
     (def better-training-dataset
-         (find-and-select-features feature-selector k training-dataset))
+         (fs/find-and-select-features feature-selector k training-dataset))
 
     ;; better-training-dataset can now be used for classification etc."
   (:use nerchuko.utils)
