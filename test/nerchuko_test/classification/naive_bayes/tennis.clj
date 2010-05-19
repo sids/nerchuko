@@ -1,4 +1,4 @@
-(ns test.nerchuko.classification.naive-bayes.tennis
+(ns nerchuko-test.classification.naive-bayes.tennis
   (:use nerchuko.classification
         nerchuko.utils
         nerchuko.helpers)

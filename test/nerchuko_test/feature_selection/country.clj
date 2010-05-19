@@ -1,4 +1,4 @@
-(ns test.nerchuko.feature-selection.country
+(ns nerchuko-test.feature-selection.country
   (:use nerchuko.feature-selection
         nerchuko.utils
         nerchuko.helpers)

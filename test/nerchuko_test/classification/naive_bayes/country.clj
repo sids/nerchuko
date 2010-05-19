@@ -1,4 +1,4 @@
-(ns test.nerchuko.classification.naive-bayes.country
+(ns nerchuko-test.classification.naive-bayes.country
   (:use nerchuko.classification
         nerchuko.utils
         nerchuko.helpers)

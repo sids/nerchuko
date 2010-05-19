@@ -1,4 +1,4 @@
-(ns test.nerchuko.feature-selection.tennis
+(ns nerchuko-test.feature-selection.tennis
   (:use nerchuko.feature-selection
         nerchuko.utils
         nerchuko.helpers)
